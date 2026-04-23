@@ -1,4 +1,4 @@
-# 🤖 [AI Literacy](https://edwinpuertas.github.io/AILiteracy/, "AI Literacy") — Edwin Puertas, PhD
+# 🤖 [AI Literacy](https://edwinpuertas.github.io/AILiteracy ,"AI Literacy") — Edwin Puertas, PhD
 
 > **Recursos educativos abiertos sobre Inteligencia Artificial** — materiales de clase, talleres, notebooks y guías diseñados para estudiantes, profesionales y cualquier persona que quiera entender y aplicar la IA de forma crítica y responsable.
 
