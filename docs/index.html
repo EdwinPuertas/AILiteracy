@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Recursos educativos abiertos sobre Inteligencia Artificial: materiales de clase, talleres, notebooks y guías para entender y aplicar la IA de forma crítica y responsable." />
+  <title>AI Literacy — Edwin Puertas, PhD</title>
+  <style>
+    :root {
+      --navy:#0a0e1a;
+      --deep:#0d1526;
+      --dark:#070b14;
+      --cyan:#00d4ff;
+      --cyan2:#00aeef;
+      --green:#8dc63f;
+      --gold:#ffd166;
+      --coral:#ff6b6b;
+      --purple:#b66dff;
+      --white:#eef2ff;
+      --muted:rgba(238,242,255,.68);
+      --faint:rgba(238,242,255,.42);
+      --glass:rgba(255,255,255,.045);
+      --glass2:rgba(0,212,255,.08);
+      --border:rgba(0,212,255,.16);
+      --border2:rgba(141,198,63,.18);
+      --shadow:0 28px 90px rgba(0,0,0,.36);
+    }
+
+    * { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body {
+      min-height:100vh;
+      background:
+        radial-gradient(circle at 18% 12%, rgba(0,212,255,.16), transparent 28rem),
+        radial-gradient(circle at 85% 10%, rgba(141,198,63,.11), transparent 24rem),
+        radial-gradient(circle at 60% 95%, rgba(182,109,255,.11), transparent 30rem),
+        var(--dark);
+      color:var(--white);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height:1.6;
+      overflow-x:hidden;
+    }
+
+    body::before {
+      content:"";
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+      background-size:44px 44px;
+      mask-image:linear-gradient(to bottom, rgba(0,0,0,.7), transparent 82%);
+      z-index:0;
+    }
+
+    a { color:inherit; }
+    .page { position:relative; z-index:1; }
+    .container { width:min(1120px, calc(100% - 40px)); margin:0 auto; }
+
+    nav {
+      position:sticky;
+      top:0;
+      z-index:20;
+      border-bottom:1px solid var(--border);
+      background:rgba(7,11,20,.82);
+      backdrop-filter:blur(18px);
+    }
+    .nav-inner {
+      height:68px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+    }
+    .brand {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      font-weight:800;
+      letter-spacing:-.03em;
+    }
+    .brand-mark {
+      width:38px;
+      height:38px;
+      display:grid;
+      place-items:center;
+      border:1px solid var(--border);
+      border-radius:14px;
+      background:linear-gradient(135deg, rgba(0,212,255,.16), rgba(141,198,63,.08));
+      color:var(--cyan);
+      font-weight:900;
+    }
+    .nav-links { display:flex; gap:18px; align-items:center; }
+    .nav-links a {
+      text-decoration:none;
+      color:var(--muted);
+      font-size:.86rem;
+      transition:.18s ease color;
+    }
+    .nav-links a:hover { color:var(--cyan); }
+
+    .hero {
+      padding:94px 0 54px;
+    }
+    .hero-grid {
+      display:grid;
+      grid-template-columns:1.18fr .82fr;
+      gap:34px;
+      align-items:stretch;
+    }
+    .eyebrow {
+      display:inline-flex;
+      gap:10px;
+      align-items:center;
+      color:var(--cyan);
+      font-size:.78rem;
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      margin-bottom:18px;
+      font-weight:700;
+    }
+    .eyebrow::before {
+      content:"";
+      width:34px;
+      height:1px;
+      background:linear-gradient(90deg, var(--cyan), transparent);
+    }
+    h1 {
+      font-size:clamp(3.2rem, 8vw, 6.7rem);
+      line-height:.88;
+      letter-spacing:-.08em;
+      margin-bottom:20px;
+    }
+    .gradient {
+      background:linear-gradient(120deg, var(--white), var(--cyan) 46%, var(--green));
+      -webkit-background-clip:text;
+      color:transparent;
+    }
+    .lead {
+      color:var(--muted);
+      font-size:clamp(1.05rem, 2vw, 1.25rem);
+      max-width:760px;
+      margin-bottom:28px;
+    }
+    .actions {
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+    .button {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-height:46px;
+      padding:0 18px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:var(--glass);
+      color:var(--white);
+      text-decoration:none;
+      font-weight:750;
+      transition:.2s ease transform, .2s ease border-color, .2s ease background;
+    }
+    .button.primary {
+      background:linear-gradient(135deg, rgba(0,212,255,.22), rgba(141,198,63,.14));
+      border-color:rgba(0,212,255,.38);
+    }
+    .button:hover {
+      transform:translateY(-2px);
+      border-color:var(--cyan);
+      background:var(--glass2);
+    }
+
+    .author-card {
+      border:1px solid var(--border);
+      background:rgba(13,21,38,.72);
+      border-radius:30px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .author-card::after {
+      content:"";
+      position:absolute;
+      inset:auto -70px -90px auto;
+      width:210px;
+      height:210px;
+      background:radial-gradient(circle, rgba(0,212,255,.22), transparent 70%);
+      pointer-events:none;
+    }
+    .author-card h2 {
+      font-size:1.38rem;
+      margin-bottom:8px;
+      letter-spacing:-.03em;
+    }
+    .author-card p {
+      color:var(--muted);
+      font-size:.97rem;
+      margin-bottom:18px;
+    }
+    .meta-list {
+      display:grid;
+      gap:10px;
+      margin-top:18px;
+    }
+    .meta {
+      display:flex;
+      justify-content:space-between;
+      gap:18px;
+      padding:12px 0;
+      border-top:1px solid rgba(255,255,255,.07);
+      color:var(--muted);
+      font-size:.92rem;
+    }
+    .meta strong { color:var(--white); font-weight:750; }
+
+    section { padding:56px 0; }
+    .section-head {
+      display:flex;
+      justify-content:space-between;
+      gap:24px;
+      align-items:end;
+      margin-bottom:24px;
+    }
+    .section-head h2 {
+      font-size:clamp(2rem, 4.5vw, 3.6rem);
+      line-height:.96;
+      letter-spacing:-.06em;
+    }
+    .section-head p {
+      max-width:520px;
+      color:var(--muted);
+    }
+
+    .cards {
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0, 1fr));
+      gap:14px;
+    }
+    .card {
+      min-height:220px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.04);
+      border-radius:24px;
+      padding:22px;
+      text-decoration:none;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      transition:.2s ease transform, .2s ease border-color, .2s ease background;
+    }
+    .card:hover {
+      transform:translateY(-4px);
+      border-color:var(--cyan);
+      background:rgba(0,212,255,.08);
+    }
+    .card .icon { font-size:2rem; margin-bottom:18px; }
+    .card h3 { font-size:1.12rem; margin-bottom:8px; letter-spacing:-.03em; }
+    .card p { color:var(--muted); font-size:.92rem; }
+    .tag {
+      display:inline-flex;
+      width:max-content;
+      margin-top:18px;
+      color:var(--cyan);
+      font-size:.76rem;
+      font-weight:800;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    .research-grid {
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:14px;
+    }
+    .research {
+      border:1px solid var(--border);
+      background:rgba(13,21,38,.62);
+      border-radius:24px;
+      padding:24px;
+    }
+    .research h3 { font-size:1.18rem; margin-bottom:10px; }
+    .research p { color:var(--muted); font-size:.96rem; }
+
+    .repo-panel {
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.24);
+      border-radius:28px;
+      padding:24px;
+      overflow:hidden;
+    }
+    pre {
+      white-space:pre-wrap;
+      font-family:"SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      color:var(--muted);
+      font-size:.94rem;
+      line-height:1.72;
+    }
+
+    .pubs {
+      display:grid;
+      gap:10px;
+    }
+    .pub {
+      display:grid;
+      grid-template-columns:72px 1fr auto;
+      gap:16px;
+      align-items:center;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.035);
+      border-radius:18px;
+      padding:16px;
+    }
+    .year {
+      color:var(--cyan);
+      font-weight:900;
+      font-size:1.15rem;
+    }
+    .pub-title { font-weight:750; letter-spacing:-.02em; }
+    .venue { color:var(--muted); font-size:.9rem; }
+    .pub-pill {
+      color:var(--gold);
+      border:1px solid rgba(255,209,102,.2);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:.78rem;
+      font-weight:800;
+    }
+
+    .usage {
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+    .code-card, .license-card {
+      border:1px solid var(--border);
+      border-radius:24px;
+      padding:22px;
+      background:rgba(13,21,38,.6);
+    }
+    .code-card h3, .license-card h3 { margin-bottom:12px; }
+    .license-card p, .license-card li {
+      color:var(--muted);
+    }
+    ul { padding-left:20px; }
+
+    footer {
+      border-top:1px solid var(--border);
+      padding:34px 0;
+      color:var(--faint);
+      text-align:center;
+    }
+    footer a { color:var(--cyan); text-decoration:none; }
+
+    @media (max-width: 920px) {
+      .hero-grid, .usage { grid-template-columns:1fr; }
+      .cards { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+      .research-grid { grid-template-columns:1fr; }
+      .section-head { display:block; }
+      .section-head p { margin-top:10px; }
+      .nav-links { display:none; }
+    }
+    @media (max-width: 620px) {
+      .container { width:min(100% - 26px, 1120px); }
+      .hero { padding-top:60px; }
+      .cards { grid-template-columns:1fr; }
+      .pub { grid-template-columns:1fr; }
+      .pub-pill { width:max-content; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <nav>
+      <div class="container nav-inner">
+        <a class="brand" href="#inicio" aria-label="AI Literacy">
+          <span class="brand-mark">AI</span>
+          <span>AI Literacy</span>
+        </a>
+        <div class="nav-links">
+          <a href="#recursos">Recursos</a>
+          <a href="#investigacion">Investigación</a>
+          <a href="#uso">Uso</a>
+          <a href="#publicaciones">Publicaciones</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+      </div>
+    </nav>
+
+    <header id="inicio" class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Recursos educativos abiertos</div>
+          <h1><span class="gradient">AI Literacy</span><br>para aprender, crear y pensar críticamente.</h1>
+          <p class="lead">
+            Materiales de clase, talleres, notebooks y guías sobre Inteligencia Artificial,
+            diseñados para estudiantes, profesionales y cualquier persona que quiera entender
+            y aplicar la IA de forma crítica y responsable.
+          </p>
+          <div class="actions">
+            <a class="button primary" href="#recursos">Explorar materiales</a>
+            <a class="button" href="about_me.html">Perfil interactivo</a>
+            <a class="button" href="ai_experience.html">Experiencia IA</a>
+            <a class="button" href="https://github.com/EdwinPuertas/AILiteracy">Ver repositorio</a>
+          </div>
+        </div>
+
+        <aside class="author-card">
+          <h2>Edwin Puertas, PhD</h2>
+          <p>
+            Profesor Asociado e investigador en la Universidad Tecnológica de Bolívar,
+            con trabajo académico e industrial en IA, NLP, visión por computador,
+            computación afectiva y ciencia de datos aplicada.
+          </p>
+          <div class="meta-list">
+            <div class="meta"><span>Institución</span><strong>UTB</strong></div>
+            <div class="meta"><span>Ubicación</span><strong>Cartagena, Colombia</strong></div>
+            <div class="meta"><span>Doctorado</span><strong>PUJ · 2023</strong></div>
+            <div class="meta"><span>Áreas</span><strong>AI · NLP · CV · Data</strong></div>
+            <div class="meta"><span>Contacto</span><strong>epuertas@utb.edu.co</strong></div>
+          </div>
+        </aside>
+      </div>
+    </header>
+
+    <main>
+      <section id="recursos">
+        <div class="container">
+          <div class="section-head">
+            <h2>¿Qué encontrarás aquí?</h2>
+            <p>El repositorio está organizado por tema y combina fundamentos, lecturas, código de soporte y recursos complementarios.</p>
+          </div>
+
+          <div class="cards">
+            <a class="card" href="general/">
+              <div>
+                <div class="icon">🧠</div>
+                <h3>Fundamentos de IA</h3>
+                <p>Historia, tipos de aprendizaje automático, ética, sesgos, transparencia, IA generativa y LLMs.</p>
+              </div>
+              <span class="tag">/general</span>
+            </a>
+
+            <a class="card" href="pdf/">
+              <div>
+                <div class="icon">📚</div>
+                <h3>Lecturas y referencias</h3>
+                <p>Papers seminales, guías de buenas prácticas e informes sobre IA responsable.</p>
+              </div>
+              <span class="tag">/pdf</span>
+            </a>
+
+            <a class="card" href="support/">
+              <div>
+                <div class="icon">💻</div>
+                <h3>Código de soporte</h3>
+                <p>Notebooks, scripts, APIs de IA, plantillas para NLP y clasificación.</p>
+              </div>
+              <span class="tag">/support</span>
+            </a>
+
+            <a class="card" href="otros/">
+              <div>
+                <div class="icon">✨</div>
+                <h3>Recursos adicionales</h3>
+                <p>Material complementario para clases, talleres y exploraciones prácticas.</p>
+              </div>
+              <span class="tag">/otros</span>
+            </a>
+          </div>
+
+          <div class="repo-panel" style="margin-top:18px;">
+<pre>AILiteracy/
+├── general/           # Fundamentos de IA: conceptos, historia, ética
+├── pdf/               # Lecturas, papers y guías en formato PDF
+├── support/           # Código de apoyo, utilidades y scripts auxiliares
+├── otros/             # Recursos adicionales y materiales complementarios
+├── about_me.html      # Perfil interactivo del autor
+├── ai_experience.html # Experiencia en proyectos de IA
+└── index.html         # Página principal para GitHub Pages</pre>
+          </div>
+        </div>
+      </section>
+
+      <section id="investigacion">
+        <div class="container">
+          <div class="section-head">
+            <h2>Líneas de investigación</h2>
+            <p>Una ruta de aprendizaje conectada con proyectos reales de investigación y aplicación industrial.</p>
+          </div>
+
+          <div class="research-grid">
+            <article class="research">
+              <h3>Natural Language Processing</h3>
+              <p>Modelos transformer para clasificación de textos, análisis de sentimientos, detección de propaganda, discurso de odio y framing mediático.</p>
+            </article>
+            <article class="research">
+              <h3>Computer Vision</h3>
+              <p>Sistemas basados en CNN para agricultura de precisión, detección de enfermedades en cultivos, monitoreo de tráfico y smart cities.</p>
+            </article>
+            <article class="research">
+              <h3>Orientación vocacional con IA</h3>
+              <p>Sistemas de recomendación para apoyar a estudiantes de bachillerato en la elección de carrera y reducir la deserción universitaria.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="uso">
+        <div class="container">
+          <div class="section-head">
+            <h2>Cómo usar este repositorio</h2>
+            <p>Clona el proyecto, explora los materiales y abre los notebooks desde la carpeta de soporte.</p>
+          </div>
+
+          <div class="usage">
+            <article class="code-card">
+              <h3>Comandos rápidos</h3>
+<pre># Clonar el repositorio
+git clone https://github.com/EdwinPuertas/AILiteracy.git
+cd AILiteracy
+
+# Explorar materiales de clase
+ls general/
+
+# Abrir notebooks
+jupyter notebook support/</pre>
+            </article>
+            <article class="license-card">
+              <h3>Requisitos mínimos</h3>
+              <ul>
+                <li>Python 3.8+</li>
+                <li>Jupyter Notebook / JupyterLab</li>
+                <li>transformers, scikit-learn, pandas, matplotlib</li>
+              </ul>
+              <br>
+<pre>pip install transformers scikit-learn pandas matplotlib jupyter</pre>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="publicaciones">
+        <div class="container">
+          <div class="section-head">
+            <h2>Publicaciones destacadas</h2>
+            <p>Una selección de trabajos recientes conectados con NLP, visión por computador e IA aplicada.</p>
+          </div>
+
+          <div class="pubs">
+            <article class="pub">
+              <div class="year">2024</div>
+              <div>
+                <div class="pub-title">VerbaNex AI at DIPROMATS 2024: Propaganda Detection with Fine-Tuned BERT</div>
+                <div class="venue">IberLEF @ SEPLN</div>
+              </div>
+              <span class="pub-pill">NLP</span>
+            </article>
+            <article class="pub">
+              <div class="year">2024</div>
+              <div>
+                <div class="pub-title">VerbaNexAI at HOMO-MEX 2024: LGBTQ+ Phobic Content Detection</div>
+                <div class="venue">IberLEF @ SEPLN</div>
+              </div>
+              <span class="pub-pill">NLP</span>
+            </article>
+            <article class="pub">
+              <div class="year">2024</div>
+              <div>
+                <div class="pub-title">The Media Framing Dataset: News from Mexico and Colombia</div>
+                <div class="venue">Dataset · Media Framing</div>
+              </div>
+              <span class="pub-pill">Dataset</span>
+            </article>
+            <article class="pub">
+              <div class="year">2025</div>
+              <div>
+                <div class="pub-title">Automated Disease Detection in Cucumber Crops using CNNs</div>
+                <div class="venue">Multimedia Tools and Applications</div>
+              </div>
+              <span class="pub-pill">Vision</span>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contacto">
+        <div class="container">
+          <div class="section-head">
+            <h2>Colaboración y contacto</h2>
+            <p>Usa los materiales en clases o talleres, reporta mejoras mediante issues, contribuye con pull requests o escribe para colaborar en investigación.</p>
+          </div>
+
+          <div class="cards">
+            <a class="card" href="mailto:epuertas@utb.edu.co">
+              <div>
+                <div class="icon">✉️</div>
+                <h3>Email</h3>
+                <p>epuertas@utb.edu.co</p>
+              </div>
+              <span class="tag">Contacto</span>
+            </a>
+
+            <a class="card" href="https://scholar.google.com/citations?user=YuXj6ksAAAAJ&hl=en">
+              <div>
+                <div class="icon">🎓</div>
+                <h3>Google Scholar</h3>
+                <p>Perfil académico y publicaciones.</p>
+              </div>
+              <span class="tag">Scholar</span>
+            </a>
+
+            <a class="card" href="https://www.researchgate.net/profile/Edwin-Puertas">
+              <div>
+                <div class="icon">🔬</div>
+                <h3>ResearchGate</h3>
+                <p>Investigación, proyectos y producción científica.</p>
+              </div>
+              <span class="tag">Research</span>
+            </a>
+
+            <a class="card" href="https://github.com/EdwinPuertas/AILiteracy/issues">
+              <div>
+                <div class="icon">🛠️</div>
+                <h3>Issues</h3>
+                <p>Reporta errores o sugiere mejoras.</p>
+              </div>
+              <span class="tag">GitHub</span>
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>Edwin Puertas, PhD · Universidad Tecnológica de Bolívar · Cartagena, Colombia</p>
+        <p>Licencia Creative Commons Attribution 4.0 International (CC BY 4.0)</p>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
