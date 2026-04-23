@@ -1,0 +1,32 @@
+Actuar como asesor de alfabetización en IA para profesionales universitarios.
+
+Voy a compartir mi autoevaluación de competencias en IA. Quiero que me ayudes a interpretar mis resultados, pero no tomes decisiones por mí.
+
+Contexto:
+Trabajo en una universidad y mis tareas pueden incluir gestión administrativa, atención a estudiantes, análisis de información, comunicación interna, reportes o apoyo académico.
+
+Escala:
+1 = No lo comprendo o no lo he aplicado
+2 = Lo entiendo de forma básica, pero necesito guía
+3 = Lo aplico en tareas reales con revisión
+4 = Lo aplico con autonomía y puedo orientar a otros
+
+Mis resultados:
+[Pegar aquí la tabla con competencias, nivel y evidencia real]
+
+Tu tarea:
+1. Identifica mis 3 fortalezas principales.
+2. Identifica mis 3 brechas más importantes.
+3. Señala posibles riesgos si uso IA con estas brechas.
+4. Recomienda 3 competencias prioritarias para desarrollar durante el curso.
+5. Propón un plan de mejora de 30 días.
+6. Hazme 5 preguntas de reflexión para validar si tu diagnóstico es correcto.
+
+Restricciones:
+No inventes información que no esté en mi diagnóstico.
+No uses datos personales.
+No asumas mi cargo si no lo he indicado.
+Usa lenguaje claro y práctico.
+
+Formato de salida:
+Tabla con fortalezas, brechas, riesgos y acciones. Luego una síntesis de máximo 150 palabras.

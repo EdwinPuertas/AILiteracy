@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Predicciones 2P — IA</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Arial,sans-serif;background:#f4f6f9;color:#1a1a1a;padding:24px}
+  h1{font-size:20px;font-weight:600;color:#1F4E79;margin-bottom:4px}
+  .subtitle{font-size:13px;color:#666;margin-bottom:20px}
+  .metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+  .metric{background:#fff;border-radius:10px;padding:14px 16px;border:1px solid #e0e0e0}
+  .metric .label{font-size:12px;color:#888;margin-bottom:4px}
+  .metric .value{font-size:24px;font-weight:600;color:#1F4E79}
+  .metric .sub{font-size:11px;color:#aaa;margin-top:2px}
+  .charts-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+  .card{background:#fff;border-radius:12px;padding:16px;border:1px solid #e0e0e0}
+  .card-title{font-size:13px;font-weight:600;color:#555;margin-bottom:12px}
+  .full{grid-column:1/-1}
+  .filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+  .filters label{font-size:12px;color:#777}
+  .filters select,.filters input{font-size:12px;padding:6px 10px;border-radius:8px;border:1px solid #ccc;background:#fff;color:#333;cursor:pointer;outline:none}
+  .filters input{width:160px}
+  .table-wrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  thead th{font-size:11px;font-weight:600;color:#888;text-align:left;padding:8px 10px;border-bottom:1px solid #eee;white-space:nowrap;background:#fafafa}
+  tbody tr{border-bottom:1px solid #f0f0f0;transition:background .15s}
+  tbody tr:hover{background:#f7f9fc}
+  tbody td{padding:8px 10px;color:#333}
+  .badge{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+  .b-exc{background:#D4EDDA;color:#155724}
+  .b-sob{background:#D7F5C2;color:#2D6A0A}
+  .b-bue{background:#FFF3CD;color:#856404}
+  .b-ace{background:#FFE0C2;color:#7A3500}
+  .b-baj{background:#FADADD;color:#7A1F1F}
+  .nf-bar{display:flex;align-items:center;gap:8px}
+  .bar-bg{flex:1;height:6px;background:#eee;border-radius:3px;overflow:hidden;min-width:60px}
+  .bar-fill{height:6px;border-radius:3px}
+  .legend{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:8px;font-size:12px;color:#666}
+  .legend span{display:flex;align-items:center;gap:5px}
+  .legend-dot{width:10px;height:10px;border-radius:2px;display:inline-block}
+  @media(max-width:600px){.charts-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<h1>Predicciones de rendimiento — 2do Periodo</h1>
+<p class="subtitle">Curso Inteligencia Artificial · 35 estudiantes · Ridge Regression R²=0.965 · MAE≈0.079</p>
+
+<div class="metrics" id="metrics"></div>
+
+<div class="charts-grid">
+  <div class="card">
+    <div class="card-title">Distribución por categoría</div>
+    <div style="position:relative;height:230px">
+      <canvas id="barChart" role="img" aria-label="Barras de cantidad de estudiantes por categoría de rendimiento"></canvas>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Dispersión de notas finales predichas</div>
+    <div style="position:relative;height:230px">
+      <canvas id="dotChart" role="img" aria-label="Dispersión de notas finales predichas por estudiante"></canvas>
+    </div>
+  </div>
+  <div class="card full">
+    <div class="card-title">Perfil de actividades vs nota predicha</div>
+    <div class="legend">
+      <span><span class="legend-dot" style="background:#5DCAA5"></span>AGENT2</span>
+      <span><span class="legend-dot" style="background:#7F77DD"></span>SSTATE</span>
+      <span><span class="legend-dot" style="background:#378ADD"></span>P-LAB</span>
+      <span><span class="legend-dot" style="background:#EF9F27"></span>P-TEO</span>
+      <span><span class="legend-dot" style="background:#E24B4A"></span>NF Predicha</span>
+    </div>
+    <div style="position:relative;height:200px">
+      <canvas id="lineChart" role="img" aria-label="Línea de actividades y nota predicha por estudiante"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="card full">
+  <div class="card-title">Detalle por estudiante</div>
+  <div class="filters">
+    <label>Filtrar:</label>
+    <select id="filterCat" onchange="render()">
+      <option value="">Todas las categorías</option>
+      <option value="Excelente">Excelente</option>
+      <option value="Sobresaliente">Sobresaliente</option>
+      <option value="Bueno">Bueno</option>
+      <option value="Aceptable">Aceptable</option>
+      <option value="Bajo">Bajo</option>
+    </select>
+    <input id="searchIn" placeholder="Buscar estudiante..." oninput="render()" />
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>#</th><th>Estudiante</th><th>AGENT2</th><th>SSTATE</th><th>P-LAB</th><th>P-TEO</th><th>NF Predicha</th><th>Categoría</th></tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+</div>
+
+<script>
+const RAW = [
+  {n:"Estudiante 1",a2:5,ss:5,lab:4.5,teo:3.6,nf:4.43},
+  {n:"Estudiante 2",a2:5,ss:4.5,lab:5,teo:5,nf:5.00},
+  {n:"Estudiante 3",a2:2,ss:5,lab:5,teo:4.5,nf:3.70},
+  {n:"Estudiante 4",a2:5,ss:4.5,lab:5,teo:4.5,nf:4.87},
+  {n:"Estudiante 5",a2:4.5,ss:4.5,lab:4.5,teo:4.5,nf:4.52},
+  {n:"Estudiante 6",a2:4,ss:4.2,lab:5,teo:5,nf:4.63},
+  {n:"Estudiante 7",a2:4.5,ss:4.5,lab:5,teo:4.6,nf:4.70},
+  {n:"Estudiante 8",a2:2,ss:5,lab:5,teo:5,nf:3.86},
+  {n:"Estudiante 9",a2:5,ss:4.2,lab:5,teo:5,nf:5.00},
+  {n:"Estudiante 10",a2:5,ss:4.5,lab:4.5,teo:4,nf:4.55},
+  {n:"Estudiante 11",a2:4.5,ss:4.5,lab:4.5,teo:4,nf:4.36},
+  {n:"Estudiante 12",a2:5,ss:4.2,lab:4,teo:4,nf:4.40},
+  {n:"Estudiante 13",a2:5,ss:5,lab:4.5,teo:4.7,nf:4.77},
+  {n:"Estudiante 14",a2:4.2,ss:1,lab:4,teo:4,nf:4.09},
+  {n:"Estudiante 15",a2:4.2,ss:1,lab:4,teo:4.5,nf:4.24},
+  {n:"Estudiante 16",a2:5,ss:4.2,lab:5,teo:4.3,nf:4.80},
+  {n:"Estudiante 17",a2:4,ss:5,lab:5,teo:0,nf:3.07},
+  {n:"Estudiante 18",a2:4.5,ss:4.2,lab:5,teo:5,nf:4.83},
+  {n:"Estudiante 19",a2:5,ss:4.5,lab:4.5,teo:4.5,nf:4.71},
+  {n:"Estudiante 20",a2:4.5,ss:4.5,lab:5,teo:3.7,nf:4.42},
+  {n:"Estudiante 21",a2:2,ss:4.2,lab:4.5,teo:5,nf:3.70},
+  {n:"Estudiante 22",a2:4.5,ss:4.2,lab:5,teo:3.8,nf:4.45},
+  {n:"Estudiante 23",a2:4,ss:4.2,lab:5,teo:0,nf:3.07},
+  {n:"Estudiante 24",a2:4.5,ss:4,lab:5,teo:5,nf:4.83},
+  {n:"Estudiante 25",a2:4.2,ss:1,lab:4,teo:0,nf:2.84},
+  {n:"Estudiante 26",a2:5,ss:4.5,lab:5,teo:5,nf:5.00},
+  {n:"Estudiante 27",a2:4.5,ss:4,lab:5,teo:4.8,nf:4.77},
+  {n:"Estudiante 28",a2:4.3,ss:4.2,lab:5,teo:2.8,nf:4.06},
+  {n:"Estudiante 29",a2:5,ss:4.2,lab:4,teo:0,nf:3.15},
+  {n:"Estudiante 30",a2:4,ss:5,lab:5,teo:4.8,nf:4.57},
+  {n:"Estudiante 31",a2:5,ss:4.5,lab:5,teo:3.5,nf:4.55},
+  {n:"Estudiante 32",a2:4.5,ss:4,lab:5,teo:4.2,nf:4.58},
+  {n:"Estudiante 33",a2:4.5,ss:4,lab:5,teo:5,nf:4.83},
+  {n:"Estudiante 34",a2:2,ss:4.2,lab:4.5,teo:0,nf:2.14},
+  {n:"Estudiante 35",a2:4.3,ss:4.2,lab:5,teo:4.8,nf:4.69},
+];
+
+function cat(nf){
+  if(nf>=4.5)return"Excelente";
+  if(nf>=4.0)return"Sobresaliente";
+  if(nf>=3.5)return"Bueno";
+  if(nf>=3.0)return"Aceptable";
+  return"Bajo";
+}
+function badgeClass(c){return{Excelente:'b-exc',Sobresaliente:'b-sob',Bueno:'b-bue',Aceptable:'b-ace',Bajo:'b-baj'}[c]}
+function barColor(nf){
+  if(nf>=4.5)return'#27AE60';
+  if(nf>=4.0)return'#82C341';
+  if(nf>=3.5)return'#F5A623';
+  if(nf>=3.0)return'#E07B20';
+  return'#E84040';
+}
+
+const data = RAW.map(d=>({...d,cat:cat(d.nf)}));
+
+function buildMetrics(){
+  const avg = (data.reduce((s,d)=>s+d.nf,0)/data.length).toFixed(2);
+  const pass = data.filter(d=>d.nf>=3).length;
+  const exc = data.filter(d=>d.nf>=4.5).length;
+  const risk = data.filter(d=>d.nf<3).length;
+  const mx = Math.max(...data.map(d=>d.nf)).toFixed(2);
+  const mn = Math.min(...data.map(d=>d.nf)).toFixed(2);
+  const items=[
+    {label:'Promedio grupo',value:avg,sub:'sobre 5.0'},
+    {label:'Aprobados',value:pass+'/35',sub:(pass/35*100).toFixed(0)+'% del grupo'},
+    {label:'Excelentes (≥4.5)',value:exc,sub:(exc/35*100).toFixed(0)+'% del grupo'},
+    {label:'En riesgo (<3.0)',value:risk,sub:risk===0?'ninguno':risk+' estudiante(s)'},
+    {label:'Nota más alta',value:mx,sub:'máximo'},
+    {label:'Nota más baja',value:mn,sub:'mínimo'},
+  ];
+  document.getElementById('metrics').innerHTML=items.map(i=>`
+    <div class="metric"><div class="label">${i.label}</div><div class="value">${i.value}</div><div class="sub">${i.sub}</div></div>
+  `).join('');
+}
+
+function buildCharts(){
+  const cats=['Excelente','Sobresaliente','Bueno','Aceptable','Bajo'];
+  const counts=cats.map(c=>data.filter(d=>d.cat===c).length);
+  const catColors=['#27AE60','#82C341','#F5A623','#E07B20','#E84040'];
+
+  new Chart(document.getElementById('barChart'),{
+    type:'bar',
+    data:{labels:cats,datasets:[{data:counts,backgroundColor:catColors,borderRadius:6,borderSkipped:false}]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>' '+ctx.parsed.y+' estudiantes'}}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:11}}},
+        y:{grid:{color:'rgba(0,0,0,0.05)'},ticks:{stepSize:1,font:{size:11}},beginAtZero:true}
+      }
+    }
+  });
+
+  new Chart(document.getElementById('dotChart'),{
+    type:'scatter',
+    data:{datasets:[{
+      data:data.map((d,i)=>({x:i+1,y:d.nf})),
+      pointBackgroundColor:data.map(d=>barColor(d.nf)),
+      pointRadius:6,pointHoverRadius:8,
+    }]},
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>{const d=data[ctx.dataIndex];return` ${d.n}: ${d.nf.toFixed(2)}`}}}},
+      scales:{
+        x:{title:{display:true,text:'Estudiante #',font:{size:11}},ticks:{font:{size:10}},grid:{display:false}},
+        y:{min:0,max:5.3,title:{display:true,text:'NF Predicha',font:{size:11}},ticks:{font:{size:10}},grid:{color:'rgba(0,0,0,0.05)'}}
+      }
+    }
+  });
+
+  new Chart(document.getElementById('lineChart'),{
+    type:'line',
+    data:{
+      labels:data.map(d=>d.n.replace('Estudiante ','')),
+      datasets:[
+        {label:'AGENT2',data:data.map(d=>d.a2),borderColor:'#5DCAA5',backgroundColor:'transparent',pointRadius:2,tension:0.3,borderWidth:1.5},
+        {label:'SSTATE',data:data.map(d=>d.ss),borderColor:'#7F77DD',backgroundColor:'transparent',pointRadius:2,tension:0.3,borderWidth:1.5},
+        {label:'P-LAB',data:data.map(d=>d.lab),borderColor:'#378ADD',backgroundColor:'transparent',pointRadius:2,tension:0.3,borderWidth:1.5},
+        {label:'P-TEO',data:data.map(d=>d.teo),borderColor:'#EF9F27',backgroundColor:'transparent',pointRadius:2,tension:0.3,borderWidth:1.5},
+        {label:'NF Predicha',data:data.map(d=>d.nf),borderColor:'#E24B4A',backgroundColor:'rgba(226,75,74,0.07)',pointRadius:3,tension:0.3,borderWidth:2,fill:true},
+      ]
+    },
+    options:{
+      responsive:true,maintainAspectRatio:false,
+      plugins:{legend:{display:false}},
+      scales:{
+        x:{grid:{display:false},ticks:{font:{size:9},maxRotation:45,autoSkip:true,maxTicksLimit:18}},
+        y:{min:0,max:5.3,grid:{color:'rgba(0,0,0,0.05)'},ticks:{font:{size:10}}}
+      }
+    }
+  });
+}
+
+function render(){
+  const cf=document.getElementById('filterCat').value;
+  const q=document.getElementById('searchIn').value.toLowerCase();
+  const filtered=data.filter(d=>(!cf||d.cat===cf)&&(!q||d.n.toLowerCase().includes(q)));
+  document.getElementById('tbody').innerHTML=filtered.map(d=>`
+    <tr>
+      <td style="color:#aaa">${RAW.indexOf(d)+1}</td>
+      <td style="font-weight:600">${d.n}</td>
+      <td>${d.a2.toFixed(1)}</td>
+      <td>${d.ss.toFixed(1)}</td>
+      <td>${d.lab.toFixed(1)}</td>
+      <td>${d.teo.toFixed(1)}</td>
+      <td>
+        <div class="nf-bar">
+          <span style="font-weight:700;min-width:36px;color:#1F4E79">${d.nf.toFixed(2)}</span>
+          <div class="bar-bg"><div class="bar-fill" style="width:${(d.nf/5)*100}%;background:${barColor(d.nf)}"></div></div>
+        </div>
+      </td>
+      <td><span class="badge ${badgeClass(d.cat)}">${d.cat}</span></td>
+    </tr>
+  `).join('');
+}
+
+buildMetrics();
+buildCharts();
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA: El Momento que Cambia Todo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Bebas+Neue&family=JetBrains+Mono:wght@300;400;700&display=swap');
+
+  :root {
+    --navy: #0a0e1a;
+    --deep: #0d1526;
+    --cyan: #00d4ff;
+    --cyan2: #00aeef;
+    --green: #39ff14;
+    --gold: #ffd700;
+    --coral: #ff6b6b;
+    --purple: #b66dff;
+    --white: #f0f4ff;
+    --glass: rgba(255,255,255,0.04);
+    --glass2: rgba(0,212,255,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* ─── CUSTOM CURSOR ─── */
+  #cursor {
+    position: fixed; width: 12px; height: 12px;
+    background: var(--cyan); border-radius: 50%;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s, background 0.3s;
+    mix-blend-mode: screen;
+  }
+  #cursor-ring {
+    position: fixed; width: 40px; height: 40px;
+    border: 1px solid rgba(0,212,255,0.4);
+    border-radius: 50%; pointer-events: none; z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: all 0.15s ease;
+  }
+
+  /* ─── PARTICLE CANVAS ─── */
+  #bg-canvas {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ─── SECTIONS ─── */
+  section {
+    min-height: 100vh; display: flex; align-items: center;
+    justify-content: center; position: relative; z-index: 1;
+    padding: 60px 40px;
+  }
+
+  /* ─── SECTION 1: OPENING CINEMATIC ─── */
+  #s1 {
+    flex-direction: column; text-align: center;
+    overflow: hidden;
+  }
+
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 0.3em;
+    color: var(--cyan); opacity: 0.7;
+    margin-bottom: 1.5rem; text-transform: uppercase;
+    animation: fadeUp 1s 0.5s both;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(5rem, 14vw, 14rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    background: linear-gradient(135deg, var(--white) 0%, var(--cyan) 50%, var(--cyan2) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeUp 1s 0.8s both;
+    position: relative;
+  }
+
+  .hero-sub {
+    font-size: clamp(1rem, 2.5vw, 1.6rem);
+    font-weight: 300; color: rgba(240,244,255,0.6);
+    margin-top: 1.5rem; max-width: 700px;
+    animation: fadeUp 1s 1.1s both;
+    line-height: 1.6;
+  }
+
+  .scroll-hint {
+    position: absolute; bottom: 40px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    animation: fadeUp 1s 2s both;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.2em; color: rgba(0,212,255,0.5);
+  }
+  .scroll-line {
+    width: 1px; height: 50px;
+    background: linear-gradient(to bottom, var(--cyan), transparent);
+    animation: scrollLine 2s ease-in-out infinite;
+  }
+
+  /* ─── SECTION 2: THE NUMBERS THAT SHOCK ─── */
+  #s2 { flex-direction: column; }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem; letter-spacing: 0.3em; color: var(--cyan);
+    text-transform: uppercase; margin-bottom: 3rem; opacity: 0.6;
+  }
+
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 2px; width: 100%; max-width: 1100px;
+  }
+
+  .stat-card {
+    background: var(--glass); border: 1px solid rgba(0,212,255,0.1);
+    padding: 3rem 2rem; position: relative; overflow: hidden;
+    opacity: 0; transform: translateY(40px);
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  .stat-card.visible { opacity: 1; transform: translateY(0); }
+  .stat-card:hover { background: var(--glass2); border-color: rgba(0,212,255,0.3); }
+
+  .stat-card::before {
+    content: ''; position: absolute; top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent, var(--cyan));
+  }
+
+  .stat-number {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(3rem, 6vw, 6rem);
+    color: var(--accent, var(--cyan));
+    line-height: 1; display: block;
+  }
+  .stat-label { font-size: 0.9rem; color: rgba(240,244,255,0.5); margin-top: 0.8rem; line-height: 1.5; }
+  .stat-source { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: rgba(240,244,255,0.25); margin-top: 1rem; }
+
+  /* ─── SECTION 3: WHAT AI CAN SEE ─── */
+  #s3 { flex-direction: column; gap: 4rem; }
+
+  .vision-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; max-width: 1100px; align-items: center; }
+
+  .vision-left h2 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(3rem, 7vw, 7rem);
+    line-height: 0.9; color: var(--white);
+    margin-bottom: 1.5rem;
+  }
+  .vision-left h2 span { color: var(--cyan); }
+  .vision-left p { font-size: 1rem; line-height: 1.8; color: rgba(240,244,255,0.6); margin-bottom: 1rem; }
+
+  .capability-list { margin-top: 2rem; display: flex; flex-direction: column; gap: 0.8rem; }
+  .cap-item {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 0.8rem 1.2rem;
+    background: var(--glass); border-left: 2px solid var(--cyan);
+    font-size: 0.9rem;
+    opacity: 0; transform: translateX(-20px);
+    transition: all 0.5s ease;
+  }
+  .cap-item.visible { opacity: 1; transform: translateX(0); }
+  .cap-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--cyan); flex-shrink: 0; }
+
+  .vision-right {
+    position: relative; aspect-ratio: 1;
+    max-width: 480px; width: 100%;
+  }
+
+  /* Neural network viz */
+  #neural-canvas {
+    width: 100%; height: 100%; border-radius: 4px;
+    background: rgba(0,0,0,0.4); border: 1px solid rgba(0,212,255,0.15);
+  }
+
+  /* ─── SECTION 4: TIMELINE CINEMATIC ─── */
+  #s4 { flex-direction: column; overflow: hidden; }
+
+  .timeline-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(2rem, 5vw, 5rem);
+    text-align: center; margin-bottom: 5rem;
+    color: var(--white);
+  }
+  .timeline-title span { color: var(--gold); }
+
+  .timeline-track {
+    width: 100%; max-width: 1100px;
+    position: relative;
+  }
+
+  .timeline-line {
+    position: absolute; top: 50%; left: 0; right: 0; height: 1px;
+    background: linear-gradient(to right, transparent, var(--cyan), transparent);
+  }
+
+  .timeline-items {
+    display: flex; gap: 0; overflow-x: auto; padding: 3rem 0;
+    scrollbar-width: none; position: relative;
+  }
+  .timeline-items::-webkit-scrollbar { display: none; }
+
+  .t-item {
+    flex: 0 0 200px; text-align: center; position: relative;
+    padding: 0 1rem;
+    opacity: 0; transform: scale(0.8);
+    transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .t-item.visible { opacity: 1; transform: scale(1); }
+
+  .t-dot {
+    width: 16px; height: 16px; border-radius: 50%;
+    background: var(--navy); border: 2px solid var(--accent, var(--cyan));
+    margin: 0 auto 1.5rem;
+    position: relative; z-index: 2;
+    box-shadow: 0 0 20px var(--accent, var(--cyan));
+    transition: all 0.3s;
+  }
+  .t-item:hover .t-dot { transform: scale(1.5); }
+
+  .t-year {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 1.8rem; color: var(--accent, var(--cyan));
+    display: block; margin-bottom: 0.5rem;
+  }
+  .t-text { font-size: 0.8rem; color: rgba(240,244,255,0.5); line-height: 1.5; }
+  .t-big { font-size: 0.95rem; font-weight: 600; color: var(--white); margin-bottom: 0.3rem; }
+
+  /* ─── SECTION 5: INTERACTIVE DEMO ─── */
+  #s5 { flex-direction: column; gap: 3rem; }
+
+  .demo-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(2.5rem, 6vw, 6rem);
+    text-align: center;
+  }
+  .demo-title span { color: var(--coral); }
+
+  .demo-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; max-width: 1100px; width: 100%;
+  }
+
+  .demo-card {
+    background: var(--glass); border: 1px solid rgba(255,255,255,0.06);
+    padding: 2rem; border-radius: 2px;
+    cursor: pointer; position: relative; overflow: hidden;
+    transition: all 0.4s ease;
+  }
+  .demo-card:hover { border-color: rgba(0,212,255,0.3); transform: translateY(-4px); }
+  .demo-card.active { border-color: var(--cyan); background: var(--glass2); }
+
+  .demo-card::after {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, var(--c1, var(--cyan)), var(--c2, var(--purple)));
+    transform: scaleX(0); transition: transform 0.4s ease;
+  }
+  .demo-card:hover::after, .demo-card.active::after { transform: scaleX(1); }
+
+  .demo-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+  .demo-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+  .demo-card p { font-size: 0.85rem; color: rgba(240,244,255,0.5); line-height: 1.6; }
+
+  .demo-output {
+    max-width: 1100px; width: 100%;
+    background: rgba(0,0,0,0.5); border: 1px solid rgba(0,212,255,0.15);
+    border-radius: 2px; padding: 2rem;
+    min-height: 200px; position: relative;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem; line-height: 1.8;
+    display: none;
+  }
+  .demo-output.active { display: block; }
+
+  .output-header {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1.5rem; padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .output-dots { display: flex; gap: 6px; }
+  .output-dots span { width: 10px; height: 10px; border-radius: 50%; }
+  .d1 { background: #ff5f57; }
+  .d2 { background: #ffbd2e; }
+  .d3 { background: #28c840; }
+  .output-label { font-size: 0.7rem; letter-spacing: 0.2em; color: rgba(0,212,255,0.5); text-transform: uppercase; }
+
+  .typing-text { color: var(--white); }
+  .typing-text .highlight { color: var(--cyan); }
+  .typing-text .highlight2 { color: var(--green); }
+  .typing-text .highlight3 { color: var(--coral); }
+  .typing-text .highlight4 { color: var(--gold); }
+  .cursor-blink { animation: blink 1s infinite; color: var(--cyan); }
+
+  /* ─── SECTION 6: THE HUMAN SIDE ─── */
+  #s6 { flex-direction: column; }
+
+  .human-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(2.5rem, 6vw, 7rem);
+    text-align: center; line-height: 0.9;
+    margin-bottom: 4rem;
+  }
+  .human-title .line2 { color: var(--green); }
+
+  .quotes-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem; max-width: 1000px;
+  }
+
+  .quote-card {
+    padding: 2rem; background: var(--glass);
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative; overflow: hidden;
+    opacity: 0; transform: translateY(30px);
+    transition: all 0.6s ease;
+  }
+  .quote-card.visible { opacity: 1; transform: translateY(0); }
+  .quote-card::before {
+    content: '"'; font-family: 'Bebas Neue'; font-size: 8rem;
+    color: rgba(0,212,255,0.04); position: absolute;
+    top: -2rem; left: 0.5rem; line-height: 1;
+  }
+
+  .quote-text { font-size: 1rem; line-height: 1.7; color: rgba(240,244,255,0.8); margin-bottom: 1.5rem; font-style: italic; }
+  .quote-author { font-size: 0.8rem; color: var(--cyan); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
+  .quote-role { font-size: 0.75rem; color: rgba(240,244,255,0.35); margin-top: 0.2rem; }
+
+  /* ─── SECTION 7: CALL TO ACTION ─── */
+  #s7 { flex-direction: column; text-align: center; }
+
+  .cta-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem; letter-spacing: 0.4em; color: var(--green);
+    text-transform: uppercase; margin-bottom: 2rem;
+  }
+
+  .cta-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(3rem, 10vw, 11rem);
+    line-height: 0.85; margin-bottom: 2rem;
+  }
+  .cta-title .line1 { display: block; color: var(--white); }
+  .cta-title .line2 { display: block; color: var(--cyan); }
+  .cta-title .line3 { display: block; color: rgba(240,244,255,0.2); }
+
+  .cta-sub { font-size: 1.1rem; color: rgba(240,244,255,0.5); max-width: 600px; line-height: 1.8; margin-bottom: 3rem; }
+
+  .cta-tags { display: flex; flex-wrap: wrap; gap: 0.8rem; justify-content: center; }
+  .tag {
+    padding: 0.5rem 1.2rem;
+    border: 1px solid rgba(0,212,255,0.25);
+    font-size: 0.8rem; letter-spacing: 0.1em;
+    color: rgba(240,244,255,0.6);
+    font-family: 'JetBrains Mono', monospace;
+    transition: all 0.3s;
+    cursor: default;
+  }
+  .tag:hover { border-color: var(--cyan); color: var(--cyan); background: var(--glass2); }
+
+  /* ─── NAVIGATION DOTS ─── */
+  #nav-dots {
+    position: fixed; right: 30px; top: 50%; transform: translateY(-50%);
+    display: flex; flex-direction: column; gap: 12px; z-index: 100;
+  }
+  .nav-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(0,212,255,0.3); cursor: pointer;
+    transition: all 0.3s; border: none; padding: 0;
+  }
+  .nav-dot.active { background: var(--cyan); transform: scale(1.5); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scrollLine {
+    0%, 100% { opacity: 1; transform: scaleY(1); }
+    50% { opacity: 0.3; transform: scaleY(0.5); }
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  @keyframes pulse-glow {
+    0%, 100% { box-shadow: 0 0 20px rgba(0,212,255,0.3); }
+    50% { box-shadow: 0 0 50px rgba(0,212,255,0.7), 0 0 100px rgba(0,212,255,0.3); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+  }
+
+  .glow-text {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .vision-wrapper { grid-template-columns: 1fr; }
+    .demo-grid { grid-template-columns: 1fr; }
+    .quotes-grid { grid-template-columns: 1fr; }
+    section { padding: 60px 20px; }
+    #nav-dots { display: none; }
+  }
+
+  /* Progress bar */
+  #progress {
+    position: fixed; top: 0; left: 0; height: 2px;
+    background: linear-gradient(to right, var(--cyan), var(--purple));
+    z-index: 1000; transition: width 0.1s;
+  }
+
+  /* Section transition overlay */
+  .section-number {
+    position: absolute; bottom: 40px; right: 40px;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 6rem; color: rgba(255,255,255,0.03);
+    line-height: 1; pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div id="progress"></div>
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV DOTS -->
+<div id="nav-dots">
+  <button class="nav-dot active" onclick="scrollToSection(0)"></button>
+  <button class="nav-dot" onclick="scrollToSection(1)"></button>
+  <button class="nav-dot" onclick="scrollToSection(2)"></button>
+  <button class="nav-dot" onclick="scrollToSection(3)"></button>
+  <button class="nav-dot" onclick="scrollToSection(4)"></button>
+  <button class="nav-dot" onclick="scrollToSection(5)"></button>
+  <button class="nav-dot" onclick="scrollToSection(6)"></button>
+</div>
+
+<!-- S1: HERO -->
+<section id="s1">
+  <div class="eyebrow">// Universidad Tecnológica de Bolívar — Introducción a IA</div>
+  <h1 class="hero-title">INTELIGENCIA<br>ARTIFICIAL</h1>
+  <p class="hero-sub">El mayor cambio tecnológico en la historia humana está ocurriendo ahora mismo. Esta es tu invitación a ser parte de él.</p>
+  <div class="scroll-hint">
+    <span>desplázate</span>
+    <div class="scroll-line"></div>
+  </div>
+  <div class="section-number">01</div>
+</section>
+
+<!-- S2: NUMBERS -->
+<section id="s2">
+  <div class="section-label">// los números que lo cambian todo</div>
+  <div class="stats-grid">
+    <div class="stat-card" style="--accent: #00d4ff">
+      <span class="stat-number" data-target="1000000000">0</span>
+      <div class="stat-label">de personas usaron herramientas de IA en 2024. Nunca una tecnología alcanzó esta escala tan rápido.</div>
+      <div class="stat-source">Fuente: Statista, 2024</div>
+    </div>
+    <div class="stat-card" style="--accent: #39ff14">
+      <span class="stat-number" data-target="15.7" data-suffix="T">0</span>
+      <div class="stat-label">de dólares aportará la IA al PIB global para 2030. Más que la economía combinada de China e India.</div>
+      <div class="stat-source">Fuente: PwC Global AI Study</div>
+    </div>
+    <div class="stat-card" style="--accent: #b66dff">
+      <span class="stat-number" data-target="97" data-suffix="%">0</span>
+      <div class="stat-label">de los trabajos tendrán algún componente de IA en los próximos 10 años. Incluido el tuyo.</div>
+      <div class="stat-source">Fuente: McKinsey, 2024</div>
+    </div>
+    <div class="stat-card" style="--accent: #ffd700">
+      <span class="stat-number" data-target="1" data-prefix="Nobel">0</span>
+      <div class="stat-label">de Química 2024 fue para AlphaFold. Por primera vez, una IA recibe el premio más alto de la ciencia.</div>
+      <div class="stat-source">Real Academia de Ciencias de Suecia</div>
+    </div>
+    <div class="stat-card" style="--accent: #ff6b6b">
+      <span class="stat-number" data-target="200" data-suffix="M">0</span>
+      <div class="stat-label">de usuarios activos de ChatGPT en 2024, apenas 2 años después de su lanzamiento. El producto de más rápido crecimiento en la historia.</div>
+      <div class="stat-source">OpenAI, 2024</div>
+    </div>
+    <div class="stat-card" style="--accent: #00aeef">
+      <span class="stat-number" data-target="44" data-suffix="%">0</span>
+      <div class="stat-label">de las empresas Fortune 500 ya tienen estrategia de IA activa. Las demás están corriendo para alcanzarlas.</div>
+      <div class="stat-source">Gartner, 2024</div>
+    </div>
+  </div>
+  <div class="section-number">02</div>
+</section>
+
+<!-- S3: NEURAL NET VIZ -->
+<section id="s3">
+  <div class="vision-wrapper">
+    <div class="vision-left">
+      <h2>LA MÁQUINA<br>QUE <span>VE</span>, <span style="color:var(--purple)">PIENSA</span><br>Y <span style="color:var(--green)">APRENDE</span></h2>
+      <p>Una red neuronal artificial imita el cerebro humano. Millones de conexiones ajustándose, aprendiendo, mejorando — sin descanso.</p>
+      <p>Lo que ves a la derecha es una visualización en tiempo real de cómo fluye la información a través de capas de neuronas artificiales.</p>
+      <div class="capability-list">
+        <div class="cap-item"><div class="cap-dot" style="background:var(--cyan)"></div>Reconoce tu voz mejor que cualquier humano</div>
+        <div class="cap-item"><div class="cap-dot" style="background:var(--purple)"></div>Diagnostica cáncer con 95%+ de precisión</div>
+        <div class="cap-item"><div class="cap-dot" style="background:var(--green)"></div>Traduce 100+ idiomas en tiempo real</div>
+        <div class="cap-item"><div class="cap-dot" style="background:var(--gold)"></div>Predijo plegamientos de proteínas en horas vs. décadas</div>
+        <div class="cap-item"><div class="cap-dot" style="background:var(--coral)"></div>Genera código funcional a partir de texto en español</div>
+      </div>
+    </div>
+    <div class="vision-right">
+      <canvas id="neural-canvas" width="480" height="480"></canvas>
+    </div>
+  </div>
+  <div class="section-number">03</div>
+</section>
+
+<!-- S4: TIMELINE -->
+<section id="s4">
+  <div class="timeline-title">80 AÑOS EN <span>3 MINUTOS</span></div>
+  <div class="timeline-track">
+    <div class="timeline-line"></div>
+    <div class="timeline-items">
+      <div class="t-item" style="--accent:#00d4ff"><div class="t-dot"></div><span class="t-year">1943</span><div class="t-big">Primera neurona artificial</div><div class="t-text">McCulloch & Pitts modelan matemáticamente el cerebro humano</div></div>
+      <div class="t-item" style="--accent:#b66dff"><div class="t-dot"></div><span class="t-year">1950</span><div class="t-big">Turing pregunta: ¿pueden pensar las máquinas?</div><div class="t-text">Test de Turing — la pregunta que define una era</div></div>
+      <div class="t-item" style="--accent:#39ff14"><div class="t-dot"></div><span class="t-year">1956</span><div class="t-big">Nace la IA</div><div class="t-text">Dartmouth Conference: se acuña el término "Artificial Intelligence"</div></div>
+      <div class="t-item" style="--accent:#ffd700"><div class="t-dot"></div><span class="t-year">1997</span><div class="t-big">Deep Blue vence a Kasparov</div><div class="t-text">"Podía sentir una nueva inteligencia al otro lado del tablero"</div></div>
+      <div class="t-item" style="--accent:#ff6b6b"><div class="t-dot"></div><span class="t-year">2012</span><div class="t-big">Deep Learning explota</div><div class="t-text">AlexNet reduce el error de reconocimiento visual a la mitad</div></div>
+      <div class="t-item" style="--accent:#00aeef"><div class="t-dot"></div><span class="t-year">2016</span><div class="t-big">AlphaGo: intuición artificial</div><div class="t-text">Lee Sedol llora. La IA descubre movimientos que ningún humano había imaginado</div></div>
+      <div class="t-item" style="--accent:#b66dff"><div class="t-dot"></div><span class="t-year">2017</span><div class="t-big">Transformer: el big bang</div><div class="t-text">"Attention Is All You Need" — el paper que lo cambió todo</div></div>
+      <div class="t-item" style="--accent:#39ff14"><div class="t-dot"></div><span class="t-year">2022</span><div class="t-big">ChatGPT: IA masiva</div><div class="t-text">1 millón de usuarios en 5 días. La IA llega al escritorio de todos</div></div>
+      <div class="t-item" style="--accent:#ffd700"><div class="t-dot"></div><span class="t-year">2024</span><div class="t-big">Nobel de Química para IA</div><div class="t-text">AlphaFold2: la mayor revolución en biología de los últimos 50 años</div></div>
+      <div class="t-item" style="--accent:#ff6b6b"><div class="t-dot"></div><span class="t-year">2025</span><div class="t-big">AI Agents autónomos</div><div class="t-text">La IA ya no solo responde — planifica, ejecuta y actúa en el mundo</div></div>
+    </div>
+  </div>
+  <div class="section-number">04</div>
+</section>
+
+<!-- S5: DEMO INTERACTIVO -->
+<section id="s5">
+  <div class="demo-title">LA IA <span>EN ACCIÓN</span></div>
+  <div class="demo-grid">
+    <div class="demo-card" style="--c1:#00d4ff;--c2:#b66dff" onclick="showDemo('medicine')">
+      <span class="demo-icon">🏥</span>
+      <h3>Medicina</h3>
+      <p>IA analizando síntomas y sugiriendo diagnóstico diferencial</p>
+    </div>
+    <div class="demo-card" style="--c1:#39ff14;--c2:#00d4ff" onclick="showDemo('climate')">
+      <span class="demo-icon">🌍</span>
+      <h3>Clima y Ciencia</h3>
+      <p>Predicción climática y descubrimiento científico con IA</p>
+    </div>
+    <div class="demo-card" style="--c1:#ffd700;--c2:#ff6b6b" onclick="showDemo('education')">
+      <span class="demo-icon">🎓</span>
+      <h3>Educación</h3>
+      <p>Tutor personalizado que adapta el ritmo a cada estudiante</p>
+    </div>
+    <div class="demo-card" style="--c1:#b66dff;--c2:#ff6b6b" onclick="showDemo('art')">
+      <span class="demo-icon">🎨</span>
+      <h3>Arte y Creatividad</h3>
+      <p>Colaboración entre inteligencia humana e inteligencia artificial</p>
+    </div>
+    <div class="demo-card" style="--c1:#ff6b6b;--c2:#ffd700" onclick="showDemo('business')">
+      <span class="demo-icon">📊</span>
+      <h3>Negocios y Datos</h3>
+      <p>Análisis predictivo y automatización inteligente de procesos</p>
+    </div>
+    <div class="demo-card" style="--c1:#00aeef;--c2:#39ff14" onclick="showDemo('code')">
+      <span class="demo-icon">💻</span>
+      <h3>Programación</h3>
+      <p>Escribir código con lenguaje natural — sin saber programar</p>
+    </div>
+  </div>
+
+  <div id="demo-medicine" class="demo-output">
+    <div class="output-header">
+      <div class="output-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+      <div class="output-label">// AI Medical Assistant — análisis en curso</div>
+    </div>
+    <div class="typing-text" id="txt-medicine"></div>
+  </div>
+  <div id="demo-climate" class="demo-output">
+    <div class="output-header">
+      <div class="output-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+      <div class="output-label">// Climate AI Model — predicción activa</div>
+    </div>
+    <div class="typing-text" id="txt-climate"></div>
+  </div>
+  <div id="demo-education" class="demo-output">
+    <div class="output-header">
+      <div class="output-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+      <div class="output-label">// Adaptive Learning AI — perfil estudiantil</div>
+    </div>
+    <div class="typing-text" id="txt-education"></div>
+  </div>
+  <div id="demo-art" class="demo-output">
+    <div class="output-header">
+      <div class="output-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+      <div class="output-label">// Creative AI Collaborator — generando ideas</div>
+    </div>
+    <div class="typing-text" id="txt-art"></div>
+  </div>
+  <div id="demo-business" class="demo-output">
+    <div class="output-header">
+      <div class="output-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+      <div class="output-label">// Business Intelligence AI — análisis completado</div>
+    </div>
+    <div class="typing-text" id="txt-business"></div>
+  </div>
+  <div id="demo-code" class="demo-output">
+    <div class="output-header">
+      <div class="output-dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+      <div class="output-label">// AI Code Generator — traduciendo lenguaje natural</div>
+    </div>
+    <div class="typing-text" id="txt-code"></div>
+  </div>
+
+  <div class="section-number">05</div>
+</section>
+
+<!-- S6: HUMAN QUOTES -->
+<section id="s6">
+  <div class="human-title">
+    LO QUE DICEN<br><span class="line2">LOS QUE LA USAN</span>
+  </div>
+  <div class="quotes-grid">
+    <div class="quote-card">
+      <p class="quote-text">"AlphaFold resolvió en meses un problema que llevábamos 50 años tratando de resolver. Cambió todo lo que sabíamos sobre cómo desarrollar medicamentos."</p>
+      <div class="quote-author">Dr. Demis Hassabis</div>
+      <div class="quote-role">Co-fundador Google DeepMind — Premio Nobel de Química 2024</div>
+    </div>
+    <div class="quote-card">
+      <p class="quote-text">"Uso la IA cada día en mi consulta. Me ayuda a no perder ningún diagnóstico importante. No reemplaza mi criterio — lo amplifica."</p>
+      <div class="quote-author">Dra. Mariana Solís</div>
+      <div class="quote-role">Radióloga, Hospital Universitario de Medellín</div>
+    </div>
+    <div class="quote-card">
+      <p class="quote-text">"Pensé que la IA era solo para ingenieros. Hoy la uso para escribir mis propuestas de investigación en derecho ambiental. Me ahorra 20 horas por semana."</p>
+      <div class="quote-author">Carlos Mendoza</div>
+      <div class="quote-role">Abogado e investigador, Universidad Nacional</div>
+    </div>
+    <div class="quote-card">
+      <p class="quote-text">"La pregunta no es si la IA va a afectar tu trabajo. La pregunta es si vas a aprender a usarla antes o después de que alguien más lo haga por ti."</p>
+      <div class="quote-author">Andrés Torres</div>
+      <div class="quote-role">Director de Innovación, Banco de Bogotá</div>
+    </div>
+  </div>
+  <div class="section-number">06</div>
+</section>
+
+<!-- S7: CTA -->
+<section id="s7">
+  <div class="cta-eyebrow">// el momento es ahora</div>
+  <div class="cta-title">
+    <span class="line1">TU MOMENTO</span>
+    <span class="line2">DE DECIDIR</span>
+    <span class="line3">YA LLEGÓ</span>
+  </div>
+  <p class="cta-sub">La IA no espera. Las personas que entiendan cómo usarla, cuándo confiar en ella y cómo cuestionarla serán las que definan el futuro de sus industrias.</p>
+  <div class="cta-tags">
+    <div class="tag">Machine Learning</div>
+    <div class="tag">Deep Learning</div>
+    <div class="tag">NLP</div>
+    <div class="tag">Computer Vision</div>
+    <div class="tag">AI Agents</div>
+    <div class="tag">LLMs</div>
+    <div class="tag">Ética en IA</div>
+    <div class="tag">GenAI</div>
+    <div class="tag">Edge AI</div>
+    <div class="tag">Prompt Engineering</div>
+    <div class="tag">Responsible AI</div>
+    <div class="tag">Human-in-the-Loop</div>
+  </div>
+  <div class="section-number">07</div>
+</section>
+
+<script>
+// ─── CURSOR ───
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let cx = 0, cy = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  cx = e.clientX; cy = e.clientY;
+  cursor.style.left = cx + 'px'; cursor.style.top = cy + 'px';
+});
+
+function animRing() {
+  rx += (cx - rx) * 0.12;
+  ry += (cy - ry) * 0.12;
+  ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+// ─── PARTICLES ───
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let W, H;
+
+function resize() {
+  W = canvas.width = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = (Math.random() - 0.5) * 0.3;
+    this.r = Math.random() * 1.5 + 0.3;
+    this.alpha = Math.random() * 0.4 + 0.1;
+    this.color = Math.random() > 0.7 ? '#00d4ff' : Math.random() > 0.5 ? '#b66dff' : '#ffffff';
+  }
+  update() {
+    this.x += this.vx; this.y += this.vy;
+    if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+  }
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+    ctx.fillStyle = this.color;
+    ctx.globalAlpha = this.alpha;
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 120; i++) particles.push(new Particle());
+
+function drawConnections() {
+  for (let i = 0; i < particles.length; i++) {
+    for (let j = i + 1; j < particles.length; j++) {
+      const dx = particles[i].x - particles[j].x;
+      const dy = particles[i].y - particles[j].y;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      if (d < 100) {
+        ctx.beginPath();
+        ctx.moveTo(particles[i].x, particles[i].y);
+        ctx.lineTo(particles[j].x, particles[j].y);
+        ctx.strokeStyle = '#00d4ff';
+        ctx.globalAlpha = (1 - d/100) * 0.08;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+      }
+    }
+  }
+}
+
+function animParticles() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => { p.update(); p.draw(); });
+  drawConnections();
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(animParticles);
+}
+animParticles();
+
+// ─── NEURAL NETWORK CANVAS ───
+const nc = document.getElementById('neural-canvas');
+const nctx = nc.getContext('2d');
+const NW = 480, NH = 480;
+
+const layers = [3, 5, 6, 5, 3];
+const nodes = [];
+let signals = [];
+
+function buildNetwork() {
+  nodes.length = 0;
+  layers.forEach((count, li) => {
+    const x = 60 + (li / (layers.length - 1)) * (NW - 120);
+    for (let n = 0; n < count; n++) {
+      const y = (NH / 2) - ((count - 1) * 55 / 2) + n * 55;
+      nodes.push({ x, y, layer: li, index: n, activation: Math.random() });
+    }
+  });
+}
+
+function getLayerNodes(li) { return nodes.filter(n => n.layer === li); }
+
+function spawnSignal() {
+  const fromLayer = Math.floor(Math.random() * (layers.length - 1));
+  const fromNodes = getLayerNodes(fromLayer);
+  const toNodes = getLayerNodes(fromLayer + 1);
+  const from = fromNodes[Math.floor(Math.random() * fromNodes.length)];
+  const to = toNodes[Math.floor(Math.random() * toNodes.length)];
+  if (from && to) {
+    signals.push({ from, to, progress: 0, speed: 0.015 + Math.random() * 0.02,
+      color: Math.random() > 0.5 ? '#00d4ff' : '#b66dff' });
+  }
+}
+
+buildNetwork();
+setInterval(spawnSignal, 120);
+
+function drawNeural() {
+  nctx.clearRect(0, 0, NW, NH);
+
+  // Connections
+  layers.forEach((_, li) => {
+    if (li >= layers.length - 1) return;
+    getLayerNodes(li).forEach(a => {
+      getLayerNodes(li + 1).forEach(b => {
+        nctx.beginPath();
+        nctx.moveTo(a.x, a.y); nctx.lineTo(b.x, b.y);
+        nctx.strokeStyle = 'rgba(0,212,255,0.06)';
+        nctx.lineWidth = 0.5; nctx.stroke();
+      });
+    });
+  });
+
+  // Signals
+  signals = signals.filter(s => s.progress <= 1);
+  signals.forEach(s => {
+    s.progress += s.speed;
+    const px = s.from.x + (s.to.x - s.from.x) * s.progress;
+    const py = s.from.y + (s.to.y - s.from.y) * s.progress;
+    const grd = nctx.createRadialGradient(px, py, 0, px, py, 6);
+    grd.addColorStop(0, s.color); grd.addColorStop(1, 'transparent');
+    nctx.beginPath(); nctx.arc(px, py, 5, 0, Math.PI*2);
+    nctx.fillStyle = grd; nctx.fill();
+    if (s.progress >= 1) {
+      s.to.activation = Math.min(1, s.to.activation + 0.2);
+    }
+  });
+
+  // Nodes
+  nodes.forEach(n => {
+    n.activation = Math.max(0.1, n.activation * 0.995);
+    const r = 10;
+    const grd = nctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, r * 2);
+    const col = n.layer === 0 ? '#39ff14' : n.layer === layers.length-1 ? '#ff6b6b' : '#00d4ff';
+    grd.addColorStop(0, col);
+    grd.addColorStop(1, 'transparent');
+
+    nctx.beginPath(); nctx.arc(n.x, n.y, r * 2, 0, Math.PI*2);
+    nctx.fillStyle = grd; nctx.globalAlpha = n.activation * 0.4; nctx.fill();
+
+    nctx.beginPath(); nctx.arc(n.x, n.y, r, 0, Math.PI*2);
+    nctx.fillStyle = 'rgba(10,14,26,0.9)'; nctx.globalAlpha = 1; nctx.fill();
+    nctx.strokeStyle = col; nctx.lineWidth = 1.5; nctx.globalAlpha = n.activation;
+    nctx.stroke(); nctx.globalAlpha = 1;
+  });
+
+  // Labels
+  nctx.font = '10px JetBrains Mono';
+  nctx.fillStyle = 'rgba(0,212,255,0.3)';
+  nctx.textAlign = 'center';
+  ['INPUT', 'HIDDEN', 'HIDDEN', 'HIDDEN', 'OUTPUT'].forEach((label, i) => {
+    const x = 60 + (i / (layers.length - 1)) * (NW - 120);
+    nctx.fillText(label, x, 20);
+  });
+
+  requestAnimationFrame(drawNeural);
+}
+drawNeural();
+
+// ─── SCROLL ANIMATIONS ───
+const sections = document.querySelectorAll('section');
+const navDots = document.querySelectorAll('.nav-dot');
+
+function updateNav() {
+  const scrollY = window.scrollY;
+  const total = document.body.scrollHeight - window.innerHeight;
+  document.getElementById('progress').style.width = (scrollY / total * 100) + '%';
+
+  sections.forEach((s, i) => {
+    const rect = s.getBoundingClientRect();
+    if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+      navDots.forEach(d => d.classList.remove('active'));
+      navDots[i]?.classList.add('active');
+    }
+  });
+}
+
+window.addEventListener('scroll', updateNav);
+
+function scrollToSection(i) {
+  sections[i].scrollIntoView({ behavior: 'smooth' });
+}
+
+// ─── COUNTER ANIMATION ───
+function animateCounter(el) {
+  const target = parseFloat(el.dataset.target);
+  const suffix = el.dataset.suffix || '';
+  const prefix = el.dataset.prefix || '';
+  const isLarge = target >= 1000000;
+  let current = 0;
+  const duration = 2000;
+  const start = performance.now();
+
+  function step(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    current = target * eased;
+
+    let display;
+    if (target >= 1000000000) display = (current / 1000000000).toFixed(1) + 'B';
+    else if (target >= 1000000) display = (current / 1000000).toFixed(0) + 'M';
+    else if (Number.isInteger(target)) display = Math.round(current).toString();
+    else display = current.toFixed(1);
+
+    el.textContent = prefix + display + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+// ─── INTERSECTION OBSERVER ───
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      const counter = entry.target.querySelector('[data-target]');
+      if (counter && !counter.classList.contains('counted')) {
+        counter.classList.add('counted');
+        animateCounter(counter);
+      }
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.stat-card, .cap-item, .t-item, .quote-card').forEach(el => observer.observe(el));
+
+// Stagger cap-items
+document.querySelectorAll('.cap-item').forEach((el, i) => {
+  el.style.transitionDelay = (i * 0.12) + 's';
+});
+document.querySelectorAll('.t-item').forEach((el, i) => {
+  el.style.transitionDelay = (i * 0.08) + 's';
+});
+document.querySelectorAll('.quote-card').forEach((el, i) => {
+  el.style.transitionDelay = (i * 0.15) + 's';
+});
+
+// ─── DEMO SYSTEM ───
+const demoContents = {
+  medicine: [
+    '<span class="highlight">PACIENTE:</span> Mujer, 42 años. Fiebre 38.5°C (3 días), tos seca, fatiga severa, dolor torácico leve al respirar.\n\n',
+    '<span class="highlight2">ANÁLISIS IA — procesando 847 patrones clínicos similares...\n\n</span>',
+    '<span class="highlight4">DIAGNÓSTICO DIFERENCIAL (por probabilidad):\n</span>',
+    '  <span class="highlight">85.3%</span> — Neumonía bacteriana (requiere confirmación por RX)\n',
+    '  <span class="highlight3">9.1%</span> — Influenza con complicación pulmonar\n',
+    '  <span class="highlight3">4.2%</span> — COVID-19 con afectación moderada\n\n',
+    '<span class="highlight2">RECOMENDACIÓN:\n</span>',
+    '  → Radiografía de tórax urgente\n',
+    '  → Hemograma + PCR + Procalcitonina\n',
+    '  → Considerar antibioticoterapia si RX confirma infiltrado\n\n',
+    '<span style="color:rgba(240,244,255,0.35)">⚠ Este análisis asiste al médico — no reemplaza el criterio clínico.</span>'
+  ],
+  climate: [
+    '<span class="highlight">MODELO:</span> ClimateFormer v4.2 — datos de 12,847 estaciones globales\n\n',
+    '<span class="highlight2">PREDICCIÓN CLIMÁTICA — Caribe colombiano, próximos 6 meses:\n\n</span>',
+    '<span class="highlight4">TEMPERATURA SUPERFICIAL DEL MAR:\n</span>',
+    '  Anomalía: <span class="highlight">+1.8°C</span> sobre promedio histórico (señal El Niño débil)\n\n',
+    '<span class="highlight4">PRECIPITACIONES ESTIMADAS:\n</span>',
+    '  Mayo–Junio: <span class="highlight3">↓ 23% déficit hídrico</span> en región Bolívar-Córdoba\n',
+    '  Agosto–Sep: <span class="highlight2">↑ 31% exceso</span> — riesgo inundaciones cuenca Sinú\n\n',
+    '<span class="highlight4">IMPACTO AGRÍCOLA (cultivos maíz/yuca):\n</span>',
+    '  Reducción estimada cosecha: <span class="highlight3">18–24%</span>\n',
+    '  Recomendación: activar reservas hídricas antes de junio\n\n',
+    '<span style="color:rgba(240,244,255,0.35)">Certeza del modelo: 78.4% | Actualizado hace 3 minutos</span>'
+  ],
+  education: [
+    '<span class="highlight">ESTUDIANTE:</span> María José, 19 años — Ingeniería de Sistemas, Semestre 3\n\n',
+    '<span class="highlight2">ANÁLISIS DE PERFIL DE APRENDIZAJE:\n\n</span>',
+    '<span class="highlight4">FORTALEZAS IDENTIFICADAS:\n</span>',
+    '  ✓ Pensamiento visual-espacial → <span class="highlight">percentil 94</span>\n',
+    '  ✓ Resolución de problemas algorítmicos → <span class="highlight">percentil 87</span>\n\n',
+    '<span class="highlight4">ÁREAS DE ATENCIÓN:\n</span>',
+    '  ⚠ Cálculo diferencial → rendimiento <span class="highlight3">12% bajo el promedio</span>\n',
+    '     Causa probable: comprensión conceptual débil en límites\n\n',
+    '<span class="highlight4">PLAN PERSONALIZADO GENERADO:\n</span>',
+    '  → 3 micro-lecciones visuales sobre límites (8 min c/u)\n',
+    '  → 12 ejercicios adaptativos (ajuste automático de dificultad)\n',
+    '  → Sesión de refuerzo con tutor IA disponible 24/7\n\n',
+    '<span class="highlight2">Predicción: 91% probabilidad de aprobar con este plan</span>'
+  ],
+  art: [
+    '<span class="highlight">PROMPT INICIAL:</span> "Una ciudad costera colombiana en 2075"\n\n',
+    '<span class="highlight2">IA CREATIVE COLLABORATOR — expandiendo tu visión:\n\n</span>',
+    '<span class="highlight4">IDEAS GENERADAS:\n</span>',
+    '  🎨 <span class="highlight">Estilo visual:</span> Realismo mágico latinoamericano + retrofuturismo solar\n',
+    '  🏛 <span class="highlight">Arquitectura:</span> Torres de coral bioimpreso, jardines verticales, plazas flotantes\n',
+    '  🌊 <span class="highlight">Narrativa:</span> La ciudad que "conversó" con el mar para no ser inundada\n\n',
+    '<span class="highlight4">REFERENCIAS ARTÍSTICAS SUGERIDAS:\n</span>',
+    '  → Hayao Miyazaki (composición de ciudades vivas)\n',
+    '  → Gabriel García Márquez (narrativa del espacio)\n',
+    '  → Olafur Eliasson (arte y naturaleza)\n\n',
+    '<span class="highlight2">La IA no crea por ti — amplifica lo que tú ya ves.</span>'
+  ],
+  business: [
+    '<span class="highlight">DATOS:</span> Empresa retail — 18 meses de ventas, 47 tiendas, 230k clientes\n\n',
+    '<span class="highlight2">ANÁLISIS PREDICTIVO IA — resultados:\n\n</span>',
+    '<span class="highlight4">HALLAZGOS CRÍTICOS:\n</span>',
+    '  ⚡ <span class="highlight">Churn prediction:</span> 1,847 clientes con 73%+ prob. de abandono en 30 días\n',
+    '  📉 <span class="highlight3">Tienda #12 (Barranquilla):</span> caída inminente -31% por cambio demográfico\n',
+    '  🎯 <span class="highlight2">Segmento oculto:</span> 12k clientes premium no identificados — LTV 4.2x promedio\n\n',
+    '<span class="highlight4">ACCIONES RECOMENDADAS:\n</span>',
+    '  1. Campaña retención para los 1,847 clientes en riesgo (ROI estimado: 340%)\n',
+    '  2. Reposicionamiento tienda #12 hacia segmento 18-25 años\n',
+    '  3. Programa VIP para segmento oculto identificado\n\n',
+    '<span class="highlight2">Ingresos adicionales estimados: $2.3M en 6 meses</span>'
+  ],
+  code: [
+    '<span class="highlight">USUARIO DICE EN ESPAÑOL:</span>\n',
+    '"Quiero una función que analice ventas mensuales y me diga cuáles meses fueron malos"\n\n',
+    '<span class="highlight2">IA GENERA CÓDIGO EN SEGUNDOS:\n\n</span>',
+    '<span class="highlight4">def analizar_ventas(ventas_mensuales):\n</span>',
+    '    <span class="highlight">"""Identifica meses con ventas por debajo del promedio"""</span>\n',
+    '    promedio = sum(ventas_mensuales.values()) / len(ventas_mensuales)\n',
+    '    meses_malos = {\n',
+    '        mes: ventas\n',
+    '        for mes, ventas in ventas_mensuales.items()\n',
+    '        <span class="highlight3">if ventas < promedio * 0.85  # 15% por debajo</span>\n',
+    '    }\n',
+    '    return meses_malos, promedio\n\n',
+    '<span class="highlight2">✓ Código listo, comentado y explicado</span>\n',
+    '<span style="color:rgba(240,244,255,0.4)">Sin saber programar. Solo describiendo lo que necesitabas.</span>'
+  ]
+};
+
+let activeDemo = null;
+let typingInterval = null;
+
+function showDemo(type) {
+  // Hide all
+  document.querySelectorAll('.demo-output').forEach(d => d.classList.remove('active'));
+  document.querySelectorAll('.demo-card').forEach(d => d.classList.remove('active'));
+
+  if (activeDemo === type) { activeDemo = null; return; }
+  activeDemo = type;
+
+  const card = document.querySelector(`[onclick="showDemo('${type}')"]`);
+  card.classList.add('active');
+
+  const output = document.getElementById('demo-' + type);
+  const textEl = document.getElementById('txt-' + type);
+  output.classList.add('active');
+
+  // Clear previous
+  textEl.innerHTML = '';
+  clearInterval(typingInterval);
+
+  const lines = demoContents[type];
+  let lineIndex = 0;
+  let charIndex = 0;
+
+  // Add blinking cursor
+  const blinker = document.createElement('span');
+  blinker.className = 'cursor-blink'; blinker.textContent = '█';
+  textEl.appendChild(blinker);
+
+  function typeNext() {
+    if (lineIndex >= lines.length) {
+      clearInterval(typingInterval);
+      blinker.style.display = 'none';
+      return;
+    }
+    const line = lines[lineIndex];
+    if (charIndex < line.length) {
+      blinker.insertAdjacentHTML('beforebegin', line[charIndex]);
+      charIndex++;
+    } else {
+      lineIndex++; charIndex = 0;
+    }
+    output.scrollTop = output.scrollHeight;
+  }
+
+  typingInterval = setInterval(typeNext, 18);
+  output.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ─── HOVER EFFECTS ───
+document.querySelectorAll('a, button, .demo-card, .tag, .stat-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(2)';
+    ring.style.transform = 'translate(-50%,-50%) scale(1.5)';
+    ring.style.borderColor = 'rgba(0,212,255,0.6)';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+    ring.style.transform = 'translate(-50%,-50%) scale(1)';
+    ring.style.borderColor = 'rgba(0,212,255,0.3)';
+  });
+});
+</script>
+</body>
+</html>
