@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sesión 8 — Prompts Profesionales Reutilizables · UTB 2025</title>
+<style>
+:root{
+  --ink:#042C53;--navy:#185FA5;--sky:#E6F1FB;--skyM:#B5D4F4;
+  --em:#0A7153;--emL:#E0F4EE;
+  --violet:#534AB7;--violetL:#EEEDFE;
+  --amber:#854F0B;--amberL:#FAEEDA;
+  --red:#A32D2D;--redL:#FCEBEB;
+  --green:#3B6D11;--greenL:#EAF3DE;
+  --slate:#444441;--slateL:#F1EFE8;
+  --text:#1a1a1a;--muted:#5a5a5a;--hint:#999;
+  --border:rgba(0,0,0,0.12);--border2:rgba(0,0,0,0.22);
+  --bg:#ffffff;--surf:#f8f9fa;--deep:#f0f2f5;
+  --r:10px;--rS:6px;--rL:14px;
+  --shadow:0 1px 4px rgba(0,0,0,0.07),0 4px 16px rgba(0,0,0,0.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--deep);color:var(--text);line-height:1.6}
+
+.topbar{background:var(--ink);color:white;padding:10px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topbar-l{font-size:14px;font-weight:600}.topbar-s{font-size:11px;opacity:.72}
+.topbar-badge{background:var(--em);border-radius:20px;padding:4px 12px;font-size:11px;font-weight:600}
+.tab-bar{background:var(--bg);border-bottom:1px solid var(--border);display:flex;padding:0 28px;overflow-x:auto;gap:0}
+.tab{padding:12px 18px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s}
+.tab:hover{color:var(--text);background:var(--surf)}.tab.on{color:var(--em);border-bottom-color:var(--em)}
+.page{display:none;max-width:980px;margin:0 auto;padding:28px 20px 60px}.page.on{display:block}
+.page-title{font-size:26px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.page-sub{font-size:14px;color:var(--muted);margin-bottom:24px}
+
+/* CARDS */
+.card{background:var(--bg);border:1px solid var(--border);border-radius:var(--rL);box-shadow:var(--shadow);overflow:hidden;margin-bottom:18px}
+.card-hdr{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:15px;font-weight:700;color:var(--ink)}
+.card-body{padding:18px}
+
+/* ANATOMY */
+.comp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+.comp-card{border-radius:var(--r);overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow)}
+.comp-top{height:5px}
+.comp-body{padding:12px 14px}
+.comp-badge{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;margin-bottom:8px;letter-spacing:.04em}
+.comp-name{font-size:14px;font-weight:700;margin-bottom:6px}
+.comp-desc{font-size:12px;color:var(--muted);line-height:1.55;margin-bottom:8px}
+.comp-ex{font-size:11px;font-style:italic;line-height:1.5;padding:7px 10px;border-radius:var(--rS);border-left:3px solid}
+
+/* TEMPLATE BUILDER */
+.field-row{display:grid;grid-template-columns:120px 1fr;gap:0;margin-bottom:8px;border:1px solid var(--border);border-radius:var(--rS);overflow:hidden}
+.field-label{display:flex;align-items:center;justify-content:center;padding:10px 8px;font-size:11px;font-weight:700;text-align:center;line-height:1.3}
+.field-input{padding:0}
+.field-input textarea{border:none;border-left:1px solid var(--border);resize:none;width:100%;padding:10px 12px;font-size:12px;font-family:inherit;color:var(--text);background:var(--bg);min-height:60px}
+.field-input textarea:focus{outline:none;background:#FFFEF8}
+
+/* COMPARE */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:12px 0}
+.compare-box{border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
+.compare-hdr{padding:8px 12px;font-size:11px;font-weight:700;color:white}
+.compare-body{padding:12px;font-size:12px;line-height:1.65;font-family:'Courier New',monospace}
+
+/* CHECKLIST */
+.checklist-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.check-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:var(--r)}
+.check-num{min-width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:white;margin-top:1px}
+.check-content{flex:1}
+.check-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px}
+.check-q{font-size:11px;color:var(--muted);font-style:italic}
+.check-box{width:24px;height:24px;border:2px solid var(--border2);border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;transition:all .15s}
+.check-box:hover{border-color:var(--em)}.check-box.checked{background:var(--em);border-color:var(--em);color:white}
+
+/* LIBRARY */
+.lib-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.lib-form-full{margin-bottom:10px}
+.lib-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:5px;display:block}
+input[type=text],select,textarea{width:100%;padding:9px 12px;border:1px solid var(--border2);border-radius:var(--rS);font-size:13px;font-family:inherit;background:var(--bg);color:var(--text)}
+input[type=text]:focus,select:focus,textarea:focus{outline:none;border-color:var(--em);box-shadow:0 0 0 3px rgba(10,113,83,.1)}
+.btn-add{background:var(--em);color:white;border:none;border-radius:var(--rS);padding:10px 22px;font-size:13px;font-weight:600;cursor:pointer;transition:background .15s}
+.btn-add:hover{background:#085C43}
+.lib-card-entry{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:10px;box-shadow:var(--shadow)}
+.lib-entry-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.lib-entry-meta{font-size:11px;color:var(--muted);margin-bottom:8px}
+.lib-entry-prompt{font-family:'Courier New',monospace;font-size:11px;background:var(--surf);border:1px solid var(--border);border-radius:4px;padding:8px;white-space:pre-wrap;line-height:1.5;max-height:150px;overflow-y:auto}
+.lib-entry-footer{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap}
+.lib-tag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px}
+.lib-del{font-size:11px;color:var(--red);background:none;border:none;cursor:pointer;margin-left:auto}
+.lib-score{font-size:11px;font-weight:700}
+
+/* RUN */
+.run-btn{width:100%;padding:11px;border:none;border-radius:var(--rS);font-size:14px;font-weight:600;cursor:pointer;color:white;background:var(--em);margin:10px 0;transition:background .15s}
+.run-btn:hover{background:#085C43}.run-btn:disabled{opacity:.5;cursor:not-allowed}
+.result-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:6px}
+.result-box{background:var(--surf);border:1px solid var(--border);border-radius:var(--rS);padding:12px;font-size:13px;line-height:1.7;white-space:pre-wrap;min-height:50px;color:var(--text)}
+.result-box.loading{color:var(--hint);font-style:italic}
+.result-box.error{background:var(--redL);color:var(--red);border-color:#F09595}
+.hint-btn{font-size:11px;color:var(--em);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0;margin:5px 0 10px}
+.hint-box{display:none;background:var(--emL);border-radius:var(--rS);padding:10px 12px;font-size:12px;color:#0B5E46;line-height:1.6;margin-bottom:10px}
+.hint-box.on{display:block}
+.reflect-box{display:none;background:var(--greenL);border-radius:var(--rS);padding:10px 12px;font-size:12px;color:#173404;line-height:1.65;margin-top:10px}
+.reflect-box.on{display:block}
+
+/* TABS */
+.inner-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.itab{font-size:12px;font-weight:500;padding:5px 14px;border:1px solid var(--border2);border-radius:20px;background:var(--bg);color:var(--muted);cursor:pointer;transition:all .12s}
+.itab:hover{background:var(--surf);color:var(--text)}.itab.on{background:var(--em);border-color:var(--em);color:white}
+.itab-content{display:none}.itab-content.on{display:block}
+
+/* INFO BOXES */
+.info{border-radius:var(--rS);padding:11px 14px;margin:10px 0;font-size:13px;line-height:1.65}
+.info-em{background:var(--emL);color:#0B5E46;border:1px solid var(--em)}
+.info-navy{background:var(--sky);color:var(--ink);border:1px solid var(--navy)}
+.info-amber{background:var(--amberL);color:#412402;border:1px solid var(--amber)}
+.tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;margin-right:4px}
+
+/* SCORE */
+.score-display{text-align:center;padding:20px;background:var(--emL);border-radius:var(--rL);margin-top:16px;display:none}
+.score-display.on{display:block}
+.score-num{font-size:48px;font-weight:700;color:var(--em)}
+.score-label{font-size:13px;color:var(--muted);margin-top:4px}
+
+@media(max-width:700px){
+  .comp-grid,.compare-grid,.checklist-grid,.lib-form-grid{grid-template-columns:1fr}
+  .page{padding:16px 14px 40px}
+  .field-row{grid-template-columns:90px 1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div><div class="topbar-l">Universidad Tecnológica de Bolívar</div>
+  <div class="topbar-s">Sesión 8 · Diseño de Prompts Profesionales Reutilizables</div></div>
+  <div class="topbar-badge">Prompts Pro · 2025</div>
+</div>
+
+<div class="tab-bar">
+  <div class="tab on" onclick="go('teoria',this)">Teoría</div>
+  <div class="tab" onclick="go('constructor',this)">Constructor de Prompts</div>
+  <div class="tab" onclick="go('taller',this)">Taller: 4 Plantillas</div>
+  <div class="tab" onclick="go('checklist',this)">Checklist de Calidad</div>
+  <div class="tab" onclick="go('biblioteca',this)">Mi Biblioteca</div>
+</div>
+
+<!-- ══════════════════════════════ TEORÍA ══════════════════════════════ -->
+<div id="teoria" class="page on">
+  <div class="page-title">Prompts Profesionales Reutilizables</div>
+  <div class="page-sub">Componentes, parametrización y criterios de calidad</div>
+
+  <div class="card">
+    <div class="card-hdr"><div class="card-title">Uso único vs. Reutilizable — la diferencia clave</div></div>
+    <div class="card-body">
+      <div class="compare-grid">
+        <div>
+          <div class="compare-hdr" style="background:var(--red)">❌ Prompt de uso único</div>
+          <div class="compare-body" style="background:var(--redL);color:var(--red)">
+"Redacta un correo a Juan Pérez informando que su solicitud de grado fue aprobada para el 15 de junio de 2025."
+
+Problema: específico, no reutilizable. Hay que reescribir todo para cada caso nuevo.</div>
+        </div>
+        <div>
+          <div class="compare-hdr" style="background:var(--em)">✅ Prompt reutilizable</div>
+          <div class="compare-body" style="background:var(--emL);color:var(--em)">
+"Redacta un correo a [NOMBRE_ESTUDIANTE] informando que su solicitud de [TIPO_TRAMITE] fue [ESTADO_DECISION] con fecha [FECHA_EFECTO]. Tono: [TONO]. Incluir: [PROXIMOS_PASOS]."
+
+Ventaja: cambia los valores, no la estructura. Estandariza el proceso del equipo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr"><div class="card-title">Los 6 componentes de un prompt profesional</div></div>
+    <div class="card-body">
+      <div class="comp-grid">
+        <div class="comp-card">
+          <div class="comp-top" style="background:var(--em)"></div>
+          <div class="comp-body">
+            <span class="comp-badge" style="background:var(--emL);color:var(--em)">[ROL]</span>
+            <div class="comp-name" style="color:var(--em)">Rol</div>
+            <div class="comp-desc">Define qué perspectiva experta debe adoptar la IA. Sin rol, la IA responde de forma genérica.</div>
+            <div class="comp-ex" style="background:var(--emL);color:var(--em);border-color:var(--em)">Eres un redactor institucional especializado en comunicaciones universitarias de la UTB.</div>
+          </div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-top" style="background:var(--navy)"></div>
+          <div class="comp-body">
+            <span class="comp-badge" style="background:var(--sky);color:var(--navy)">[CONTEXTO]</span>
+            <div class="comp-name" style="color:var(--navy)">Contexto</div>
+            <div class="comp-desc">Proporciona la información de fondo necesaria para que la IA entienda la situación.</div>
+            <div class="comp-ex" style="background:var(--sky);color:var(--navy);border-color:var(--navy)">El área de Registro Académico de la UTB atiende 8.000 estudiantes en 40 programas.</div>
+          </div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-top" style="background:var(--violet)"></div>
+          <div class="comp-body">
+            <span class="comp-badge" style="background:var(--violetL);color:var(--violet)">[TAREA]</span>
+            <div class="comp-name" style="color:var(--violet)">Tarea</div>
+            <div class="comp-desc">Describe exactamente qué debe hacer la IA. La precisión de la instrucción determina la calidad del resultado.</div>
+            <div class="comp-ex" style="background:var(--violetL);color:var(--violet);border-color:var(--violet)">Redacta una respuesta formal a la solicitud de [TIPO_TRAMITE] del estudiante [NOMBRE].</div>
+          </div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-top" style="background:var(--amber)"></div>
+          <div class="comp-body">
+            <span class="comp-badge" style="background:var(--amberL);color:var(--amber)">[RESTRICCIONES]</span>
+            <div class="comp-name" style="color:var(--amber)">Restricciones</div>
+            <div class="comp-desc">Establece lo que NO debe hacer, el tono, la extensión y los límites de contenido.</div>
+            <div class="comp-ex" style="background:var(--amberL);color:var(--amber);border-color:var(--amber)">Máximo 150 palabras. No incluir plazos sin verificar. Tono formal pero empático.</div>
+          </div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-top" style="background:var(--red)"></div>
+          <div class="comp-body">
+            <span class="comp-badge" style="background:var(--redL);color:var(--red)">[FORMATO]</span>
+            <div class="comp-name" style="color:var(--red)">Formato</div>
+            <div class="comp-desc">Especifica la estructura y presentación de la salida esperada. Sin formato, la IA decide por su cuenta.</div>
+            <div class="comp-ex" style="background:var(--redL);color:var(--red);border-color:var(--red)">Estructura: saludo / cuerpo (2 párrafos) / cierre / firma institucional.</div>
+          </div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-top" style="background:var(--green)"></div>
+          <div class="comp-body">
+            <span class="comp-badge" style="background:var(--greenL);color:var(--green)">[CRITERIOS]</span>
+            <div class="comp-name" style="color:var(--green)">Criterios de calidad</div>
+            <div class="comp-desc">Define cómo saber si la respuesta cumplió el objetivo. Cierra el ciclo de evaluación.</div>
+            <div class="comp-ex" style="background:var(--greenL);color:var(--green);border-color:var(--green)">La respuesta debe ser clara, verificable y no incluir información confidencial.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr"><div class="card-title">Parametrización: de estático a dinámico</div></div>
+    <div class="card-body">
+      <div class="info info-em"><strong>Convención recomendada:</strong> usa [NOMBRE_VARIABLE] en mayúsculas con guiones bajos para marcar los parámetros. Son visibles, inequívocos y fáciles de buscar con Ctrl+H para reemplazar.</div>
+      <div class="compare-grid" style="margin-top:14px">
+        <div>
+          <div class="compare-hdr" style="background:var(--slate)">Prompt estático — antes</div>
+          <div class="compare-body" style="background:var(--slateL);color:var(--slate)">"Analiza los datos de matrícula del primer semestre de 2025 del programa de Ingeniería Industrial e identifica las 3 principales causas de bajo rendimiento entre estudiantes de primer año, considerando asistencia, notas y participación. Responde en formato ejecutivo."</div>
+        </div>
+        <div>
+          <div class="compare-hdr" style="background:var(--em)">Plantilla parametrizada — después</div>
+          <div class="compare-body" style="background:var(--emL);color:var(--em)">"Analiza los datos de [TIPO_DATO] del [PERIODO] del programa de [PROGRAMA] e identifica las [NUM_CAUSAS] principales causas de [PROBLEMA] entre [SEGMENTO], considerando [VARIABLES]. Responde en formato [FORMATO_SALIDA]."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ CONSTRUCTOR ══════════════════════════════ -->
+<div id="constructor" class="page">
+  <div class="page-title">Constructor de Prompts Profesionales</div>
+  <div class="page-sub">Completa los 6 campos · genera tu prompt · pruébalo en tiempo real</div>
+
+  <div class="card">
+    <div class="card-hdr"><div class="card-title">Plantilla de prompt profesional</div></div>
+    <div class="card-body">
+      <div class="info info-em" style="margin-bottom:16px">Completa cada campo. Usa [PLACEHOLDER] para marcar las variables que cambiarán entre usos. Deja en blanco los campos que no apliquen.</div>
+
+      <div class="field-row">
+        <div class="field-label" style="background:var(--em);color:white">[ROL]</div>
+        <div class="field-input"><textarea id="f_rol" placeholder="Eres un [EXPERTO_TIPO] especializado en [DOMINIO] para [ORGANIZACION]." rows="2"></textarea></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label" style="background:var(--navy);color:white">[CONTEXTO]</div>
+        <div class="field-input"><textarea id="f_ctx" placeholder="El área de [AREA] atiende [DESCRIPCION_CONTEXTO]. El usuario es [PERFIL_USUARIO]." rows="2"></textarea></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label" style="background:var(--violet);color:white">[TAREA]</div>
+        <div class="field-input"><textarea id="f_tarea" placeholder="[VERBO_ACCION] [OBJETO] para [DESTINATARIO/PROPOSITO]. Asegúrate de incluir [ELEMENTOS_CLAVE]." rows="2"></textarea></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label" style="background:var(--amber);color:white">[RESTRICCIONES]</div>
+        <div class="field-input"><textarea id="f_rest" placeholder="Máximo [EXTENSION]. Tono: [TONO]. No incluir [ELEMENTO_EXCLUIDO]. Usar solo información verificable." rows="2"></textarea></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label" style="background:var(--red);color:white">[FORMATO]</div>
+        <div class="field-input"><textarea id="f_fmt" placeholder="Estructura: [SECCION_1] / [SECCION_2] / [SECCION_3]. Presentar en [FORMA_PRESENTACION]." rows="2"></textarea></div>
+      </div>
+      <div class="field-row">
+        <div class="field-label" style="background:var(--green);color:white">[CRITERIOS]</div>
+        <div class="field-input"><textarea id="f_crit" placeholder="La respuesta es exitosa si: [CRITERIO_1], [CRITERIO_2], [CRITERIO_3]." rows="2"></textarea></div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+        <button class="btn-add" onclick="buildPrompt()">Construir prompt completo →</button>
+        <button onclick="clearFields()" style="padding:10px 18px;border:1px solid var(--border2);border-radius:var(--rS);background:var(--bg);font-size:13px;cursor:pointer;color:var(--muted)">Limpiar campos</button>
+      </div>
+
+      <div id="builtPromptSection" style="display:none;margin-top:16px">
+        <div class="result-lbl">Tu prompt construido</div>
+        <div class="result-box" id="builtPrompt" style="font-family:'Courier New',monospace;font-size:12px"></div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button onclick="copyPrompt()" style="padding:8px 16px;border:1px solid var(--em);border-radius:var(--rS);background:white;color:var(--em);font-size:12px;font-weight:600;cursor:pointer">Copiar prompt</button>
+          <button onclick="saveToLib()" style="padding:8px 16px;border:1px solid var(--em);border-radius:var(--rS);background:var(--em);color:white;font-size:12px;font-weight:600;cursor:pointer">Guardar en biblioteca</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr"><div class="card-title">Probar el prompt en tiempo real</div></div>
+    <div class="card-body">
+      <div class="info info-amber" style="margin-bottom:12px">Antes de ejecutar, reemplaza los placeholders [ASÍ] con valores reales para el caso concreto que quieres probar.</div>
+      <div class="result-lbl">Prompt a ejecutar (edita los placeholders antes de ejecutar)</div>
+      <textarea id="execPrompt" rows="8" placeholder="Tu prompt aparecerá aquí después de construirlo. También puedes escribir o pegar un prompt directamente."></textarea>
+      <button class="run-btn" onclick="runPrompt()">Ejecutar con Claude →</button>
+      <div class="result-lbl">Resultado</div>
+      <div class="result-box" id="execResult">El resultado aparecerá aquí...</div>
+      <div class="reflect-box on" style="margin-top:12px"><strong>Evaluación rápida:</strong> ¿El resultado cumple el [ROL] que definiste? ¿La estructura corresponde al [FORMATO]? ¿Se respetaron las [RESTRICCIONES]? ¿Pasaría el checklist de 10 criterios? Si no: ¿cuál campo mejorarías primero?</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ TALLER ══════════════════════════════ -->
+<div id="taller" class="page">
+  <div class="page-title">Taller: 4 Plantillas Profesionales</div>
+  <div class="page-sub">45 minutos · correo · informe · análisis · automatización</div>
+
+  <div class="inner-tabs" id="tallerTabs">
+    <button class="itab on" onclick="showTaller('t1',this)">✉ Correo institucional</button>
+    <button class="itab" onclick="showTaller('t2',this)">📊 Informe ejecutivo</button>
+    <button class="itab" onclick="showTaller('t3',this)">🔍 Análisis de datos</button>
+    <button class="itab" onclick="showTaller('t4',this)">⚙ Automatización</button>
+  </div>
+
+  <div id="t1" class="itab-content on">
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">Plantilla 1 — Correo Institucional</div>
+        <span class="tag" style="background:var(--emL);color:var(--em)">Registro · Bienestar · Comunicaciones</span>
+      </div>
+      <div class="card-body">
+        <div class="info info-em">Área: cualquier área que emita comunicaciones formales a estudiantes, docentes o directivos.</div>
+        <div class="compare-grid" style="margin:14px 0">
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:6px">❌ Prompt de uso único (malo)</div>
+            <div style="background:var(--redL);padding:10px;border-radius:var(--rS);font-size:11px;color:var(--red);font-family:Courier New;line-height:1.6">"Escribe un correo a María García informando que su solicitud de cancelación de materia fue aprobada."</div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--em);margin-bottom:6px">✅ Plantilla reutilizable (bueno)</div>
+            <div style="background:var(--emL);padding:10px;border-radius:var(--rS);font-size:11px;color:var(--em);font-family:Courier New;line-height:1.6">"[ROL] Eres el comunicador institucional de [AREA_UTB]. [CONTEXTO] El área gestiona [TIPO_TRAMITE_AREA]. [TAREA] Redacta un correo a [NOMBRE_DESTINATARIO] con cargo [CARGO_O_CONDICION] informando [MENSAJE_PRINCIPAL]. [RESTRICCIONES] Tono [TONO], máx. [PALABRAS] palabras. [FORMATO] Asunto / Saludo / Cuerpo / Cierre / Firma [NOMBRE_FIRMANTE]."</div>
+          </div>
+        </div>
+        <div class="result-lbl">Tu plantilla de correo — escribe o edita aquí</div>
+        <textarea id="t1_prompt" rows="10" placeholder="[ROL] Eres el comunicador institucional del área de [AREA_UTB].
+[CONTEXTO] El área de [AREA_UTB] atiende [DESCRIPCION_AREA] en la UTB.
+[TAREA] Redacta un correo a [NOMBRE_DESTINATARIO] ([CARGO_O_CONDICION]) sobre: [MENSAJE_PRINCIPAL].
+[RESTRICCIONES] Tono: [TONO]. Máximo [PALABRAS] palabras. No incluir [ELEMENTO_EXCLUIR].
+[FORMATO] Estructura: Asunto (1 línea) / Saludo / Cuerpo ([NUM_PARRAFOS] párrafos) / Cierre / Firma: [NOMBRE_FIRMANTE], [CARGO_FIRMANTE], [AREA_UTB].
+[CRITERIOS] El correo debe ser claro, formal, sin jerga técnica y verificable antes de enviar."></textarea>
+        <div class="result-lbl" style="margin-top:8px">Caso de prueba con datos reales (reemplaza los placeholders)</div>
+        <textarea id="t1_test" rows="5" placeholder="Prueba con un caso real: reemplaza cada [PLACEHOLDER] con valores concretos de tu área en la UTB y ejecuta para ver el resultado...">Eres el comunicador institucional del área de Registro Académico de la UTB.
+El área de Registro atiende 8.000 estudiantes en 40 programas de pregrado y posgrado.
+Redacta un correo a Carlos Mendoza (estudiante, código 2022-0341) sobre: su solicitud de constancia de notas para proceso de beca ha sido aprobada y estará lista en 2 días hábiles.
+Tono: formal pero empático. Máximo 120 palabras. No incluir plazos específicos de horario.
+Estructura: Asunto / Saludo / Cuerpo (2 párrafos) / Cierre / Firma: Oficina de Registro Académico, UTB.</textarea>
+        <button class="run-btn" onclick="runTaller('t1_test','t1_result')">Ejecutar plantilla con datos de prueba →</button>
+        <div class="result-lbl">Resultado</div>
+        <div class="result-box" id="t1_result">El correo generado aparecerá aquí...</div>
+        <div class="reflect-box on" style="margin-top:10px"><strong>Reflexión:</strong> ¿La plantilla funcionaría para diferentes tipos de correo (notificación, solicitud de info, rechazo, aprobación)? ¿Qué placeholder agregarías para hacerla más versátil?</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="t2" class="itab-content">
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">Plantilla 2 — Informe Ejecutivo</div>
+        <span class="tag" style="background:var(--sky);color:var(--navy)">Dirección · Financiero · Investigación</span>
+      </div>
+      <div class="card-body">
+        <div class="info info-navy">Área: cualquier dependencia que genere informes periódicos con indicadores, análisis o recomendaciones para directivos.</div>
+        <div class="result-lbl" style="margin-top:14px">Tu plantilla de informe ejecutivo</div>
+        <textarea id="t2_prompt" rows="10" placeholder="[ROL] Eres un analista institucional senior de la UTB.
+[CONTEXTO] Este informe corresponde a [TIPO_INFORME] del período [PERIODO]. Audiencia: [AUDIENCIA_DESTINATARIA].
+[TAREA] Genera un informe ejecutivo sobre [TEMA_INFORME] con los siguientes datos: [DATOS_CLAVE].
+[RESTRICCIONES] Máximo [EXTENSION]. Sin tecnicismos no explicados. Solo datos verificables. Tono objetivo y directo.
+[FORMATO] Estructura:
+1. Resumen ejecutivo (3 oraciones)
+2. Indicadores clave ([NUM_INDICADORES] métricas con semáforo: 🟢🟡🔴)
+3. Análisis de causas ([NUM_CAUSAS] principales)
+4. Recomendaciones ([NUM_RECOMENDACIONES] acciones con responsable y plazo)
+[CRITERIOS] El informe es exitoso si un directivo puede tomar una decisión basándose en él sin leer otra fuente."></textarea>
+        <div class="result-lbl" style="margin-top:8px">Caso de prueba</div>
+        <textarea id="t2_test" rows="6" placeholder="Reemplaza los placeholders con datos reales...">Eres un analista institucional senior de la UTB.
+Informe de deserción estudiantil del semestre 2025-1. Audiencia: Comité de Rectoría.
+Genera un informe sobre retención estudiantil con estos datos: tasa de deserción primer año: 18% (meta: 12%), programa más afectado: Ingeniería Industrial (24%), causa reportada: dificultades económicas (45%) y bajo rendimiento en Cálculo I (38%).
+Máximo 400 palabras. Tono objetivo y directo.
+Estructura: Resumen ejecutivo (3 oraciones) / Indicadores clave (3 métricas con semáforo) / Análisis de causas (2) / Recomendaciones (3 acciones con responsable y plazo).</textarea>
+        <button class="run-btn" onclick="runTaller('t2_test','t2_result')">Ejecutar plantilla con datos de prueba →</button>
+        <div class="result-lbl">Resultado</div>
+        <div class="result-box" id="t2_result">El informe aparecerá aquí...</div>
+        <div class="reflect-box on"><strong>Reflexión:</strong> ¿El formato de semáforo (🟢🟡🔴) ayudó a comunicar el estado de los indicadores? ¿Las recomendaciones son accionables o son demasiado genéricas?</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="t3" class="itab-content">
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">Plantilla 3 — Análisis de Datos</div>
+        <span class="tag" style="background:var(--amberL);color:var(--amber)">Financiero · Académico · Investigación</span>
+      </div>
+      <div class="card-body">
+        <div class="info info-amber">Área: cualquier dependencia que trabaje con indicadores, encuestas, datos de matrícula, ejecución presupuestal o resultados de evaluación.</div>
+        <div class="result-lbl" style="margin-top:14px">Tu plantilla de análisis de datos</div>
+        <textarea id="t3_prompt" rows="10" placeholder="[ROL] Eres un analista de datos especializado en [DOMINIO_ANALISIS] universitario.
+[CONTEXTO] Los datos corresponden a [DESCRIPCION_DATASET]. Período: [PERIODO]. Fuente: [FUENTE_DATOS].
+[TAREA] Analiza los siguientes datos: [DATOS_A_ANALIZAR].
+Identifica: [NUM_TENDENCIAS] tendencias principales, [NUM_ANOMALIAS] anomalías o alertas, y [NUM_OPORTUNIDADES] oportunidades de mejora.
+[RESTRICCIONES] No inferir más allá de los datos disponibles. Señalar explícitamente cualquier suposición. Evitar sesgos de confirmación.
+[FORMATO] Presentar en: Tabla resumen de indicadores / Hallazgos narrativos / Alertas destacadas / Recomendaciones priorizadas.
+[CRITERIOS] El análisis es válido si es reproducible, no contradice los datos y sus recomendaciones son verificables."></textarea>
+        <div class="result-lbl" style="margin-top:8px">Caso de prueba</div>
+        <textarea id="t3_test" rows="7" placeholder="Reemplaza con tus datos reales...">Eres un analista de datos especializado en gestión financiera universitaria.
+Datos de ejecución presupuestal Q2 2025, UTB. Fuente: sistema financiero institucional.
+Analiza: Investigación $480M presupuesto, $312M ejecutado (65%, meta 60%); Infraestructura $920M presupuesto, $230M ejecutado (25%, meta 45%); Bienestar $210M, $189M ejecutado (90%, meta 75%); Sistemas $340M, $306M ejecutado (90%, meta 80%).
+Identifica 2 tendencias, 2 alertas y 2 oportunidades.
+No inferir más allá de los datos. Señalar supuestos.
+Tabla resumen / Hallazgos / Alertas / Recomendaciones priorizadas por impacto.</textarea>
+        <button class="run-btn" onclick="runTaller('t3_test','t3_result')">Ejecutar plantilla de análisis →</button>
+        <div class="result-lbl">Resultado</div>
+        <div class="result-box" id="t3_result">El análisis aparecerá aquí...</div>
+        <div class="reflect-box on"><strong>Reflexión:</strong> ¿La IA se limitó a los datos o hizo inferencias no justificadas? ¿Las recomendaciones son específicas y accionables? ¿Qué restricción adicional agregarías?</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="t4" class="itab-content">
+    <div class="card">
+      <div class="card-hdr">
+        <div class="card-title">Plantilla 4 — Automatización de Procesos</div>
+        <span class="tag" style="background:var(--violetL);color:var(--violet)">Sistemas · TI · Cualquier área repetitiva</span>
+      </div>
+      <div class="card-body">
+        <div class="info" style="background:var(--violetL);color:#26215C;border:1px solid var(--violet)">Área: cualquier proceso que se realice repetitivamente y pueda describirse paso a paso. No necesitas ser programador para usar esta plantilla.</div>
+        <div class="result-lbl" style="margin-top:14px">Tu plantilla de automatización</div>
+        <textarea id="t4_prompt" rows="10" placeholder="[ROL] Eres un experto en automatización de procesos administrativos universitarios.
+[CONTEXTO] El proceso de [NOMBRE_PROCESO] en la UTB actualmente requiere [TIEMPO_ACTUAL] y lo realizan [PERSONAS_INVOLUCRADAS] personas usando [HERRAMIENTAS_ACTUALES].
+[TAREA] Diseña un pseudocódigo / flujo de automatización para [OBJETIVO_AUTOMATIZACION].
+El flujo debe manejar: [CASO_NORMAL], [CASO_EXCEPCION_1], [CASO_EXCEPCION_2].
+[RESTRICCIONES] No automatizar decisiones que involucren [DATOS_SENSIBLES]. Incluir punto de validación humana en [PASO_REVISION_HUMANA]. Sin acceso directo a sistemas de terceros.
+[FORMATO] Pasos numerados con descripción / Diagrama de flujo textual / Herramientas recomendadas / Puntos de control humano destacados.
+[CRITERIOS] El flujo automatizado debe reducir el tiempo actual en al menos [REDUCCION_OBJETIVO]%."></textarea>
+        <div class="result-lbl" style="margin-top:8px">Caso de prueba</div>
+        <textarea id="t4_test" rows="7" placeholder="Reemplaza con tu proceso real...">Eres un experto en automatización de procesos administrativos universitarios.
+El proceso de generación de constancias de matrícula en la UTB actualmente toma 2-3 días hábiles y lo realizan 3 personas del área de Registro usando formularios físicos y correo electrónico.
+Diseña un flujo de automatización para generar constancias de matrícula de forma automática cuando el estudiante las solicite online.
+El flujo debe manejar: solicitud normal, solicitud urgente (visa/beca), y estudiante con deuda pendiente.
+No automatizar decisiones sobre deudas mayores a 1 SMMLV. Incluir validación humana antes del envío final. Sin acceso directo a sistemas de pago.
+Pasos numerados / Diagrama de flujo textual / Herramientas recomendadas (Microsoft 365, Power Automate) / Puntos de control humano destacados.
+El flujo debe reducir el tiempo actual en al menos 70%.</textarea>
+        <button class="run-btn" onclick="runTaller('t4_test','t4_result')">Ejecutar plantilla de automatización →</button>
+        <div class="result-lbl">Resultado</div>
+        <div class="result-box" id="t4_result">El flujo de automatización aparecerá aquí...</div>
+        <div class="reflect-box on"><strong>Reflexión:</strong> ¿El flujo incluye todos los puntos de control humano importantes? ¿Las herramientas recomendadas son viables para tu área? ¿Qué caso de excepción faltaría considerar?</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ CHECKLIST ══════════════════════════════ -->
+<div id="checklist" class="page">
+  <div class="page-title">Checklist de Calidad del Prompt</div>
+  <div class="page-sub">10 criterios · marca cada uno · evalúa cualquier prompt tuyo o de un compañero</div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-hdr"><div class="card-title">Prompt a evaluar</div></div>
+    <div class="card-body">
+      <textarea id="evalPrompt" rows="8" placeholder="Pega aquí el prompt que quieres evaluar con el checklist de 10 criterios..."></textarea>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-hdr"><div class="card-title">10 criterios de calidad</div><span id="checkScore" style="font-size:14px;font-weight:700;color:var(--em)">0/10</span></div>
+    <div class="card-body">
+      <div class="checklist-grid" id="checkGrid"></div>
+      <div class="score-display" id="scoreDisplay">
+        <div class="score-num" id="scoreNum">0/10</div>
+        <div class="score-label" id="scoreLbl">Evalúa cada criterio marcando la casilla</div>
+        <div id="scoreFeedback" style="font-size:13px;color:var(--muted);margin-top:10px;line-height:1.7"></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+        <button class="btn-add" onclick="calcCheck()">Ver evaluación final →</button>
+        <button onclick="runQualityAnalysis()" style="padding:10px 18px;border:1px solid var(--em);border-radius:var(--rS);background:var(--bg);color:var(--em);font-size:13px;font-weight:600;cursor:pointer">Analizar con IA →</button>
+        <button onclick="resetCheck()" style="padding:10px 18px;border:1px solid var(--border2);border-radius:var(--rS);background:var(--bg);color:var(--muted);font-size:13px;cursor:pointer">Reiniciar</button>
+      </div>
+      <div class="result-lbl" style="margin-top:14px">Análisis de calidad con IA</div>
+      <div class="result-box" id="qualityResult">El análisis aparecerá aquí después de hacer clic en "Analizar con IA"...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ BIBLIOTECA ══════════════════════════════ -->
+<div id="biblioteca" class="page">
+  <div class="page-title">Mi Biblioteca Personal de Prompts</div>
+  <div class="page-sub">Organiza, categoriza y versiona tus mejores prompts profesionales</div>
+
+  <div class="card" style="margin-bottom:18px">
+    <div class="card-hdr"><div class="card-title">Agregar prompt a la biblioteca</div></div>
+    <div class="card-body">
+      <div class="lib-form-grid">
+        <div><span class="lib-label">Nombre del prompt</span><input type="text" id="l_name" placeholder="Ej: Respuesta a solicitud de constancia"></div>
+        <div><span class="lib-label">Categoría</span>
+          <select id="l_cat">
+            <option value="Comunicación">✉ Comunicación e-mail</option>
+            <option value="Informe">📊 Informe ejecutivo</option>
+            <option value="Análisis">🔍 Análisis de datos</option>
+            <option value="Automatización">⚙ Automatización de procesos</option>
+            <option value="Decisión">🎯 Gestión y decisión</option>
+            <option value="Otro">📌 Otro</option>
+          </select>
+        </div>
+      </div>
+      <div class="lib-form-grid">
+        <div><span class="lib-label">Área universitaria</span>
+          <select id="l_area">
+            <option>Registro Académico</option><option>Bienestar Universitario</option>
+            <option>Dirección Académica</option><option>Gestión Financiera</option>
+            <option>Mercadeo y Comunicaciones</option><option>Investigación y Posgrados</option>
+            <option>Sistemas y TI</option><option>Otra área</option>
+          </select>
+        </div>
+        <div><span class="lib-label">Versión</span><input type="text" id="l_ver" placeholder="1.0" value="1.0"></div>
+      </div>
+      <div class="lib-form-full">
+        <span class="lib-label">Descripción de uso (¿cuándo y para qué usarlo?)</span>
+        <input type="text" id="l_desc" placeholder="Usar para responder solicitudes de constancias de matrícula con estado aprobado o pendiente.">
+      </div>
+      <div class="lib-form-full">
+        <span class="lib-label">Versión inicial (antes de mejorar)</span>
+        <textarea id="l_v0" rows="3" placeholder="Escribe aquí cómo formulabas este prompt antes de aprender a estructurarlo..."></textarea>
+      </div>
+      <div class="lib-form-full">
+        <span class="lib-label">Versión mejorada (plantilla con placeholders)</span>
+        <textarea id="l_prompt" rows="8" placeholder="[ROL] Eres...
+[CONTEXTO] ...
+[TAREA] ...
+[RESTRICCIONES] ...
+[FORMATO] ...
+[CRITERIOS] ..."></textarea>
+      </div>
+      <div class="lib-form-full">
+        <span class="lib-label">Notas de uso y mejoras futuras</span>
+        <textarea id="l_notes" rows="2" placeholder="Funciona mejor cuando... / Pendiente mejorar... / Variantes posibles..."></textarea>
+      </div>
+      <button class="btn-add" onclick="addToLib()">Guardar en biblioteca</button>
+    </div>
+  </div>
+
+  <div id="libStats" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px"></div>
+  <div id="libEmpty" style="text-align:center;color:var(--hint);padding:32px;font-size:14px;background:var(--bg);border-radius:var(--rL);border:1px solid var(--border)">Tu biblioteca está vacía. Agrega tu primer prompt usando el formulario de arriba.</div>
+  <div id="libList"></div>
+</div>
+
+<script>
+// ─── NAV ───────────────────────────────────────────────────────────────
+function go(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on'); el.classList.add('on');
+}
+function showTaller(id,el){
+  document.querySelectorAll('.itab-content').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.itab').forEach(t=>t.classList.remove('on'));
+  document.getElementById(id).classList.add('on'); el.classList.add('on');
+}
+
+// ─── API ───────────────────────────────────────────────────────────────
+async function ask(sys,msgs,maxTok=1400){
+  const r=await fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:maxTok,system:sys,messages:msgs})
+  });
+  const d=await r.json();
+  if(d.error)throw new Error(d.error.message);
+  return d.content.filter(b=>b.type==='text').map(b=>b.text).join('');
+}
+function setRes(id,text,cls=''){
+  const el=document.getElementById(id);
+  el.className='result-box'+(cls?' '+cls:'');
+  el.textContent=text;
+}
+
+// ─── CONSTRUCTOR ───────────────────────────────────────────────────────
+function buildPrompt(){
+  const rol=document.getElementById('f_rol').value.trim();
+  const ctx=document.getElementById('f_ctx').value.trim();
+  const tarea=document.getElementById('f_tarea').value.trim();
+  const rest=document.getElementById('f_rest').value.trim();
+  const fmt=document.getElementById('f_fmt').value.trim();
+  const crit=document.getElementById('f_crit').value.trim();
+  if(!rol&&!tarea){alert('Completa al menos el campo ROL y TAREA');return;}
+  const parts=[];
+  if(rol) parts.push(`[ROL] ${rol}`);
+  if(ctx) parts.push(`[CONTEXTO] ${ctx}`);
+  if(tarea) parts.push(`[TAREA] ${tarea}`);
+  if(rest) parts.push(`[RESTRICCIONES] ${rest}`);
+  if(fmt) parts.push(`[FORMATO] ${fmt}`);
+  if(crit) parts.push(`[CRITERIOS] ${crit}`);
+  const built=parts.join('\n');
+  document.getElementById('builtPrompt').textContent=built;
+  document.getElementById('execPrompt').value=built;
+  document.getElementById('builtPromptSection').style.display='block';
+}
+function clearFields(){
+  ['f_rol','f_ctx','f_tarea','f_rest','f_fmt','f_crit'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('builtPromptSection').style.display='none';
+}
+function copyPrompt(){
+  const t=document.getElementById('builtPrompt').textContent;
+  navigator.clipboard.writeText(t).then(()=>alert('Prompt copiado al portapapeles'));
+}
+async function runPrompt(){
+  const prompt=document.getElementById('execPrompt').value.trim();
+  if(!prompt){alert('Escribe un prompt primero');return;}
+  setRes('execResult','Ejecutando...','loading');
+  try{
+    const r=await ask('Eres un asistente profesional de la Universidad Tecnológica de Bolívar (UTB). Ejecuta el prompt exactamente como se indica. Responde en español.',
+      [{role:'user',content:prompt}]);
+    setRes('execResult',r);
+  }catch(e){setRes('execResult','Error: '+e.message,'error');}
+}
+
+// ─── TALLER ─────────────────────────────────────────────────────────────
+async function runTaller(promptId,resultId){
+  const prompt=document.getElementById(promptId).value.trim();
+  if(!prompt){alert('Completa el caso de prueba primero');return;}
+  setRes(resultId,'Ejecutando plantilla...','loading');
+  try{
+    const r=await ask('Eres un asistente profesional especializado para la Universidad Tecnológica de Bolívar (UTB), Cartagena, Colombia. Sigue exactamente las instrucciones del prompt. Responde en español profesional.',
+      [{role:'user',content:prompt}]);
+    setRes(resultId,r);
+  }catch(e){setRes(resultId,'Error: '+e.message,'error');}
+}
+
+// ─── CHECKLIST ──────────────────────────────────────────────────────────
+const CHECKS=[
+  {n:'01',t:'Rol definido',q:'¿La IA sabe qué perspectiva experta adoptar?',c:'#0A7153'},
+  {n:'02',t:'Contexto suficiente',q:'¿La IA tiene la información de fondo necesaria?',c:'#0A7153'},
+  {n:'03',t:'Tarea específica',q:'¿La instrucción principal es clara y verificable?',c:'#185FA5'},
+  {n:'04',t:'Sin ambigüedad',q:'¿No hay palabras vagas que puedan interpretarse de formas múltiples?',c:'#185FA5'},
+  {n:'05',t:'Restricciones explícitas',q:'¿Especifica límites de extensión, tono y contenido?',c:'#534AB7'},
+  {n:'06',t:'Formato especificado',q:'¿La estructura de la salida esperada está definida?',c:'#534AB7'},
+  {n:'07',t:'Placeholders visibles',q:'¿Las variables están marcadas claramente con [NOMBRE]?',c:'#854F0B'},
+  {n:'08',t:'Criterios de calidad',q:'¿Se puede evaluar objetivamente si el resultado cumple el objetivo?',c:'#854F0B'},
+  {n:'09',t:'Libre de sesgos',q:'¿El prompt no induce hacia una respuesta predeterminada?',c:'#A32D2D'},
+  {n:'10',t:'Reutilizable',q:'¿Puede adaptarse a casos similares sin reescritura total?',c:'#3B6D11'},
+];
+const checked=new Set();
+
+function renderChecklist(){
+  const grid=document.getElementById('checkGrid');
+  grid.innerHTML='';
+  CHECKS.forEach((ch,i)=>{
+    const div=document.createElement('div');
+    div.className='check-item';
+    div.innerHTML=`<div class="check-num" style="background:${ch.c}">${ch.n}</div>
+      <div class="check-content"><div class="check-name">${ch.t}</div><div class="check-q">${ch.q}</div></div>
+      <div class="check-box${checked.has(i)?' checked':''}" id="cb_${i}" onclick="toggleCheck(${i})">
+        ${checked.has(i)?'✓':''}
+      </div>`;
+    grid.appendChild(div);
+  });
+  updateScore();
+}
+function toggleCheck(i){
+  if(checked.has(i)) checked.delete(i); else checked.add(i);
+  renderChecklist();
+}
+function updateScore(){
+  const s=checked.size;
+  document.getElementById('checkScore').textContent=`${s}/10`;
+  document.getElementById('checkScore').style.color=s>=8?'var(--em)':s>=6?'var(--amber)':'var(--red)';
+}
+function calcCheck(){
+  const s=checked.size;
+  const levels=[
+    [10,10,'Prompt de alta calidad — listo para biblioteca personal','Este prompt cumple todos los criterios de calidad. Está listo para ser archivado en tu biblioteca personal y compartido con el equipo.'],
+    [7,9,'Buen prompt — revisar criterios sin marcar','El prompt tiene buena base. Revisa los criterios que no marcaste y ajusta esos campos específicos antes de archivarlo.'],
+    [5,6,'Prompt funcional — necesita mejoras','El prompt funciona pero tiene brechas importantes. Trabaja especialmente en los campos de restricciones, formato y criterios de calidad.'],
+    [0,4,'Prompt débil — rediseñar estructura','El prompt necesita rediseño. Regresa al constructor y completa los 6 componentes desde cero con más detalle en cada campo.'],
+  ];
+  const [,,label,feedback]=levels.find(([lo,hi])=>s>=lo&&s<=hi)||levels[levels.length-1];
+  document.getElementById('scoreNum').textContent=`${s}/10`;
+  document.getElementById('scoreLbl').textContent=label;
+  document.getElementById('scoreFeedback').textContent=feedback;
+  document.getElementById('scoreDisplay').classList.add('on');
+}
+function resetCheck(){
+  checked.clear(); renderChecklist();
+  document.getElementById('scoreDisplay').classList.remove('on');
+}
+async function runQualityAnalysis(){
+  const prompt=document.getElementById('evalPrompt').value.trim();
+  if(!prompt){alert('Pega un prompt en el campo de texto primero');return;}
+  setRes('qualityResult','Analizando calidad del prompt...','loading');
+  const sys=`Eres un experto en diseño de prompts profesionales para entornos universitarios. Cuando te compartan un prompt, analiza su calidad según estos 10 criterios:
+1. Rol definido, 2. Contexto suficiente, 3. Tarea específica, 4. Sin ambigüedad, 5. Restricciones explícitas,
+6. Formato especificado, 7. Placeholders visibles, 8. Criterios de calidad, 9. Libre de sesgos, 10. Reutilizable.
+
+Responde en español con: puntuación (X/10), qué criterios cumple bien, qué criterios mejorar y una versión mejorada del prompt.`;
+  try{
+    const r=await ask(sys,[{role:'user',content:`Analiza este prompt:\n\n${prompt}`}],1600);
+    setRes('qualityResult',r);
+  }catch(e){setRes('qualityResult','Error: '+e.message,'error');}
+}
+
+// ─── BIBLIOTECA ──────────────────────────────────────────────────────────
+let library=[];
+try{const s=localStorage.getItem('utb_s8_library');if(s)library=JSON.parse(s);}catch(e){}
+
+const catColors={'Comunicación':['emL','em'],'Informe':['sky','navy'],'Análisis':['amberL','amber'],'Automatización':['violetL','violet'],'Decisión':['greenL','green'],'Otro':['slateL','slate']};
+
+function saveLib(){try{localStorage.setItem('utb_s8_library',JSON.stringify(library));}catch(e){}}
+
+function addToLib(){
+  const name=document.getElementById('l_name').value.trim();
+  const prompt=document.getElementById('l_prompt').value.trim();
+  if(!name||!prompt){alert('El nombre y la plantilla de prompt son obligatorios');return;}
+  library.unshift({
+    id:Date.now(),name,cat:document.getElementById('l_cat').value,
+    area:document.getElementById('l_area').value,ver:document.getElementById('l_ver').value||'1.0',
+    desc:document.getElementById('l_desc').value,v0:document.getElementById('l_v0').value,
+    prompt,notes:document.getElementById('l_notes').value,
+    date:new Date().toLocaleDateString('es-CO'),uses:0
+  });
+  saveLib(); renderLib();
+  ['l_name','l_desc','l_v0','l_prompt','l_notes'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('l_ver').value='1.0';
+}
+
+function saveToLib(){
+  const prompt=document.getElementById('builtPrompt').textContent;
+  if(!prompt){alert('Construye el prompt primero');return;}
+  document.getElementById('l_prompt').value=prompt;
+  go('biblioteca',document.querySelectorAll('.tab')[4]);
+  document.getElementById('l_name').focus();
+}
+
+function deleteEntry(id){library=library.filter(e=>e.id!==id);saveLib();renderLib();}
+
+function renderLib(){
+  const list=document.getElementById('libList');
+  const empty=document.getElementById('libEmpty');
+  const stats=document.getElementById('libStats');
+  empty.style.display=library.length?'none':'block';
+  // Stats
+  if(library.length){
+    const cats={};library.forEach(e=>cats[e.cat]=(cats[e.cat]||0)+1);
+    stats.innerHTML=`<div style="font-size:13px;color:var(--muted)">Total: <strong style="color:var(--em)">${library.length} prompt${library.length>1?'s':''}</strong></div>`+
+      Object.entries(cats).map(([c,n])=>`<span class="tag" style="background:var(--${(catColors[c]||['slateL','slate'])[0]});color:var(--${(catColors[c]||['slateL','slate'])[1]})">${c}: ${n}</span>`).join('');
+  } else stats.innerHTML='';
+  list.innerHTML=library.map(e=>{
+    const [bg,fg]=(catColors[e.cat]||['slateL','slate']);
+    return `<div class="lib-card-entry">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:6px">
+        <div><div class="lib-entry-title">${e.name}</div><div class="lib-entry-meta">${e.area} · v${e.ver} · ${e.date}${e.desc?' · '+e.desc:''}</div></div>
+        <span class="tag" style="background:var(--${bg});color:var(--${fg});white-space:nowrap">${e.cat}</span>
+      </div>
+      ${e.v0?`<div style="font-size:11px;color:var(--red);margin-bottom:6px"><strong>Versión inicial:</strong> <em>${e.v0.substring(0,120)}${e.v0.length>120?'...':''}</em></div>`:''}
+      <div class="lib-entry-prompt">${e.prompt}</div>
+      ${e.notes?`<div style="font-size:11px;color:var(--muted);margin-top:6px;font-style:italic">${e.notes}</div>`:''}
+      <div class="lib-entry-footer">
+        <button onclick="usePrompt(${e.id})" style="font-size:11px;padding:4px 12px;border:1px solid var(--em);border-radius:20px;background:white;color:var(--em);cursor:pointer">Usar este prompt</button>
+        <button class="lib-del" onclick="deleteEntry(${e.id})">Eliminar</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function usePrompt(id){
+  const e=library.find(x=>x.id===id);
+  if(!e)return;
+  document.getElementById('execPrompt').value=e.prompt;
+  go('constructor',document.querySelectorAll('.tab')[1]);
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────
+renderChecklist();
+renderLib();
+</script>
+</body>
+</html>
