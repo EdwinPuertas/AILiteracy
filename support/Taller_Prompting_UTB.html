@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller de Prompting IA — UTB 2025</title>
+<style>
+  :root {
+    --blue: #185FA5; --blue-light: #E6F1FB; --blue-dark: #0C447C;
+    --green: #3B6D11; --green-light: #EAF3DE;
+    --amber: #854F0B; --amber-light: #FAEEDA;
+    --red: #A32D2D; --red-light: #FCEBEB;
+    --teal: #0F6E56; --teal-light: #E1F5EE;
+    --gray: #444441; --gray-light: #F1EFE8;
+    --text: #1a1a1a; --text-muted: #5a5a5a; --text-hint: #888;
+    --border: rgba(0,0,0,0.12); --border-med: rgba(0,0,0,0.2);
+    --bg: #ffffff; --bg-surface: #f8f9fa; --bg-deep: #f0f2f5;
+    --radius: 10px; --radius-sm: 6px; --radius-lg: 14px;
+    --shadow: 0 1px 4px rgba(0,0,0,0.08), 0 4px 16px rgba(0,0,0,0.06);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg-deep); color: var(--text); line-height: 1.6; }
+
+  /* NAV */
+  .topbar { background: var(--blue-dark); color: white; padding: 12px 32px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .topbar-brand { font-size: 15px; font-weight: 600; letter-spacing: 0.02em; }
+  .topbar-sub { font-size: 12px; opacity: 0.75; }
+  .topbar-badge { background: rgba(255,255,255,0.18); border-radius: 20px; padding: 4px 12px; font-size: 12px; }
+
+  /* TABS */
+  .tab-bar { background: var(--bg); border-bottom: 1px solid var(--border); display: flex; gap: 0; padding: 0 32px; }
+  .tab { padding: 14px 24px; font-size: 14px; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.18s; }
+  .tab:hover { color: var(--text); background: var(--bg-surface); }
+  .tab.on { color: var(--blue); border-bottom-color: var(--blue); }
+
+  /* CONTAINER */
+  .page { display: none; max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+  .page.on { display: block; }
+
+  /* THEORY PAGE */
+  .page-hero { text-align: center; margin-bottom: 36px; }
+  .page-hero h1 { font-size: 28px; font-weight: 700; color: var(--blue-dark); margin-bottom: 8px; }
+  .page-hero p { font-size: 16px; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
+
+  .technique-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 36px; }
+  .tcard { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--shadow); border-top: 4px solid; }
+  .tcard-zero { border-top-color: #E24B4A; }
+  .tcard-one  { border-top-color: #EF9F27; }
+  .tcard-few  { border-top-color: #639922; }
+  .tcard h3 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+  .tcard-zero h3 { color: #A32D2D; }
+  .tcard-one h3  { color: #633806; }
+  .tcard-few h3  { color: #27500A; }
+  .tcard p { font-size: 13px; color: var(--text-muted); line-height: 1.65; margin-bottom: 10px; }
+  .tcard-badge { display: inline-block; font-size: 12px; font-weight: 600; padding: 4px 12px; border-radius: 20px; }
+  .badge-zero { background: var(--red-light); color: var(--red); }
+  .badge-one  { background: var(--amber-light); color: var(--amber); }
+  .badge-few  { background: var(--green-light); color: var(--green); }
+
+  .theory-section { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow); }
+  .theory-section h2 { font-size: 18px; font-weight: 700; color: var(--blue-dark); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+
+  .anatomy-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .abox { border-radius: var(--radius-sm); padding: 12px; text-align: center; }
+  .abox-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+  .abox-val { font-size: 12px; line-height: 1.45; }
+  .a-role { background: var(--blue-light); } .a-role .abox-label { color: var(--blue); } .a-role .abox-val { color: var(--blue-dark); }
+  .a-ctx  { background: var(--teal-light); } .a-ctx .abox-label { color: var(--teal); } .a-ctx .abox-val { color: #085041; }
+  .a-shot { background: var(--amber-light); } .a-shot .abox-label { color: var(--amber); } .a-shot .abox-val { color: #412402; }
+  .a-task { background: #EEEDFE; } .a-task .abox-label { color: #534AB7; } .a-task .abox-val { color: #26215C; }
+
+  .when-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .wbox { border-radius: var(--radius-sm); padding: 14px; }
+  .wbox h4 { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .wbox ul { padding-left: 16px; }
+  .wbox li { font-size: 12px; line-height: 1.7; }
+  .w-zero { background: var(--red-light); } .w-zero h4 { color: var(--red); } .w-zero li { color: #791F1F; }
+  .w-one  { background: var(--amber-light); } .w-one h4 { color: var(--amber); } .w-one li { color: #412402; }
+  .w-few  { background: var(--green-light); } .w-few h4 { color: var(--green); } .w-few li { color: #173404; }
+
+  .perf-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+  .perf-label { font-size: 13px; font-weight: 600; min-width: 110px; }
+  .perf-bar-wrap { flex: 1; background: var(--bg-surface); border-radius: 4px; height: 16px; overflow: hidden; }
+  .perf-bar { height: 100%; border-radius: 4px; transition: width 1s ease; }
+  .perf-pct { font-size: 12px; font-weight: 600; min-width: 36px; }
+  .perf-zero .perf-label { color: var(--red); } .perf-zero .perf-bar { background: #E24B4A; width: 38%; } .perf-zero .perf-pct { color: var(--red); }
+  .perf-one  .perf-label { color: var(--amber); } .perf-one .perf-bar  { background: #EF9F27; width: 65%; } .perf-one .perf-pct  { color: var(--amber); }
+  .perf-few3 .perf-label { color: var(--green); } .perf-few3 .perf-bar { background: #639922; width: 87%; } .perf-few3 .perf-pct { color: var(--green); }
+  .perf-few5 .perf-label { color: #27500A; }   .perf-few5 .perf-bar { background: #3B6D11; width: 91%; } .perf-few5 .perf-pct { color: #27500A; }
+
+  .tips-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tip-pill { background: var(--blue-light); color: var(--blue-dark); border-radius: 20px; padding: 5px 14px; font-size: 12px; font-weight: 500; }
+
+  .cta-btn { display: inline-block; background: var(--blue); color: white; padding: 12px 28px; border-radius: var(--radius); font-size: 15px; font-weight: 600; border: none; cursor: pointer; margin-top: 8px; transition: background 0.15s; }
+  .cta-btn:hover { background: var(--blue-dark); }
+
+  /* EXERCISES PAGE */
+  .ex-progress { display: flex; gap: 8px; margin-bottom: 24px; }
+  .ep-step { flex: 1; text-align: center; padding: 10px 6px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg-surface); }
+  .ep-step strong { display: block; font-size: 13px; font-weight: 700; color: var(--text); }
+  .ep-step span { font-size: 11px; color: var(--text-muted); }
+  .ep-step.active { border-color: var(--blue); background: var(--blue-light); }
+  .ep-step.active strong { color: var(--blue); }
+  .ep-step.done { border-color: var(--green); background: var(--green-light); }
+  .ep-step.done strong { color: var(--green); }
+
+  .ex-selector { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+  .ex-sel-btn { font-size: 12px; font-weight: 500; padding: 6px 14px; border: 1px solid var(--border-med); border-radius: 20px; background: var(--bg); color: var(--text-muted); cursor: pointer; transition: all 0.15s; }
+  .ex-sel-btn:hover { background: var(--bg-surface); color: var(--text); }
+  .ex-sel-btn.on { background: var(--blue); border-color: var(--blue); color: white; }
+
+  .ex-card { background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); }
+  .ex-card-header { padding: 20px 24px 16px; border-bottom: 1px solid var(--border); }
+  .ex-card-body { padding: 20px 24px; }
+  .ex-type-badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; margin-bottom: 10px; letter-spacing: 0.04em; }
+  .ex-title { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .ex-desc { font-size: 13px; color: var(--text-muted); line-height: 1.65; }
+
+  .data-panel { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 16px; }
+  .panel-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 10px; }
+  table.data-tbl { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .data-tbl th { background: var(--blue); color: white; padding: 7px 10px; text-align: left; font-weight: 600; font-size: 11px; }
+  .data-tbl td { padding: 7px 10px; border-bottom: 1px solid var(--border); color: var(--text); }
+  .data-tbl tr:last-child td { border-bottom: none; }
+  .data-tbl tr:nth-child(even) td { background: rgba(0,0,0,0.02); }
+
+  .shots-panel { margin-bottom: 16px; }
+  .shot-item { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 8px; }
+  .shot-row { display: grid; grid-template-columns: 1fr 24px 1.4fr; gap: 10px; align-items: start; }
+  .shot-col-in .sh-label { font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--blue); margin-bottom: 3px; }
+  .shot-col-in .sh-text { font-size: 12px; color: var(--blue-dark); line-height: 1.55; }
+  .shot-arrow { font-size: 18px; color: var(--text-hint); padding-top: 14px; text-align: center; }
+  .shot-col-out .sh-label { font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--teal); margin-bottom: 3px; }
+  .shot-col-out .sh-text { font-size: 12px; color: #085041; line-height: 1.55; }
+
+  .task-section { margin-bottom: 14px; }
+  .task-section label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); display: block; margin-bottom: 8px; }
+  textarea { width: 100%; min-height: 90px; padding: 12px 14px; border: 1px solid var(--border-med); border-radius: var(--radius-sm); font-size: 13px; font-family: inherit; line-height: 1.6; color: var(--text); resize: vertical; background: var(--bg); transition: border-color 0.15s; }
+  textarea:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(24,95,165,0.12); }
+
+  .hint-btn { font-size: 12px; color: var(--blue); background: none; border: none; cursor: pointer; padding: 0; margin-bottom: 12px; text-decoration: underline; }
+  .hint-box { display: none; background: var(--blue-light); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 14px; font-size: 12px; color: var(--blue-dark); line-height: 1.65; }
+  .hint-box.on { display: block; }
+
+  .run-btn { width: 100%; padding: 12px; background: var(--blue); color: white; border: none; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 14px; transition: background 0.15s; }
+  .run-btn:hover { background: var(--blue-dark); }
+  .run-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .result-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 8px; }
+  .result-box { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 13px; line-height: 1.7; white-space: pre-wrap; min-height: 60px; color: var(--text); }
+  .result-box.loading { color: var(--text-hint); font-style: italic; }
+  .result-box.error { background: var(--red-light); color: var(--red); border-color: #F09595; }
+
+  .reflect-box { display: none; margin-top: 16px; background: var(--green-light); border-radius: var(--radius-sm); padding: 12px 14px; font-size: 13px; color: #173404; line-height: 1.65; }
+  .reflect-box.on { display: block; }
+  .reflect-box strong { color: var(--green); }
+
+  @media (max-width: 700px) {
+    .technique-grid, .anatomy-grid, .when-grid { grid-template-columns: 1fr; }
+    .shot-row { grid-template-columns: 1fr; }
+    .shot-arrow { display: none; }
+    .ex-progress { flex-wrap: wrap; }
+    .page { padding: 20px 16px 48px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div>
+    <div class="topbar-brand">Universidad Tecnológica de Bolívar — UTB</div>
+    <div class="topbar-sub">Curso de Adopción de IA | Taller de Prompting</div>
+  </div>
+  <div class="topbar-badge">Sesión 4 · 2025</div>
+</div>
+
+<div class="tab-bar">
+  <div class="tab on" onclick="showPage('theory',this)">Teoría</div>
+  <div class="tab" onclick="showPage('exercises',this)">Ejercicios prácticos</div>
+</div>
+
+<!-- ============================================================ THEORY PAGE -->
+<div id="theory" class="page on">
+  <div class="page-hero">
+    <h1>Técnicas de Prompting con IA</h1>
+    <p>Aprende cuándo y cómo usar Zero-Shot, One-Shot y Few-Shot Prompting para obtener resultados precisos y consistentes en tu trabajo universitario.</p>
+  </div>
+
+  <div class="technique-grid">
+    <div class="tcard tcard-zero">
+      <h3>Zero-Shot</h3>
+      <p>Haces la tarea directamente sin dar ningún ejemplo. La IA usa solo su entrenamiento para inferir el formato esperado.</p>
+      <p style="font-size:12px">Ideal para tareas simples, preguntas directas o primera exploración.</p>
+      <span class="tcard-badge badge-zero">0 ejemplos</span>
+    </div>
+    <div class="tcard tcard-one">
+      <h3>One-Shot</h3>
+      <p>Proporcionas exactamente 1 ejemplo de entrada y salida antes de tu tarea real. Establece el patrón mínimo.</p>
+      <p style="font-size:12px">Ideal cuando el formato es específico y la IA puede inferirlo con un solo modelo.</p>
+      <span class="tcard-badge badge-one">1 ejemplo</span>
+    </div>
+    <div class="tcard tcard-few">
+      <h3>Few-Shot</h3>
+      <p>Das 2 a 5 ejemplos que cubren variaciones del patrón. La IA generaliza el formato con mayor precisión.</p>
+      <p style="font-size:12px">Ideal para comunicaciones institucionales, análisis de datos o tareas con formato muy específico.</p>
+      <span class="tcard-badge badge-few">2–5 ejemplos</span>
+    </div>
+  </div>
+
+  <div class="theory-section">
+    <h2>Anatomía de un prompt con shots</h2>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:14px">Todo prompt de calidad tiene cuatro componentes. Los shots son el componente que diferencia las técnicas:</p>
+    <div class="anatomy-grid">
+      <div class="abox a-role"><div class="abox-label">1. Rol</div><div class="abox-val">Eres asistente de Registro Académico de la UTB</div></div>
+      <div class="abox a-ctx"><div class="abox-label">2. Contexto</div><div class="abox-val">Respondemos solicitudes estudiantiles con tono formal institucional</div></div>
+      <div class="abox a-shot"><div class="abox-label">3. Shots</div><div class="abox-val">Entrada 1 → Salida 1 / Entrada 2 → Salida 2 (0, 1 o varios)</div></div>
+      <div class="abox a-task"><div class="abox-label">4. Tarea real</div><div class="abox-val">Ahora responde esta nueva solicitud: [caso concreto]</div></div>
+    </div>
+  </div>
+
+  <div class="theory-section">
+    <h2>¿Cuándo usar cada técnica?</h2>
+    <div class="when-grid">
+      <div class="wbox w-zero">
+        <h4>Zero-Shot · sin ejemplos</h4>
+        <ul>
+          <li>Preguntas directas y factuales</li>
+          <li>Resúmenes generales de texto</li>
+          <li>Brainstorming inicial de ideas</li>
+          <li>Tareas sin formato específico</li>
+          <li>Clasificaciones con criterios claros</li>
+        </ul>
+      </div>
+      <div class="wbox w-one">
+        <h4>One-Shot · 1 ejemplo</h4>
+        <ul>
+          <li>Respuestas con estructura fija</li>
+          <li>Clasificaciones simples (sí/no)</li>
+          <li>Adaptación de estilo de escritura</li>
+          <li>Formatos de datos sencillos</li>
+          <li>Reportes con plantilla única</li>
+        </ul>
+      </div>
+      <div class="wbox w-few">
+        <h4>Few-Shot · 2 a 5 ejemplos</h4>
+        <ul>
+          <li>Comunicaciones institucionales</li>
+          <li>Análisis de datos con formato</li>
+          <li>Clasificación con matices</li>
+          <li>Redacción con voz de marca</li>
+          <li>Fichas o reportes estandarizados</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="theory-section">
+    <h2>Rendimiento comparativo</h2>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px">Consistencia de formato y tono institucional (escala relativa). Fuente: Brown et al., 2020 — GPT-3 paper.</p>
+    <div class="perf-row perf-zero"><span class="perf-label">Zero-Shot</span><div class="perf-bar-wrap"><div class="perf-bar"></div></div><span class="perf-pct">38%</span></div>
+    <div class="perf-row perf-one"><span class="perf-label">One-Shot</span><div class="perf-bar-wrap"><div class="perf-bar"></div></div><span class="perf-pct">65%</span></div>
+    <div class="perf-row perf-few3"><span class="perf-label">Few-Shot (3)</span><div class="perf-bar-wrap"><div class="perf-bar"></div></div><span class="perf-pct">87%</span></div>
+    <div class="perf-row perf-few5"><span class="perf-label">Few-Shot (5)</span><div class="perf-bar-wrap"><div class="perf-bar"></div></div><span class="perf-pct">91%</span></div>
+  </div>
+
+  <div class="theory-section">
+    <h2>Reglas de oro para construir buenos shots</h2>
+    <div class="tips-grid">
+      <span class="tip-pill">Los ejemplos deben ser representativos del caso real</span>
+      <span class="tip-pill">Varía los ejemplos — no repitas el mismo patrón</span>
+      <span class="tip-pill">El orden importa: pon el más parecido al final</span>
+      <span class="tip-pill">Más de 5 shots raramente mejora el resultado</span>
+      <span class="tip-pill">Los shots van ANTES de la tarea real</span>
+      <span class="tip-pill">Formato consistente en todos los ejemplos</span>
+      <span class="tip-pill">Usa el mismo idioma y nivel de formalidad</span>
+      <span class="tip-pill">No incluyas ejemplos con errores o excepciones</span>
+    </div>
+  </div>
+
+  <button class="cta-btn" onclick="document.querySelectorAll('.tab')[1].click()">Ir a ejercicios prácticos →</button>
+</div>
+
+<!-- ============================================================ EXERCISES PAGE -->
+<div id="exercises" class="page">
+  <div class="ex-progress" id="epRow">
+    <div class="ep-step active" id="ep0"><strong>Ej. 1</strong><span>Zero-Shot</span></div>
+    <div class="ep-step" id="ep1"><strong>Ej. 2</strong><span>One-Shot</span></div>
+    <div class="ep-step" id="ep2"><strong>Ej. 3</strong><span>One-Shot</span></div>
+    <div class="ep-step" id="ep3"><strong>Ej. 4</strong><span>Few-Shot</span></div>
+    <div class="ep-step" id="ep4"><strong>Ej. 5</strong><span>Few-Shot</span></div>
+    <div class="ep-step" id="ep5"><strong>Ej. 6</strong><span>Few-Shot</span></div>
+  </div>
+  <div class="ex-selector" id="exSel"></div>
+  <div id="exContainer"></div>
+</div>
+
+<script>
+const EXERCISES = [
+  {
+    id:0,type:"Zero-Shot",area:"Registro Académico",
+    title:"Clasifica la urgencia de solicitudes estudiantiles",
+    desc:"Sin dar ejemplos, construye un prompt claro con criterios explícitos para que la IA clasifique solicitudes en URGENTE, NORMAL o BAJA. Edita el prompt hasta obtener resultados consistentes.",
+    data:{title:"Solicitudes entrantes — semana actual",cols:["ID","Estudiante","Solicitud"],rows:[
+      ["SOL-001","María Pérez","Necesito constancia de notas antes del viernes para trámite de visa"],
+      ["SOL-002","Carlos García","¿Cuándo queda listo mi diploma de grado?"],
+      ["SOL-003","Ana Torres","Quiero saber si puedo cancelar una materia sin perder mi beca"],
+      ["SOL-004","Luis Martín","Solicito certificado de matrícula para subsidio de vivienda, mi plazo vence hoy"],
+      ["SOL-005","Sofía Reyes","¿Cuál es el calendario académico 2026-1?"]
+    ]},
+    shots:[],
+    prompt:"Eres el asistente de Registro Académico de la UTB. Clasifica las siguientes solicitudes estudiantiles según urgencia:\n\nCriterios:\n- URGENTE: tiene plazo en menos de 48h, afecta visa, beca o situación legal\n- NORMAL: requiere atención en la semana, sin plazo crítico\n- BAJA: informativa, sin plazo declarado\n\nSolicitudes:\n- SOL-001: Constancia de notas urgente para trámite de visa (viernes)\n- SOL-002: ¿Cuándo queda listo el diploma de grado?\n- SOL-003: ¿Puedo cancelar materia sin perder beca?\n- SOL-004: Certificado de matrícula para subsidio — plazo vence HOY\n- SOL-005: ¿Cuál es el calendario académico 2026-1?\n\nFormato de respuesta: ID | Estudiante | Urgencia | Razón (máx. 10 palabras)",
+    hint:"Zero-Shot funciona mejor cuando los criterios son explícitos en el prompt. Prueba agregar: 'Responde SOLO en el formato indicado. Si hay duda entre URGENTE y NORMAL, elige URGENTE.'",
+    reflect:"¿La IA clasificó correctamente sin ver ejemplos? Probablemente sí para los casos obvios, pero puede vacilar en los ambiguos (SOL-003). Esto demuestra que Zero-Shot funciona cuando los criterios son lógicos y claros en el prompt."
+  },
+  {
+    id:1,type:"One-Shot",area:"Bienestar Universitario",
+    title:"Respuestas empáticas con un solo ejemplo guía",
+    desc:"Con exactamente 1 ejemplo de respuesta empática, la IA aprenderá el tono y estructura de Bienestar. Observa cómo replica el patrón en los nuevos casos.",
+    data:{title:"Casos recibidos — Bienestar Universitario",cols:["Código","Situación reportada"],rows:[
+      ["BU-012","Estudiante de Ing. Industrial, 3er semestre. Dice que se siente estresado con los parciales y no está durmiendo bien."],
+      ["BU-013","Estudiante extranjera de Administración. Siente que no encaja con su grupo de trabajo y quiere cambiarse de sección."],
+      ["BU-014","Estudiante de primer año. Sus padres perdieron el empleo y no sabe si podrá pagar el próximo semestre."]
+    ]},
+    shots:[{
+      input:"BU-010 — Estudiante de Derecho, 5to semestre. Dice que piensa en abandonar la carrera porque siente que eligió mal.",
+      output:"Hola, muchas gracias por escribirnos. Que compartas esto con nosotros es un paso muy valioso. Es completamente normal tener momentos de duda sobre el camino que estamos recorriendo — muchos estudiantes lo experimentan, especialmente en semestres exigentes. Antes de tomar cualquier decisión, te invitamos a agendar una cita de orientación vocacional totalmente confidencial y gratuita. Un espacio para conversar con calma, sin presiones. ¿Te gustaría que te busquemos un horario esta semana?"
+    }],
+    prompt:"Usando el ejemplo como guía de tono y estructura, genera una respuesta de Bienestar para el caso BU-014:\n\n'Estudiante de primer año. Sus padres perdieron el empleo y no sabe si podrá pagar el próximo semestre.'\n\nLa respuesta debe: agradecer que se comunicó, validar el sentimiento, ofrecer opciones concretas y terminar con una pregunta abierta.",
+    hint:"Observa el ejemplo: empieza con agradecimiento, valida el sentimiento, normaliza la situación, ofrece una acción concreta y termina con una pregunta abierta. Tu respuesta debe seguir ese mismo flujo, adaptado a la situación económica.",
+    reflect:"¿La IA mantuvo el tono empático y la estructura del ejemplo? ¿Usó frases similares? Esto es One-Shot: un ejemplo establece el patrón mínimo para que la IA lo replique con precisión."
+  },
+  {
+    id:2,type:"One-Shot",area:"Gestión Financiera",
+    title:"Reportes de ejecución presupuestal con formato estándar",
+    desc:"Con 1 ejemplo de reporte ejecutivo, la IA aprenderá a transformar datos brutos en reportes con semáforo institucional. Observa qué elementos del formato replica.",
+    data:{title:"Ejecución presupuestal Q2 2025 — UTB",cols:["Área","Presupuesto","Ejecutado","% Ejec.","Meta Q2"],rows:[
+      ["Investigación","$480M","$312M","65%","60%"],
+      ["Infraestructura","$920M","$230M","25%","45%"],
+      ["Bienestar","$210M","$189M","90%","75%"],
+      ["Internacionalización","$150M","$45M","30%","50%"],
+      ["Sistemas y TI","$340M","$306M","90%","80%"]
+    ]},
+    shots:[{
+      input:"Área: Docencia | Presupuesto: $650M | Ejecutado: $455M | Ejecución: 70% | Meta Q2: 65%",
+      output:"DOCENCIA — Ejecución Q2: 70% (SUPERA META en 5pp). Estado: VERDE. Observación: ritmo sólido, proyección anual estimada al 140%. Sin alertas. Próxima revisión: inicio Q3."
+    }],
+    prompt:"Usando el ejemplo como modelo de formato, genera el reporte ejecutivo para el área de INFRAESTRUCTURA:\n\nÁrea: Infraestructura | Presupuesto: $920M | Ejecutado: $230M | Ejecución: 25% | Meta Q2: 45%\n\nFormato: ÁREA — Ejecución Q2: X% (comparar con meta). Estado: VERDE/AMARILLO/ROJO. Observación. Próxima acción.",
+    hint:"Infraestructura ejecutó 25% vs meta del 45% — está 20pp por debajo. Estado debería ser ROJO. El reporte debe incluir la acción correctiva específica, no solo describir el problema.",
+    reflect:"¿El reporte usó exactamente el mismo formato del ejemplo? ¿Calculó correctamente los puntos porcentuales de diferencia? ¿Asignó el semáforo correcto (ROJO)? One-Shot es ideal para formatos de reporte donde la estructura es fija."
+  },
+  {
+    id:3,type:"Few-Shot",area:"Dirección Académica",
+    title:"Alertas de riesgo académico con criterios múltiples",
+    desc:"Con 2 ejemplos que muestran niveles de alerta distintos, la IA aprende tanto el formato como los criterios de clasificación. Compara la precisión vs One-Shot.",
+    data:{title:"Indicadores académicos — Ing. Industrial 2025-1",cols:["Código","Nombre","Promedio","Mat. perdidas","Asistencia","Becado"],rows:[
+      ["2021-0341","Felipe Castro","2.8","2","72%","Sí"],
+      ["2022-0891","Laura Mendoza","3.9","0","95%","No"],
+      ["2020-1204","Diego Herrera","1.9","3","55%","Sí"],
+      ["2023-0055","Valentina Cruz","3.1","1","88%","No"],
+      ["2021-0782","Andrés Molina","2.3","2","61%","No"]
+    ]},
+    shots:[
+      {input:"Código: 2022-0412 | Nombre: Juliana Ríos | Promedio: 2.5 | Materias perdidas: 2 | Asistencia: 68% | Becada: Sí",output:"ALERTA MEDIA — Juliana Ríos (2022-0412). Promedio bajo (2.5) con 2 materias en riesgo. Asistencia deficiente (68%). ATENCIÓN: estudiante becada — pérdida de beca si promedio cae bajo 3.0. Acción: citar a consejería académica esta semana. Responsable: coordinador de programa."},
+      {input:"Código: 2023-0118 | Nombre: Sebastián López | Promedio: 1.7 | Materias perdidas: 4 | Asistencia: 42% | Becado: No",output:"ALERTA ALTA — Sebastián López (2023-0118). Situación crítica: promedio 1.7 con 4 materias perdidas. Asistencia muy baja (42%) — posible abandono silencioso. Acción inmediata: contactar por teléfono hoy + notificar a familia + activar protocolo de retención. Responsable: dirección académica + bienestar."}
+    ],
+    prompt:"Con los 2 ejemplos como guía, genera alertas académicas para Diego Herrera y Andrés Molina:\n\nDiego Herrera: Código 2020-1204 | Promedio: 1.9 | Materias perdidas: 3 | Asistencia: 55% | Becado: Sí\nAndrés Molina: Código 2021-0782 | Promedio: 2.3 | Materias perdidas: 2 | Asistencia: 61% | Becado: No\n\nUsa el mismo formato: nivel de alerta, nombre, análisis de indicadores, impacto de beca si aplica, acción y responsable.",
+    hint:"Diego tiene 1.9 de promedio + becado → ALTA urgencia por doble riesgo (académico + pérdida de beca). Andrés tiene 2.3 sin beca → MEDIA. Ambos tienen asistencia bajo 70% lo que aumenta el nivel de alerta.",
+    reflect:"¿Las alertas usaron el mismo formato de los ejemplos? ¿El nivel fue consistente con los criterios implícitos en los shots? Con 2 ejemplos que muestran MEDIA y ALTA, la IA aprendió tanto el formato como la lógica de clasificación."
+  },
+  {
+    id:4,type:"Few-Shot",area:"Mercadeo y Comunicaciones",
+    title:"Publicaciones institucionales con voz de marca UTB",
+    desc:"Con 3 ejemplos de diferentes plataformas, la IA aprende el tono, estructura y estilo específico de UTB. Genera contenido para la agenda de mayo.",
+    data:{title:"Agenda de contenidos — redes UTB, mayo 2025",cols:["Fecha","Plataforma","Tema","Tipo"],rows:[
+      ["05/05","Instagram","Semana de la ingeniería","Celebración"],
+      ["12/05","LinkedIn","Convenio con empresa tech de Bogotá","Noticia"],
+      ["19/05","Instagram","Graduada UTB consiguió empleo internacional","Historia de vida"],
+      ["26/05","Twitter/X","Recordatorio fechas de grado junio","Informativo"]
+    ]},
+    shots:[
+      {input:"Instagram | Logro académico | Estudiante UTB gana hackathon nacional de sostenibilidad",output:"El talento de nuestra comunidad no tiene techo. Camilo Restrepo, estudiante de Ingeniería Ambiental, se alzó con el primer lugar en el Hackathon Nacional de Sostenibilidad 2025 entre más de 200 equipos del país. Su proyecto propone reducir residuos industriales en puertos colombianos usando sensores IoT. Orgullo azul y verde. #UTB #Hackathon #Sostenibilidad #TalentoUTB"},
+      {input:"LinkedIn | Alianza estratégica | UTB firma convenio con Ministerio de Ciencia para investigación en IA",output:"Nos enorgullece anunciar que la Universidad Tecnológica de Bolívar ha firmado un convenio de cooperación con el Ministerio de Ciencias, Tecnología e Innovación para el desarrollo de investigación aplicada en Inteligencia Artificial. Este acuerdo abre financiación para 8 proyectos y 15 becas doctorales en tres años. Un paso firme hacia la universidad investigativa que estamos construyendo."},
+      {input:"Instagram | Recordatorio | Última semana para inscribirse en becas para estratos 1 y 2",output:"El tiempo corre. Si eres estudiante UTB de estrato 1 o 2 con promedio superior a 3.5, aún puedes aplicar a nuestra beca de excelencia. Quedan 5 días para el cierre. Formulario: utb.edu.co/becas. Comparte con quien lo necesite. Porque el talento no debería tener barreras. #UTB #Becas #Educacion"}
+    ],
+    prompt:"Usando los 3 ejemplos como guía de tono, genera el contenido para Instagram del 19 de mayo:\n\nTema: Historia de vida — Graduada de Administración de Empresas UTB (promoción 2022) consiguió empleo como analista financiera en multinacional en Medellín, 6 meses después de graduarse.\n\nDebe incluir: frase de impacto inicial, datos específicos de la historia, reflexión institucional y hashtags UTB.",
+    hint:"La voz UTB en Instagram: empieza con frase de impacto o pregunta retórica, usa datos concretos (nombre, programa, logro específico), conecta con el valor institucional y cierra con emoción + hashtags. Tono: inspiracional, directo, orgulloso.",
+    reflect:"¿La publicación tiene la misma estructura de los ejemplos? ¿Capturó el tono emocional e inspiracional? Con 3 ejemplos variados, la IA aprendió tanto el formato como el DNA comunicacional de UTB."
+  },
+  {
+    id:5,type:"Few-Shot",area:"Investigación y Posgrados",
+    title:"Fichas de síntesis de literatura científica estandarizadas",
+    desc:"Con 2 ejemplos de fichas académicas, la IA aprende a extraer y estructurar información relevante de artículos en el formato del grupo de investigación UTB.",
+    data:{title:"Artículos para revisión sistemática — Grupo GISI, UTB",cols:["Ref","Título","Autores","Año"],rows:[
+      ["A01","Predictive Analytics in University Dropout: A Systematic Review","González et al.","2024"],
+      ["A02","Large Language Models for Academic Writing Assistance","Kim & Patel","2025"],
+      ["A03","Digital Transformation in Colombian Public Universities","Restrepo et al.","2023"],
+      ["A04","Student Mental Health and Academic Performance in Colombian HEIs","Vargas et al.","2024"]
+    ]},
+    shots:[
+      {input:"Ref: B12 | Título: 'AI-Powered Grading Systems: Faculty Acceptance and Student Outcomes' | Autores: Liu & Chen | Año: 2023 | Abstract: Study across 14 universities in Asia. Results: 67% adoption rate where training was provided, grading consistency improved (r=0.89). No significant change in student performance but perceived fairness increased.",output:"FICHA B12 — Liu & Chen (2023). TEMA: Adopción de sistemas de calificación con IA por docentes universitarios. HALLAZGO PRINCIPAL: 67% de adopción con capacitación previa; mejora en consistencia de notas (r=0.89). LIMITACIÓN: muestra concentrada en Asia — transferibilidad limitada a Latinoamérica. RELEVANCIA UTB: base para proyecto de evaluación asistida por IA en programas de ingeniería. PALABRAS CLAVE: AI grading, faculty acceptance, higher education."},
+      {input:"Ref: B08 | Título: 'Early Warning Systems for Student Retention in STEM Programs' | Autores: Martínez et al. | Año: 2022 | Abstract: ML model to predict first-year dropout in STEM. Achieved 84% accuracy using attendance, grades and LMS engagement data from 3,200 students across 5 Colombian universities.",output:"FICHA B08 — Martínez et al. (2022). TEMA: Sistemas de alerta temprana con ML para deserción en STEM. HALLAZGO PRINCIPAL: modelo predictivo con 84% de precisión usando asistencia, notas y actividad LMS. LIMITACIÓN: solo 5 universidades colombianas con LMS maduro. RELEVANCIA UTB: replicable con datos de Moodle UTB; candidato a proyecto MINCIENCIAS. PALABRAS CLAVE: machine learning, student retention, early warning, STEM."}
+    ],
+    prompt:"Usando los 2 ejemplos como modelo, genera la ficha de síntesis para el artículo A04:\n\nTítulo: 'Student Mental Health and Academic Performance: Evidence from Colombian HEIs'\nAutores: Vargas et al. | Revista: Psicología Educativa | Año: 2024\nAbstract: Estudio longitudinal en 6 IES colombianas (n=2.840). Estudiantes con ansiedad moderada-alta tienen promedios 0.6 puntos menores y 2.3 veces más probabilidad de reprobación. Intervenciones de bienestar redujeron la brecha en 40% en instituciones con programas activos.\n\nFormato: FICHA + referencia, TEMA, HALLAZGO PRINCIPAL, LIMITACIÓN, RELEVANCIA UTB, PALABRAS CLAVE.",
+    hint:"La sección RELEVANCIA UTB es la más importante para el grupo GISI — debe conectar el hallazgo con una aplicación concreta en la UTB (proyecto, programa, política). Incluye datos numéricos del abstract en HALLAZGO PRINCIPAL.",
+    reflect:"¿La ficha tiene todas las secciones del modelo? ¿La RELEVANCIA UTB es específica y accionable? ¿Los datos del abstract se extrajeron con precisión? Con 2 ejemplos variados, la IA generaliza el formato académico institucional."
+  }
+];
+
+let currentEx = 0;
+const doneSet = new Set();
+
+function showPage(id, tabEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  tabEl.classList.add('on');
+}
+
+function renderSelButtons() {
+  const cont = document.getElementById('exSel');
+  cont.innerHTML = '';
+  EXERCISES.forEach((ex, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'ex-sel-btn' + (i === currentEx ? ' on' : '');
+    btn.textContent = `Ej. ${i+1}: ${ex.type}`;
+    btn.onclick = () => { currentEx = i; renderSelButtons(); renderExercise(); };
+    cont.appendChild(btn);
+  });
+}
+
+function renderExercise() {
+  const ex = EXERCISES[currentEx];
+  const badgeColors = {'Zero-Shot':'background:#FCEBEB;color:#A32D2D','One-Shot':'background:#FAEEDA;color:#854F0B','Few-Shot':'background:#EAF3DE;color:#3B6D11'};
+  let dataHTML = `<div class="data-panel"><div class="panel-title">Datos sintéticos — ${ex.data.title}</div>
+    <table class="data-tbl"><thead><tr>${ex.data.cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+    <tbody>${ex.data.rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+
+  let shotsHTML = '';
+  if(ex.shots.length > 0) {
+    const label = ex.shots.length === 1 ? '1 shot · ejemplo guía' : `${ex.shots.length} shots · ejemplos guía`;
+    shotsHTML = `<div class="shots-panel"><div class="panel-title">${label}</div>`;
+    ex.shots.forEach((s,i) => {
+      shotsHTML += `<div class="shot-item"><div class="shot-row">
+        <div class="shot-col-in"><div class="sh-label">Entrada (shot ${i+1})</div><div class="sh-text">${s.input}</div></div>
+        <div class="shot-arrow">→</div>
+        <div class="shot-col-out"><div class="sh-label">Salida esperada</div><div class="sh-text">${s.output}</div></div>
+      </div></div>`;
+    });
+    shotsHTML += '</div>';
+  }
+
+  document.getElementById('exContainer').innerHTML = `
+    <div class="ex-card">
+      <div class="ex-card-header">
+        <span class="ex-type-badge" style="${badgeColors[ex.type]}">${ex.type} · ${ex.area}</span>
+        <div class="ex-title">${ex.title}</div>
+        <div class="ex-desc">${ex.desc}</div>
+      </div>
+      <div class="ex-card-body">
+        ${dataHTML}
+        ${shotsHTML}
+        <div class="task-section">
+          <label>Tu prompt · edítalo y experimenta</label>
+          <textarea id="pt-${ex.id}">${ex.prompt}</textarea>
+        </div>
+        <button class="hint-btn" onclick="toggleHint(${ex.id})">Ver pista para este ejercicio</button>
+        <div class="hint-box" id="hb-${ex.id}">${ex.hint}</div>
+        <button class="run-btn" id="rb-${ex.id}" onclick="runEx(${ex.id})">Ejecutar con Claude →</button>
+        <div class="result-label">Respuesta de la IA</div>
+        <div class="result-box" id="res-${ex.id}">La respuesta aparecerá aquí después de ejecutar...</div>
+        <div class="reflect-box" id="rf-${ex.id}"><strong>Reflexión:</strong> ${ex.reflect}</div>
+      </div>
+    </div>`;
+
+  document.querySelectorAll('.ep-step').forEach((s,i) => {
+    s.classList.remove('active','done');
+    if(doneSet.has(i)) s.classList.add('done');
+    if(i === currentEx) s.classList.add('active');
+  });
+}
+
+function toggleHint(id) { document.getElementById(`hb-${id}`).classList.toggle('on'); }
+
+async function runEx(id) {
+  const ex = EXERCISES.find(e => e.id === id);
+  const prompt = document.getElementById(`pt-${id}`).value.trim();
+  const btn = document.getElementById(`rb-${id}`);
+  const resEl = document.getElementById(`res-${id}`);
+  const rfEl = document.getElementById(`rf-${id}`);
+  btn.disabled = true; btn.textContent = 'Ejecutando...';
+  resEl.className = 'result-box loading'; resEl.textContent = 'Generando respuesta con Claude...';
+  const sys = `Eres un asistente experto del área de ${ex.area} de la Universidad Tecnológica de Bolívar (UTB), Cartagena, Colombia. Este es un ejercicio educativo de prompting. Responde siempre en español. Sigue estrictamente el formato indicado.`;
+  const messages = [
+    ...ex.shots.flatMap(s=>[{role:'user',content:s.input},{role:'assistant',content:s.output}]),
+    {role:'user',content:prompt}
+  ];
+  try {
+    const r = await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,system:sys,messages})});
+    const d = await r.json();
+    if(d.error) throw new Error(d.error.message);
+    resEl.className='result-box'; resEl.textContent=d.content.filter(b=>b.type==='text').map(b=>b.text).join('');
+    rfEl.classList.add('on'); doneSet.add(id);
+    document.querySelectorAll('.ep-step').forEach((s,i)=>{s.classList.remove('active','done');if(doneSet.has(i))s.classList.add('done');if(i===currentEx)s.classList.add('active');});
+  } catch(err) { resEl.className='result-box error'; resEl.textContent='Error: '+err.message; }
+  btn.disabled=false; btn.textContent='Ejecutar con Claude →';
+}
+
+renderSelButtons(); renderExercise();
+</script>
+</body>
+</html>
