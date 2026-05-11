@@ -1,0 +1,201 @@
+codigo,nombre,genero,programa,semestre,estrato,municipio_origen,tipo_beca,promedio_acumulado,asistencia_pct,materias_reprobadas,creditos_cursados,estado_academico,satisfaccion_carrera,modalidad
+COD-ADM-2019-0001,Carlos Pérez González,M,Administración de Empresas,4,1,Cartagena,ICETEX,2.09,72.2,2,71,RIESGO,3.9,Presencial
+COD-CON-2019-0002,Jorge Rodríguez Pérez,M,Contaduría Pública,9,2,Barranquilla,SIN_BECA,3.79,75.5,0,162,REGULAR,4.9,Presencial
+COD-IND-2019-0003,María López Torres,F,Ingeniería Industrial,6,4,Montería,EXCELENCIA,3.68,74.7,1,112,REGULAR,4.2,Presencial
+COD-IND-2019-0004,Daniela Rodríguez Pérez,F,Ingeniería Industrial,1,3,Santa Marta,BIENESTAR,3.96,72.7,0,19,REGULAR,4.8,Presencial
+COD-CON-2019-0005,Carolina Mora González,F,Contaduría Pública,2,3,Cartagena,ICETEX,3.49,97.9,2,40,REGULAR,4.2,Presencial
+COD-IND-2019-0006,Paula Jiménez Jiménez,F,Ingeniería Industrial,4,4,Santa Marta,SIN_BECA,4.59,100,0,71,DESTACADO,4.2,Virtual
+COD-SIS-2019-0007,Luisa Díaz Mora,F,Ingeniería de Sistemas,3,2,Cartagena,ICETEX,2.97,99.6,2,53,SEGUIMIENTO,3.7,Mixta
+COD-IND-2019-0008,Jorge Ramírez López,M,Ingeniería Industrial,2,1,Cartagena,ICETEX,2.39,72.4,0,36,RIESGO,3.5,Mixta
+COD-CON-2019-0009,Miguel Pérez López,M,Contaduría Pública,9,3,Santa Marta,SIN_BECA,3.06,91.3,2,162,REGULAR,4.1,Mixta
+COD-CON-2019-0010,Jorge Díaz López,M,Contaduría Pública,5,4,Barranquilla,SIN_BECA,3.01,89.2,3,86,REGULAR,3.7,Presencial
+COD-DER-2019-0011,Ana López Díaz,F,Derecho,5,2,Cartagena,ICETEX,3.97,100,1,94,REGULAR,2.9,Virtual
+COD-ADM-2019-0012,Miguel Ramírez Vargas,M,Administración de Empresas,5,3,Montería,BIENESTAR,4.14,84.4,0,92,REGULAR,3.6,Mixta
+COD-SIS-2019-0013,Natalia Díaz Vargas,F,Ingeniería de Sistemas,2,2,Cartagena,SIN_BECA,2.22,72.4,3,32,RIESGO,3.9,Presencial
+COD-PSI-2019-0014,Nicolás Hernández López,M,Psicología,4,2,Barranquilla,SIN_BECA,2.82,58.1,0,75,SEGUIMIENTO,3.8,Virtual
+COD-SIS-2019-0015,Juan López Mora,M,Ingeniería de Sistemas,6,2,Barranquilla,ICETEX,2.17,46.7,2,109,RIESGO,4.2,Virtual
+COD-PSI-2019-0016,Andrés Rodríguez Rodríguez,M,Psicología,8,1,Cartagena,SIN_BECA,3.1,81.4,1,141,REGULAR,3,Presencial
+COD-ADM-2019-0017,Juan Díaz Jiménez,M,Administración de Empresas,3,2,Barranquilla,EXCELENCIA,3.86,86.7,1,57,REGULAR,4.4,Presencial
+COD-ADM-2019-0018,Laura Rodríguez González,F,Administración de Empresas,1,3,Barranquilla,ICETEX,3.97,97.3,0,16,REGULAR,4.4,Presencial
+COD-PSI-2019-0019,Nicolás Martínez López,M,Psicología,2,3,Cartagena,SIN_BECA,3.54,82.6,0,38,REGULAR,3.8,Virtual
+COD-CON-2019-0020,Luisa González Rodríguez,F,Contaduría Pública,6,2,Cartagena,ICETEX,2.86,92.8,1,111,SEGUIMIENTO,3.8,Presencial
+COD-PSI-2019-0021,Juan Vargas Rodríguez,M,Psicología,5,1,Cartagena,SIN_BECA,2.94,93.3,0,90,SEGUIMIENTO,4.4,Presencial
+COD-DER-2019-0022,Miguel Ruiz Vargas,M,Derecho,2,5,Cartagena,SIN_BECA,4.05,100,0,37,DESTACADO,5,Presencial
+COD-IND-2019-0023,Camila Ramírez González,F,Ingeniería Industrial,2,3,Bogotá,SIN_BECA,2.99,89.4,1,39,SEGUIMIENTO,4.1,Presencial
+COD-IND-2019-0024,Camila García López,F,Ingeniería Industrial,3,3,Bogotá,ICETEX,3.36,91.9,0,50,REGULAR,5,Mixta
+COD-IND-2019-0025,Miguel Rodríguez Mora,M,Ingeniería Industrial,6,4,Bogotá,SIN_BECA,3.01,79.3,3,106,REGULAR,3.6,Mixta
+COD-DER-2019-0026,Pedro Pérez Díaz,M,Derecho,7,4,Bogotá,EXCELENCIA,3.66,100,2,129,REGULAR,5,Presencial
+COD-ADM-2019-0027,Valentina González Ruiz,F,Administración de Empresas,4,1,Cartagena,SIN_BECA,4.04,68.7,0,74,REGULAR,5,Virtual
+COD-DER-2019-0028,Ana López Díaz,F,Derecho,3,3,Medellín,SIN_BECA,2.67,75.1,1,58,SEGUIMIENTO,3.4,Presencial
+COD-SIS-2019-0029,Diego García Pérez,M,Ingeniería de Sistemas,1,3,Santa Marta,ICETEX,4.15,86,0,19,DESTACADO,5,Presencial
+COD-PSI-2019-0030,Luis Díaz González,M,Psicología,5,3,Cartagena,ICETEX,2.76,79.5,0,88,SEGUIMIENTO,3.5,Presencial
+COD-IND-2019-0031,Isabella Vargas Ruiz,F,Ingeniería Industrial,5,2,Barranquilla,ICETEX,2.63,70,0,93,SEGUIMIENTO,4.1,Virtual
+COD-PSI-2019-0032,Miguel López González,M,Psicología,10,2,Santa Marta,ICETEX,2.82,75,1,179,SEGUIMIENTO,4.2,Mixta
+COD-CON-2019-0033,Alejandro Torres Díaz,M,Contaduría Pública,10,2,Sincelejo,SIN_BECA,3.08,100,2,177,REGULAR,4.2,Virtual
+COD-PSI-2019-0034,Pedro Jiménez Pérez,M,Psicología,8,1,Cartagena,EXCELENCIA,2.29,84.1,0,145,RIESGO,2.3,Mixta
+COD-PSI-2019-0035,Daniela Ruiz Pérez,F,Psicología,7,4,Barranquilla,EXCELENCIA,3.75,76.4,0,126,REGULAR,4.8,Virtual
+COD-SIS-2019-0036,Sara Rodríguez González,F,Ingeniería de Sistemas,2,3,Cartagena,SIN_BECA,3.37,83.9,1,34,REGULAR,4.7,Virtual
+COD-PSI-2019-0037,Felipe Torres Hernández,M,Psicología,8,2,Cartagena,SIN_BECA,3.75,81.1,0,146,REGULAR,3.2,Presencial
+COD-SIS-2019-0038,Sofía Jiménez Torres,F,Ingeniería de Sistemas,9,3,Barranquilla,ICETEX,3.24,94.2,0,163,REGULAR,4.2,Virtual
+COD-SIS-2019-0039,Juliana Martínez Ruiz,F,Ingeniería de Sistemas,3,6,Barranquilla,EXCELENCIA,3.22,76.1,1,57,REGULAR,4.5,Presencial
+COD-SIS-2019-0040,Isabella Hernández Rodríguez,F,Ingeniería de Sistemas,6,2,Bogotá,SIN_BECA,3.69,85.7,0,112,REGULAR,3.7,Presencial
+COD-CON-2020-0041,Carolina Mora López,F,Contaduría Pública,1,3,Medellín,SIN_BECA,3.53,89.1,1,17,REGULAR,4.9,Presencial
+COD-PSI-2020-0042,Andrea Hernández Martínez,F,Psicología,10,5,Valledupar,EXCELENCIA,4.19,100,0,182,DESTACADO,3.8,Presencial
+COD-CON-2020-0043,Juan Castro Pérez,M,Contaduría Pública,4,1,Santa Marta,EXCELENCIA,3.15,81.6,2,73,REGULAR,4,Presencial
+COD-DER-2020-0044,María Vargas Mora,F,Derecho,1,4,Bogotá,SIN_BECA,4.18,89.3,0,20,DESTACADO,3.6,Presencial
+COD-PSI-2020-0045,Daniela Jiménez Díaz,F,Psicología,8,3,Bogotá,ICETEX,2.95,91.7,1,147,SEGUIMIENTO,3.9,Presencial
+COD-SIS-2020-0046,Daniela Castro Mora,F,Ingeniería de Sistemas,6,1,Bogotá,SIN_BECA,3.19,100,0,108,REGULAR,5,Presencial
+COD-SIS-2020-0047,Juan Rodríguez Pérez,M,Ingeniería de Sistemas,8,3,Cartagena,SIN_BECA,2.99,71.2,2,146,SEGUIMIENTO,4.2,Virtual
+COD-SIS-2020-0048,Sara Castro Hernández,F,Ingeniería de Sistemas,9,3,Barranquilla,ICETEX,2.67,97.7,1,159,SEGUIMIENTO,4.5,Virtual
+COD-CON-2020-0049,María Pérez Vargas,F,Contaduría Pública,3,2,Valledupar,SIN_BECA,2.11,66.1,0,53,RIESGO,2.9,Presencial
+COD-CON-2020-0050,Laura González García,F,Contaduría Pública,9,1,Cartagena,SIN_BECA,2.51,100,0,159,SEGUIMIENTO,3.2,Mixta
+COD-DER-2020-0051,Natalia Ramírez Ramírez,F,Derecho,3,5,Cartagena,EXCELENCIA,4.08,95.5,0,50,DESTACADO,4.5,Presencial
+COD-PSI-2020-0052,María Rodríguez López,F,Psicología,7,3,Santa Marta,SIN_BECA,2.46,77.8,0,128,RIESGO,4.4,Presencial
+COD-ADM-2020-0053,David Pérez López,M,Administración de Empresas,4,2,Cartagena,SIN_BECA,2.68,79.2,0,75,SEGUIMIENTO,4.5,Presencial
+COD-CON-2020-0054,Diego Pérez González,M,Contaduría Pública,8,1,Cartagena,SIN_BECA,3.14,69.6,1,141,REGULAR,3.8,Presencial
+COD-ADM-2020-0055,Tomás González Ruiz,M,Administración de Empresas,2,1,Santa Marta,ICETEX,3.58,64.5,0,36,SEGUIMIENTO,4.5,Virtual
+COD-SIS-2020-0056,Camila Vargas Ramírez,F,Ingeniería de Sistemas,2,3,Bogotá,ICETEX,3.04,82.7,1,32,REGULAR,5,Mixta
+COD-ADM-2020-0057,Daniela García Jiménez,F,Administración de Empresas,8,3,Barranquilla,SIN_BECA,3.86,90.6,1,147,REGULAR,2.9,Presencial
+COD-ADM-2020-0058,Valentina Mora López,F,Administración de Empresas,6,2,Barranquilla,ICETEX,2.15,89.1,2,108,RIESGO,3.9,Presencial
+COD-IND-2020-0059,Paula Vargas Ruiz,F,Ingeniería Industrial,9,3,Cartagena,SIN_BECA,2.61,71.1,1,162,SEGUIMIENTO,4.1,Presencial
+COD-SIS-2020-0060,Natalia Díaz Pérez,F,Ingeniería de Sistemas,2,1,Sincelejo,EXCELENCIA,3.28,76.2,1,35,REGULAR,4.2,Mixta
+COD-ADM-2020-0061,Alejandro López Mora,M,Administración de Empresas,8,5,Cartagena,ICETEX,2.76,89.1,0,142,SEGUIMIENTO,4.1,Presencial
+COD-SIS-2020-0062,Nicolás López González,M,Ingeniería de Sistemas,6,5,Barranquilla,EXCELENCIA,3.79,100,0,111,REGULAR,3.2,Mixta
+COD-DER-2020-0063,Camila Ramírez Hernández,F,Derecho,9,4,Cartagena,BIENESTAR,4.53,71.6,0,164,REGULAR,5,Presencial
+COD-SIS-2020-0064,Juliana Díaz Jiménez,F,Ingeniería de Sistemas,7,6,Santa Marta,ICETEX,4.49,100,1,127,DESTACADO,5,Mixta
+COD-SIS-2020-0065,María Vargas Díaz,F,Ingeniería de Sistemas,1,3,Barranquilla,ICETEX,3.57,99.7,1,20,REGULAR,4.2,Presencial
+COD-PSI-2020-0066,Paula Mora Ruiz,F,Psicología,7,5,Montería,EXCELENCIA,3.09,85.9,0,126,REGULAR,3.8,Mixta
+COD-CON-2020-0067,Felipe López Jiménez,M,Contaduría Pública,2,2,Sincelejo,EXCELENCIA,4.65,100,0,34,DESTACADO,5,Presencial
+COD-ADM-2020-0068,Daniela Mora Jiménez,F,Administración de Empresas,3,1,Montería,SIN_BECA,2.61,68,0,54,SEGUIMIENTO,3.8,Presencial
+COD-DER-2020-0069,Tomás Jiménez Ramírez,M,Derecho,9,1,Barranquilla,SIN_BECA,2.13,68.1,1,162,RIESGO,4,Presencial
+COD-ADM-2020-0070,Paula Ramírez López,F,Administración de Empresas,7,3,Montería,BIENESTAR,2.66,100,0,122,SEGUIMIENTO,3.6,Mixta
+COD-DER-2020-0071,Paula Díaz Díaz,F,Derecho,4,3,Cartagena,ICETEX,2.45,67.2,1,70,RIESGO,3.1,Presencial
+COD-IND-2020-0072,Diego Jiménez Ramírez,M,Ingeniería Industrial,10,2,Cartagena,EXCELENCIA,3.23,96.9,1,181,REGULAR,5,Presencial
+COD-SIS-2020-0073,Paula Martínez González,F,Ingeniería de Sistemas,5,3,Cartagena,SIN_BECA,3.51,86.6,2,92,REGULAR,4,Mixta
+COD-IND-2020-0074,María Jiménez Torres,F,Ingeniería Industrial,5,3,Barranquilla,ICETEX,2.76,68,2,87,SEGUIMIENTO,2.7,Virtual
+COD-PSI-2020-0075,Ana Castro Díaz,F,Psicología,6,4,Cartagena,SIN_BECA,3.92,67.8,0,106,REGULAR,5,Presencial
+COD-IND-2020-0076,Diego Ramírez López,M,Ingeniería Industrial,4,4,Cartagena,SIN_BECA,2.77,64.8,2,70,SEGUIMIENTO,3.8,Mixta
+COD-SIS-2020-0077,Nicolás Ramírez Castro,M,Ingeniería de Sistemas,5,1,Cartagena,SIN_BECA,4.14,85.9,1,94,DESTACADO,5,Mixta
+COD-ADM-2020-0078,Ana Torres González,F,Administración de Empresas,2,5,Bogotá,SIN_BECA,3.62,100,0,37,REGULAR,4.3,Presencial
+COD-IND-2020-0079,Santiago Castro Rodríguez,M,Ingeniería Industrial,9,2,Cartagena,EXCELENCIA,3.37,92.9,0,160,REGULAR,4.2,Mixta
+COD-CON-2020-0080,Andrea Martínez López,F,Contaduría Pública,1,1,Cartagena,EXCELENCIA,3.32,85.4,0,20,REGULAR,4.5,Presencial
+COD-DER-2021-0081,Alejandro Ramírez Jiménez,M,Derecho,9,3,Barranquilla,SIN_BECA,2.37,66.2,3,162,RIESGO,3.4,Presencial
+COD-SIS-2021-0082,Carlos Ramírez Ruiz,M,Ingeniería de Sistemas,7,3,Barranquilla,EXCELENCIA,3.9,93.4,0,126,REGULAR,4.2,Presencial
+COD-DER-2021-0083,Isabella Castro Vargas,F,Derecho,8,3,Barranquilla,EXCELENCIA,4.37,100,0,143,DESTACADO,4,Presencial
+COD-SIS-2021-0084,Felipe Hernández Ruiz,M,Ingeniería de Sistemas,7,2,Cartagena,SIN_BECA,2.72,71.8,2,123,SEGUIMIENTO,5,Presencial
+COD-CON-2021-0085,Juan Torres López,M,Contaduría Pública,6,4,Montería,ICETEX,2.74,77.9,2,110,SEGUIMIENTO,4.4,Mixta
+COD-DER-2021-0086,Diego Castro González,M,Derecho,2,3,Cartagena,ICETEX,3.21,91.3,1,36,REGULAR,3.7,Presencial
+COD-PSI-2021-0087,Paula Vargas Jiménez,F,Psicología,10,3,Montería,ICETEX,2.61,65.4,2,180,SEGUIMIENTO,4.1,Mixta
+COD-ADM-2021-0088,Ana Martínez Ruiz,F,Administración de Empresas,10,3,Cartagena,ICETEX,3.44,86.6,0,183,REGULAR,4.1,Presencial
+COD-PSI-2021-0089,Sofía Pérez Hernández,F,Psicología,10,1,Cartagena,SIN_BECA,2.2,65.5,1,183,RIESGO,4.7,Presencial
+COD-PSI-2021-0090,Sofía Rodríguez Jiménez,F,Psicología,2,2,Cartagena,ICETEX,2.38,70.9,1,32,RIESGO,4.3,Presencial
+COD-DER-2021-0091,Carolina Jiménez Martínez,F,Derecho,5,2,Cartagena,ICETEX,3.33,97.1,0,91,REGULAR,3.5,Presencial
+COD-IND-2021-0092,Felipe García Ramírez,M,Ingeniería Industrial,6,3,Montería,ICETEX,2.88,86,2,111,SEGUIMIENTO,4.1,Virtual
+COD-IND-2021-0093,María Torres Ruiz,F,Ingeniería Industrial,4,2,Barranquilla,SIN_BECA,3.78,75.8,0,69,REGULAR,5,Presencial
+COD-DER-2021-0094,Jorge Vargas Rodríguez,M,Derecho,6,3,Santa Marta,EXCELENCIA,3.69,96.2,0,105,REGULAR,5,Presencial
+COD-PSI-2021-0095,Natalia Jiménez Castro,F,Psicología,8,3,Bogotá,ICETEX,3.73,88.9,1,147,REGULAR,4.2,Presencial
+COD-DER-2021-0096,Sara González Jiménez,F,Derecho,10,1,Barranquilla,SIN_BECA,2.71,82.9,1,177,SEGUIMIENTO,3.8,Presencial
+COD-CON-2021-0097,Natalia Castro Vargas,F,Contaduría Pública,1,2,Santa Marta,ICETEX,2.72,94,1,15,SEGUIMIENTO,4.2,Virtual
+COD-CON-2021-0098,Juliana López Vargas,F,Contaduría Pública,3,1,Valledupar,BIENESTAR,2.04,73.8,0,56,RIESGO,4.8,Presencial
+COD-CON-2021-0099,Sara Castro García,F,Contaduría Pública,6,1,Cartagena,ICETEX,2.7,100,0,106,SEGUIMIENTO,2.9,Presencial
+COD-CON-2021-0100,Tomás Hernández González,M,Contaduría Pública,7,1,Valledupar,SIN_BECA,2.05,70.2,1,130,RIESGO,4.1,Presencial
+COD-DER-2021-0101,Camila Hernández García,F,Derecho,5,2,Cartagena,BIENESTAR,2.58,81.4,1,87,SEGUIMIENTO,4.2,Presencial
+COD-PSI-2021-0102,Miguel Hernández Díaz,M,Psicología,3,3,Cartagena,SIN_BECA,2.84,67,2,50,SEGUIMIENTO,3.5,Presencial
+COD-CON-2021-0103,Alejandro Castro González,M,Contaduría Pública,8,2,Cartagena,BIENESTAR,3.34,61.3,1,147,SEGUIMIENTO,5,Presencial
+COD-PSI-2021-0104,Andrea Torres Vargas,F,Psicología,7,5,Santa Marta,EXCELENCIA,4.22,100,0,130,DESTACADO,3.5,Mixta
+COD-ADM-2021-0105,Diego López Jiménez,M,Administración de Empresas,5,2,Barranquilla,EXCELENCIA,4.74,100,0,86,DESTACADO,3.5,Presencial
+COD-SIS-2021-0106,Camila Hernández Rodríguez,F,Ingeniería de Sistemas,2,2,Cartagena,BIENESTAR,3.54,73.6,0,36,REGULAR,3.9,Mixta
+COD-CON-2021-0107,Juliana Ruiz Martínez,F,Contaduría Pública,8,2,Cartagena,SIN_BECA,2.99,100,0,148,SEGUIMIENTO,3.8,Presencial
+COD-IND-2021-0108,Carolina González López,F,Ingeniería Industrial,4,2,Santa Marta,SIN_BECA,4.12,100,0,76,DESTACADO,4.4,Presencial
+COD-PSI-2021-0109,Diego Torres García,M,Psicología,6,2,Barranquilla,ICETEX,4.55,100,0,112,DESTACADO,4.9,Virtual
+COD-IND-2021-0110,Felipe Ruiz Ramírez,M,Ingeniería Industrial,7,6,Cartagena,SIN_BECA,3.66,78.6,0,127,REGULAR,3.5,Presencial
+COD-CON-2021-0111,Camila Hernández Ruiz,F,Contaduría Pública,3,4,Sincelejo,BIENESTAR,2.87,84,2,57,SEGUIMIENTO,4.8,Presencial
+COD-IND-2021-0112,Carlos Jiménez Rodríguez,M,Ingeniería Industrial,6,5,Barranquilla,BIENESTAR,2.92,80.9,1,109,SEGUIMIENTO,3.7,Mixta
+COD-DER-2021-0113,Nicolás Mora Hernández,M,Derecho,2,4,Barranquilla,SIN_BECA,1.77,85.3,1,39,RIESGO,4.1,Presencial
+COD-SIS-2021-0114,Andrea López Pérez,F,Ingeniería de Sistemas,2,2,Medellín,SIN_BECA,2.96,89.1,0,39,SEGUIMIENTO,4.5,Presencial
+COD-DER-2021-0115,Laura Pérez Ramírez,F,Derecho,8,1,Bogotá,SIN_BECA,3.44,87.4,3,141,REGULAR,4,Virtual
+COD-CON-2021-0116,Valentina Vargas Jiménez,F,Contaduría Pública,3,5,Cartagena,ICETEX,3.43,84.3,2,55,REGULAR,4.7,Presencial
+COD-SIS-2021-0117,David Martínez Mora,M,Ingeniería de Sistemas,6,2,Santa Marta,ICETEX,2.4,77,1,105,RIESGO,3.6,Presencial
+COD-PSI-2021-0118,Alejandro Vargas Torres,M,Psicología,2,2,Cartagena,SIN_BECA,3.57,88.3,1,33,REGULAR,3.9,Presencial
+COD-CON-2021-0119,Alejandro Martínez Díaz,M,Contaduría Pública,8,6,Santa Marta,BIENESTAR,4.48,94.3,0,144,DESTACADO,3.8,Mixta
+COD-CON-2021-0120,Luis Pérez Díaz,M,Contaduría Pública,3,4,Barranquilla,SIN_BECA,3.39,93.4,0,58,REGULAR,4.1,Presencial
+COD-PSI-2022-0121,Andrea Vargas Martínez,F,Psicología,2,1,Cartagena,ICETEX,2.26,79.7,0,34,RIESGO,4.3,Mixta
+COD-PSI-2022-0122,Alejandro Ramírez Mora,M,Psicología,6,1,Bogotá,ICETEX,1.97,65,3,104,RIESGO,4.3,Virtual
+COD-DER-2022-0123,Diego Martínez Martínez,M,Derecho,4,2,Medellín,EXCELENCIA,3.82,83.1,0,70,REGULAR,3.8,Presencial
+COD-PSI-2022-0124,Jorge Mora Martínez,M,Psicología,10,1,Sincelejo,ICETEX,1.93,61.3,0,176,RIESGO,3.3,Presencial
+COD-PSI-2022-0125,Sara Rodríguez Jiménez,F,Psicología,7,3,Cartagena,EXCELENCIA,2.77,77.3,0,128,SEGUIMIENTO,4.5,Presencial
+COD-SIS-2022-0126,Luis García Martínez,M,Ingeniería de Sistemas,7,3,Cartagena,ICETEX,2.76,99.7,1,128,SEGUIMIENTO,2.8,Presencial
+COD-DER-2022-0127,Camila Vargas López,F,Derecho,4,3,Cartagena,SIN_BECA,3.6,94.5,0,71,REGULAR,4.8,Mixta
+COD-PSI-2022-0128,Nicolás Hernández Díaz,M,Psicología,6,2,Cartagena,BIENESTAR,1.73,78.9,1,110,RIESGO,3.7,Presencial
+COD-IND-2022-0129,Andrés Castro Hernández,M,Ingeniería Industrial,1,2,Montería,EXCELENCIA,3.29,77.6,1,16,REGULAR,4.2,Mixta
+COD-IND-2022-0130,Andrea Torres Hernández,F,Ingeniería Industrial,7,1,Montería,SIN_BECA,2.77,93.7,0,123,SEGUIMIENTO,4.3,Presencial
+COD-DER-2022-0131,Felipe Hernández Jiménez,M,Derecho,9,5,Valledupar,SIN_BECA,2.64,80.3,1,163,SEGUIMIENTO,4.1,Virtual
+COD-PSI-2022-0132,Laura Castro Díaz,F,Psicología,3,2,Montería,SIN_BECA,4.1,91.6,0,58,DESTACADO,4.9,Presencial
+COD-DER-2022-0133,Natalia Ruiz García,F,Derecho,6,3,Medellín,ICETEX,3.46,69.2,0,111,REGULAR,4.1,Presencial
+COD-SIS-2022-0134,Luis García Castro,M,Ingeniería de Sistemas,3,3,Valledupar,EXCELENCIA,2.78,97.5,1,51,SEGUIMIENTO,4.8,Presencial
+COD-SIS-2022-0135,Valentina Torres Martínez,F,Ingeniería de Sistemas,4,2,Santa Marta,BIENESTAR,3.78,76.2,0,71,REGULAR,4.5,Presencial
+COD-ADM-2022-0136,Camila Torres Hernández,F,Administración de Empresas,8,4,Cartagena,SIN_BECA,3.42,68.4,0,147,REGULAR,3.5,Presencial
+COD-ADM-2022-0137,Diego Vargas González,M,Administración de Empresas,5,4,Valledupar,ICETEX,2.54,81.3,0,90,SEGUIMIENTO,3.4,Presencial
+COD-DER-2022-0138,Luisa Torres Ruiz,F,Derecho,3,2,Cartagena,ICETEX,2.64,91.8,1,53,SEGUIMIENTO,4.7,Virtual
+COD-DER-2022-0139,Luisa Vargas Pérez,F,Derecho,3,1,Valledupar,SIN_BECA,4.26,100,0,51,DESTACADO,4.9,Presencial
+COD-ADM-2022-0140,María Mora Jiménez,F,Administración de Empresas,1,5,Medellín,SIN_BECA,2.63,60.8,0,18,SEGUIMIENTO,4.1,Presencial
+COD-CON-2022-0141,Tomás Jiménez López,M,Contaduría Pública,10,2,Valledupar,EXCELENCIA,4.97,100,0,176,DESTACADO,5,Mixta
+COD-CON-2022-0142,Andrea Ramírez Martínez,F,Contaduría Pública,5,4,Cartagena,ICETEX,4.73,100,0,94,DESTACADO,5,Presencial
+COD-DER-2022-0143,Nicolás Vargas Ramírez,M,Derecho,4,4,Cartagena,ICETEX,2.66,65.9,2,72,SEGUIMIENTO,4,Presencial
+COD-CON-2022-0144,Pedro Castro Ruiz,M,Contaduría Pública,7,4,Barranquilla,SIN_BECA,3.08,77.9,1,125,REGULAR,4.5,Presencial
+COD-DER-2022-0145,Carolina Ramírez Jiménez,F,Derecho,6,2,Valledupar,SIN_BECA,2.47,64.6,2,108,RIESGO,4.1,Presencial
+COD-DER-2022-0146,Juliana López Mora,F,Derecho,6,3,Cartagena,SIN_BECA,3.78,100,0,112,REGULAR,4,Mixta
+COD-PSI-2022-0147,Santiago Rodríguez Mora,M,Psicología,2,3,Barranquilla,SIN_BECA,3.44,84.6,1,35,REGULAR,3.1,Presencial
+COD-PSI-2022-0148,Pedro Hernández Ruiz,M,Psicología,8,1,Cartagena,ICETEX,3.57,96.3,0,148,REGULAR,3.7,Presencial
+COD-DER-2022-0149,Jorge Ramírez Mora,M,Derecho,1,2,Santa Marta,ICETEX,2.87,81.2,0,14,SEGUIMIENTO,4.2,Mixta
+COD-DER-2022-0150,Tomás Ramírez García,M,Derecho,7,1,Cartagena,ICETEX,2.7,50.9,0,129,SEGUIMIENTO,4.9,Mixta
+COD-CON-2022-0151,Isabella López Mora,F,Contaduría Pública,9,1,Bogotá,SIN_BECA,3.57,88,2,158,REGULAR,5,Virtual
+COD-PSI-2022-0152,Natalia Mora Pérez,F,Psicología,7,3,Bogotá,SIN_BECA,2.86,90.8,2,123,SEGUIMIENTO,3.7,Presencial
+COD-IND-2022-0153,Daniela Jiménez Díaz,F,Ingeniería Industrial,4,2,Cartagena,SIN_BECA,2.21,66.9,3,74,RIESGO,4.2,Presencial
+COD-IND-2022-0154,Santiago Ruiz Jiménez,M,Ingeniería Industrial,3,3,Cartagena,EXCELENCIA,3.59,78.3,0,55,REGULAR,3.8,Presencial
+COD-SIS-2022-0155,Miguel Vargas Rodríguez,M,Ingeniería de Sistemas,5,2,Montería,ICETEX,3,76.6,0,86,REGULAR,3.4,Mixta
+COD-CON-2022-0156,Andrea Vargas Hernández,F,Contaduría Pública,7,2,Cartagena,SIN_BECA,2.57,78.5,1,124,SEGUIMIENTO,5,Virtual
+COD-PSI-2022-0157,Jorge Torres Torres,M,Psicología,9,1,Cartagena,SIN_BECA,2.03,54.6,2,161,RIESGO,3.6,Presencial
+COD-IND-2022-0158,Sara Castro Castro,F,Ingeniería Industrial,2,2,Santa Marta,ICETEX,2.35,73.8,2,32,RIESGO,3.5,Presencial
+COD-SIS-2022-0159,Luis López Pérez,M,Ingeniería de Sistemas,4,3,Valledupar,SIN_BECA,3.2,96.1,0,73,REGULAR,4.8,Presencial
+COD-SIS-2022-0160,Camila Díaz Ramírez,F,Ingeniería de Sistemas,2,4,Valledupar,ICETEX,3.09,92,0,35,REGULAR,4.3,Virtual
+COD-PSI-2023-0161,Diego Vargas Díaz,M,Psicología,10,3,Cartagena,SIN_BECA,3.27,100,0,181,REGULAR,4.9,Presencial
+COD-SIS-2023-0162,Juliana Mora Pérez,F,Ingeniería de Sistemas,8,1,Santa Marta,SIN_BECA,2.78,68.6,2,140,SEGUIMIENTO,3.7,Presencial
+COD-IND-2023-0163,Nicolás Mora García,M,Ingeniería Industrial,7,1,Sincelejo,SIN_BECA,3.19,92.4,0,129,REGULAR,4.2,Virtual
+COD-SIS-2023-0164,Carlos Vargas Vargas,M,Ingeniería de Sistemas,1,1,Valledupar,SIN_BECA,2.74,95.7,0,16,SEGUIMIENTO,3.4,Presencial
+COD-ADM-2023-0165,Jorge Martínez Rodríguez,M,Administración de Empresas,10,3,Santa Marta,SIN_BECA,2.66,88.3,0,179,SEGUIMIENTO,4.4,Presencial
+COD-IND-2023-0166,Miguel Ruiz Mora,M,Ingeniería Industrial,2,2,Cartagena,SIN_BECA,2.38,64.9,3,37,RIESGO,4.5,Presencial
+COD-IND-2023-0167,Tomás Vargas Díaz,M,Ingeniería Industrial,4,2,Bogotá,EXCELENCIA,3.34,87.3,3,76,REGULAR,4.8,Presencial
+COD-DER-2023-0168,Pedro Díaz Ruiz,M,Derecho,1,5,Montería,ICETEX,3.25,74.2,1,17,REGULAR,4.3,Presencial
+COD-DER-2023-0169,Sara Díaz Vargas,F,Derecho,7,3,Cartagena,BIENESTAR,3.04,70.4,1,128,REGULAR,4.1,Presencial
+COD-PSI-2023-0170,Sebastián Castro Jiménez,M,Psicología,10,2,Santa Marta,SIN_BECA,2.74,100,0,182,SEGUIMIENTO,4.1,Presencial
+COD-DER-2023-0171,María Jiménez Castro,F,Derecho,4,3,Cartagena,SIN_BECA,2.94,67,0,69,SEGUIMIENTO,3.6,Presencial
+COD-DER-2023-0172,Natalia Hernández Jiménez,F,Derecho,2,1,Cartagena,SIN_BECA,2.29,74.2,2,33,RIESGO,4,Presencial
+COD-DER-2023-0173,Paula Torres García,F,Derecho,7,2,Cartagena,EXCELENCIA,5,81.4,0,128,REGULAR,4.5,Presencial
+COD-ADM-2023-0174,Sofía González Ramírez,F,Administración de Empresas,2,1,Cartagena,SIN_BECA,3.05,73.3,2,39,REGULAR,3.8,Presencial
+COD-DER-2023-0175,Alejandro López Martínez,M,Derecho,1,5,Cartagena,ICETEX,3.59,78.6,0,16,REGULAR,5,Presencial
+COD-SIS-2023-0176,Alejandro Hernández Martínez,M,Ingeniería de Sistemas,6,2,Sincelejo,SIN_BECA,2.61,76.8,0,110,SEGUIMIENTO,4.8,Presencial
+COD-CON-2023-0177,David Vargas Martínez,M,Contaduría Pública,9,1,Valledupar,BIENESTAR,3.21,100,1,164,REGULAR,4,Virtual
+COD-DER-2023-0178,Miguel González Rodríguez,M,Derecho,3,3,Santa Marta,SIN_BECA,3.9,90.4,0,56,REGULAR,4.8,Presencial
+COD-PSI-2023-0179,Juliana Díaz Jiménez,F,Psicología,10,3,Cartagena,ICETEX,2.83,73.2,0,182,SEGUIMIENTO,3.9,Mixta
+COD-IND-2023-0180,Andrea Torres López,F,Ingeniería Industrial,2,2,Barranquilla,SIN_BECA,2.3,70.8,0,40,RIESGO,4.1,Presencial
+COD-SIS-2023-0181,Alejandro López González,M,Ingeniería de Sistemas,2,1,Medellín,SIN_BECA,2.65,93.4,1,39,SEGUIMIENTO,4.7,Presencial
+COD-IND-2023-0182,Valentina López González,F,Ingeniería Industrial,2,1,Cartagena,SIN_BECA,3.38,60.7,0,40,SEGUIMIENTO,3.5,Presencial
+COD-SIS-2023-0183,Natalia Rodríguez Jiménez,F,Ingeniería de Sistemas,3,2,Sincelejo,SIN_BECA,2.93,58.7,0,50,SEGUIMIENTO,4.3,Virtual
+COD-IND-2023-0184,Diego Jiménez Pérez,M,Ingeniería Industrial,10,1,Bogotá,SIN_BECA,2.59,92.5,1,184,SEGUIMIENTO,5,Mixta
+COD-SIS-2023-0185,Daniela Torres Castro,F,Ingeniería de Sistemas,10,1,Cartagena,SIN_BECA,3.37,100,1,177,REGULAR,2.9,Virtual
+COD-IND-2023-0186,María Rodríguez González,F,Ingeniería Industrial,3,2,Cartagena,SIN_BECA,2.34,69.8,0,58,RIESGO,4.2,Virtual
+COD-DER-2023-0187,Jorge Martínez Ramírez,M,Derecho,3,2,Bogotá,ICETEX,4.1,70.7,0,56,REGULAR,4.5,Mixta
+COD-SIS-2023-0188,Isabella Mora Ramírez,F,Ingeniería de Sistemas,8,3,Cartagena,SIN_BECA,3.2,75.6,0,142,REGULAR,4.9,Virtual
+COD-PSI-2023-0189,Camila Vargas López,F,Psicología,2,2,Barranquilla,BIENESTAR,1.98,70.6,2,35,RIESGO,3.1,Mixta
+COD-ADM-2023-0190,Luis Ruiz Mora,M,Administración de Empresas,5,4,Cartagena,SIN_BECA,3.46,83.8,0,89,REGULAR,4,Presencial
+COD-CON-2023-0191,Paula Pérez Castro,F,Contaduría Pública,7,1,Cartagena,SIN_BECA,2.98,87.9,0,130,SEGUIMIENTO,4.5,Presencial
+COD-PSI-2023-0192,Sofía Castro González,F,Psicología,2,1,Valledupar,SIN_BECA,3.41,90.8,0,34,REGULAR,3.4,Presencial
+COD-CON-2023-0193,Paula Rodríguez Jiménez,F,Contaduría Pública,7,3,Montería,SIN_BECA,2.55,87.2,0,123,SEGUIMIENTO,3,Presencial
+COD-DER-2023-0194,Juliana Díaz Díaz,F,Derecho,8,5,Cartagena,SIN_BECA,3.56,69.2,0,145,REGULAR,3.6,Mixta
+COD-ADM-2023-0195,Carolina Torres Ruiz,F,Administración de Empresas,8,2,Bogotá,SIN_BECA,2.3,71.1,0,140,RIESGO,3.9,Presencial
+COD-ADM-2023-0196,Ana López Díaz,F,Administración de Empresas,8,2,Medellín,SIN_BECA,4.46,95,0,144,DESTACADO,4.2,Presencial
+COD-CON-2023-0197,Sofía López Hernández,F,Contaduría Pública,3,1,Montería,ICETEX,2.94,70.8,1,53,SEGUIMIENTO,4.2,Presencial
+COD-CON-2023-0198,David Rodríguez Vargas,M,Contaduría Pública,8,1,Sincelejo,EXCELENCIA,4.1,91.9,0,146,DESTACADO,4.6,Presencial
+COD-DER-2023-0199,Juan Hernández Hernández,M,Derecho,3,2,Santa Marta,EXCELENCIA,2.92,69.3,2,52,SEGUIMIENTO,4.4,Presencial
+COD-SIS-2023-0200,Miguel Pérez Martínez,M,Ingeniería de Sistemas,10,3,Bogotá,SIN_BECA,4.04,100,0,182,DESTACADO,4.1,Presencial
