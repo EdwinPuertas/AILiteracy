@@ -1,0 +1,211 @@
+id_venta,producto,ciudad,vendedor,mes,cantidad,precio_unitario,total_venta
+31,Monitor,Medellín,María Reyes,2024-01,19,1945416.51,0
+123,Impresora,Cartagena,María Reyes,2024-03,8,435485.76,3483886.08
+9,Webcam,Barranquilla,Ana Torres,2024-01,8,2709143.17,21673145.36
+189,Disco SSD,Bucaramanga,Ana Torres,2024-04,1,936638.15,936638.15
+84,Tablet,Manizales,Carlos Díaz,2024-02,5,"$2,301,362.17",11506810.85
+179,Auriculares,Barranquilla,Carlos Díaz,2024-04,4,841661.87,3366647.48
+89,Disco SSD,Manizales,Luis Gómez,2024-06,16,1583493.1,25335889.6
+62,Laptop,Bucaramanga,Luis Gómez,2024-06,8,2339262.94,18714103.52
+175,Hub USB,Barranquilla,Carlos Díaz,2024-05,5,824176.73,4120883.65
+44,Disco SSD,Manizales,Luis Gómez,2024-02,10,773687.63,7736876.3
+118,Hub USB,Cartagena,Sandra López,2024-01,17,3318998.08,56422967.36
+169,Webcam,Manizales,Sandra López,2024-01,20,253446.3,5068926
+192,Disco SSD,Bucaramanga,Sandra López,2024-02,3,2229382.67,6688148.01
+141,Teclado,Cartagena,Luis Gómez,2024-01,2,"$593,240.92",1186481.84
+145,,Medellín,Luis Gómez,2024-06,19,2061123.42,39161344.98
+12,Mouse,Cali,Sandra López,2024-06,8,584457.69,4675661.52
+36,Tablet,Bucaramanga,Carlos Díaz,2024-04,15,3025471.07,45382066.05
+153,,Bogotá,Luis Gómez,2024-03,18,"$471,581.10",8488459.8
+195,Disco SSD,Cali,Carlos Díaz,2024-04,12,2351644.47,28219733.64
+4,Disco SSD,Pereira,Luis Gómez,2024-04,19,984494.62,18705397.78
+43,Tablet,Cartagena,Carlos Díaz,2024-03,14,2442621.39,34196699.46
+185,Teclado,medellín,María Reyes,2024-03,14,627105.65,8779479.1
+60,,Bogotá,Ana Torres,2024-01,5,1916382.16,9581910.8
+180,Hub USB,BUCARAMANGA,Sandra López,2024-03,10,91459.5,914595
+61,Webcam,Cali,Carlos Díaz,2024-02,2,1089280.35,2178560.7
+50,Tablet,Cali,María Reyes,2024-04,11,3252628.89,35778917.79
+75,Webcam,Bucaramanga,Ana Torres,2024-06,10,1782321.93,17823219.3
+115,Monitor,Medellín,María Reyes,2024-04,8,2630409.84,21043278.72
+158,Impresora,Manizales,Luis Gómez,2024-04,18,519077.26,9343390.68
+188,Impresora,Medellín,Luis Gómez,2024-02,13,3385935.07,44017155.91
+13,,Cartagena,Sandra López,2024-02,11,2952338.94,32475728.34
+92,Disco SSD,Medellín,Luis Gómez,2024-02,8,1349877.99,10799023.92
+98,Laptop,Pereira,María Reyes,2024-06,13,"$2,538,772.10",33004037.3
+52,Mouse,Barranquilla,Sandra López,2024-03,5,3267408.93,16337044.65
+174,Teclado,Cali,Luis Gómez,2024-01,20,3049876,60997520
+120,Impresora,Manizales,Carlos Díaz,2024-01,3,1040411,3121233
+53,Mouse,,María Reyes,2024-03,6,1542073.24,9252439.44
+127,Teclado,Cartagena,Ana Torres,2024-06,18,456141.62,8210549.16
+137,Teclado,Medellín,Luis Gómez,2024-01,14,1585005.41,22190075.74
+105,Laptop,Bogotá,Luis Gómez,2024-02,1,2180354.76,2180354.76
+131,Impresora,Medellín,Ana Torres,2024-04,16,273176.36,4370821.76
+112,Mouse,Bucaramanga,Ana Torres,2024-04,16,382802.96,6124847.36
+133,Monitor,Medellín,Sandra López,2024-04,20,2092502.06,41850041.2
+156,Tablet,Medellín,Luis Gómez,2024-01,15 unid,3315506.69,49732600.35
+199,Mouse,Bucaramanga,Sandra López,2024-06,12,226017.06,2712204.72
+83,Hub USB,Medellín,Carlos Díaz,2024-04,19 unid,692606.8,13159529.2
+19,Mouse,Cali,Luis Gómez,2024-06,14 unid,2093485.47,29308796.58
+62,Laptop,BUCARAMANGA,Luis Gómez,2024-06,8,2339262.94,18714103.52
+168,Tablet,MEDELLÍN,María Reyes,2024-06,18,1339332.75,24107989.5
+125,Teclado,Barranquilla,Luis Gómez,2024-06,16,978601.2,15657619.2
+177,Impresora,Cartagena,Sandra López,2024-02,3,1554428.3,4663284.9
+104,Laptop,Bucaramanga,Luis Gómez,2024-06,3,2737597.18,8212791.54
+59,Teclado,Cartagena,Luis Gómez,06/2024,15,1937606.27,29064094.05
+129,Impresora,Medellín,Ana Torres,2024-05,10,1650848.35,16508483.5
+132,Laptop,Cali,Luis Gómez,2024-05,10,311855.47,3118554.7
+5,Laptop,Cali,Carlos Díaz,2024-03,9,556846.06,5011614.54
+67,Impresora,Bucaramanga,María Reyes,2024-02,8,97470.55,779764.4
+173,Teclado,Barranquilla,Sandra López,2024-04,19,2391074.29,45430411.51
+79,Tablet,Bucaramanga,Carlos Díaz,2024-04,15,2369560.91,35543413.65
+3,Monitor,Barranquilla,Sandra López,2024-05,1,1970939.04,1970939.04
+48,Hub USB,Barranquilla,Sandra López,2024-05,2,2173544.56,4347089.12
+71,Auriculares,Bogotá,Ana Torres,,14 unid,1219719.58,17076074.12
+26,Webcam,CARTAGENA,Luis Gómez,2024-01,8,3074863.45,24598907.6
+10,Mouse,Barranquilla,Ana Torres,2024-04,9,1595134.9,14356214.1
+46,Disco SSD,Cali,Ana Torres,2024-05,3,2981928.77,8945786.31
+65,Webcam,Pereira,Luis Gómez,,6,2759000.16,16554000.96
+159,Monitor,Cali,Ana Torres,2024-03,14,1199465.22,16792513.08
+49,Tablet,Bucaramanga,María Reyes,2024-02,11,846820.54,9315025.94
+17,Disco SSD,Cartagena,Sandra López,2024-04,19 unid,1406910.76,26731304.44
+23,Auriculares,Cali,Sandra López,2024-01,10,2948217.68,29482176.8
+101,Impresora,Cali,Ana Torres,2024-03,13,1155824.04,15025712.52
+64,Monitor,Cali,Luis Gómez,2024-04,1,640071.91,640071.91
+82,Monitor,Cali,Ana Torres,2024-01,8,3444017.04,27552136.32
+186,Teclado,Bucaramanga,Sandra López,2024-05,9,2909197.08,26182773.72
+126,Hub USB,Cartagena,Ana Torres,2024-02,10,807778.82,8077788.2
+38,Mouse,Barranquilla,Luis Gómez,,18 unid,1578418.21,28411527.78
+33,Laptop,Bucaramanga,,2024-05,8 unid,985493.26,7883946.08
+140,Hub USB,Barranquilla,Carlos Díaz,2024-01,18,798460.93,14372296.74
+102,Impresora,Bucaramanga,María Reyes,2024-04,9,2635754.24,23721788.16
+39,Tablet,Cali,María Reyes,2024-04,8,3062583.55,24500668.4
+170,Auriculares,Barranquilla,Ana Torres,2024-04,4,2664888.38,10659553.52
+1,,Bogotá,María Reyes,2024-02,8,501289.68,4010317.44
+138,Hub USB,Manizales,María Reyes,2024-01,8,1019045.54,8152364.32
+198,Webcam,Barranquilla,,2024-04,8,2996243.92,23969951.36
+51,Mouse,Bogotá,Carlos Díaz,2024-05,19,3486396.12,66241526.28
+29,Hub USB,Pereira,Luis Gómez,2024-05,7,2499627.17,17497390.19
+6,Webcam,,Ana Torres,2024-04,4,1266043.14,5064172.56
+166,Impresora,Medellín,Sandra López,2024-04,1,2532716.74,2532716.74
+86,Disco SSD,Manizales,,2024-05,8,3212383,25699064
+68,Monitor,Pereira,María Reyes,2024-03,3,3384608.53,10153825.59
+63,Webcam,,Sandra López,2024-06,5,3241286.92,16206434.6
+76,Tablet,Bucaramanga,Carlos Díaz,2024-06,10,"$1,947,127.48",19471274.8
+94,Impresora,Pereira,Ana Torres,2024-02,14,1372326.69,19212573.66
+113,Webcam,Manizales,Luis Gómez,2024-04,6,2572276.63,15433659.78
+139,Auriculares,Manizales,,2024-06,8,3234829.99,25878639.92
+99,Impresora,Cali,Sandra López,2024-05,1,3175647.09,3175647.09
+135,Auriculares,Pereira,María Reyes,2024-05,20,224902.61,4498052.2
+45,Laptop,Bogotá,María Reyes,2024-01,2,2050858.92,4101717.84
+15,Monitor,Bucaramanga,Luis Gómez,2024-06,16,1393777.18,22300434.88
+4,Disco SSD,Pereira,Luis Gómez,2024-04,19,984494.62,18705397.78
+116,Hub USB,Pereira,María Reyes,01/2024,16,2980570.63,47689130.08
+163,Monitor,Pereira,Luis Gómez,2024-04,2 unid,1123844.5,2247689
+193,Impresora,Cartagena,Carlos Díaz,2024-01,5,173033.64,865168.2
+54,Disco SSD,,Sandra López,2024-06,17,42263.53,718480.01
+155,Hub USB,BARRANQUILLA,Luis Gómez,2024-03,18,62655.51,1127799.18
+78,Auriculares,Pereira,Sandra López,2024-01,10,1014894.3,10148943
+63,Webcam,,Sandra López,2024-06,5,3241286.92,16206434.6
+167,Tablet,cali,Ana Torres,2024-04,9,1194885.9,10753973.1
+182,Impresora,Cartagena,Luis Gómez,2024-05,12,778230.82,9338769.84
+57,Webcam,Barranquilla,María Reyes,2024-05,16,890157.56,14242520.96
+35,Monitor,Manizales,Carlos Díaz,2024-02,4,352803.89,1411215.56
+165,Laptop,,Sandra López,2024-05,11,3045905.59,33504961.49
+146,Laptop,Cartagena,Sandra López,2024-01,6,1654695.37,9928172.22
+119,Mouse,Barranquilla,Carlos Díaz,2024-04,18,2657203.82,47829668.76
+128,Laptop,Bogotá,Sandra López,2024-03,5,2237975.75,11189878.75
+134,Hub USB,Barranquilla,Sandra López,2024-04,15,3181137.76,47717066.4
+21,Disco SSD,Bogotá,Ana Torres,2024-06,18 unid,-50000,47372564.34
+20,Tablet,Pereira,Sandra López,2024-04,17,891178.21,15150029.57
+152,Laptop,Barranquilla,Sandra López,2024-03,20,2651204.39,53024087.8
+114,Auriculares,Manizales,Carlos Díaz,2024-04,19 unid,950358.45,18056810.55
+11,Webcam,Cali,María Reyes,2024-03,9999,2350560.48,16453923.36
+77,Monitor,Pereira,Carlos Díaz,2024-06,6,2160069.48,12960416.88
+73,Hub USB,Barranquilla,María Reyes,2024-01,14,20894.1,292517.4
+121,Tablet,Barranquilla,María Reyes,2024-06,19,1301036.27,24719689.13
+100,Hub USB,Bogotá,Ana Torres,2024-06,14,487912.71,6830777.94
+42,Impresora,Barranquilla,Carlos Díaz,2024-01,6,1335721.32,8014327.92
+93,Teclado,Barranquilla,Ana Torres,2024-04,14,1168121.65,16353703.1
+157,Teclado,Manizales,María Reyes,2024-05,9,1462983.85,13166854.65
+160,Disco SSD,Cartagena,Ana Torres,2024-03,10 unid,2933603.59,29336035.9
+41,Disco SSD,Bogotá,Ana Torres,2024-02,6,999999999,8588117.94
+88,Hub USB,Bucaramanga,Carlos Díaz,2024-05,17,1502191.54,25537256.18
+117,Teclado,Manizales,Luis Gómez,03/2024,9,"$1,201,080.87",10809727.83
+108,Mouse,Cali,María Reyes,2024-01,19,104489.31,1985296.89
+97,Disco SSD,Barranquilla,Carlos Díaz,2024-02,9,1533888.38,13804995.42
+56,,cali,María Reyes,2024-03,20,749044.35,14980887
+136,Mouse,Barranquilla,Luis Gómez,2024-03,3,"$562,343.97",1687031.91
+194,Laptop,Cartagena,Carlos Díaz,2024-01,4,833278.11,3333112.44
+150,Tablet,Bogotá,Carlos Díaz,2024-01,11 unid,894610,9840710
+142,,cartagena,Carlos Díaz,2024-01,15,2415042.8,36225642
+197,Mouse,manizales,Sandra López,2024-04,9,129016.26,1161146.34
+92,Disco SSD,Medellín,Luis Gómez,2024-02,8,1349877.99,10799023.92
+37,Laptop,Medellín,Ana Torres,2024-04,11,2805064.9,30855713.9
+149,Mouse,Cali,María Reyes,2024-04,16,1019439.02,16311024.32
+2,Mouse,Medellín,Sandra López,2024-04,2,118843.31,237686.62
+162,Webcam,Pereira,Carlos Díaz,2024-03,7,3432999.59,24030997.13
+87,Mouse,Manizales,Luis Gómez,04/2024,17,3457805.2,58782688.4
+181,Tablet,Cartagena,Ana Torres,2024-05,2,3188500.08,6377000.16
+70,Laptop,Medellín,María Reyes,2024-02,19,3369432.09,64019209.71
+47,Mouse,Medellín,Luis Gómez,2024-04,4,3296462.5,13185850
+8,Tablet,Medellín,Sandra López,2024-03,20,3100799.34,62015986.8
+69,Auriculares,Bucaramanga,Sandra López,2024-04,18,1169057.29,21043031.22
+7,Webcam,Cartagena,Ana Torres,2024-06,15,1883754.9,28256323.5
+161,Hub USB,Manizales,Luis Gómez,2024-04,18,1702929.73,30652735.14
+183,Monitor,,Luis Gómez,2024-06,4,"$3,163,361.91",12653447.64
+52,Mouse,Barranquilla,Sandra López,2024-03,5,3267408.93,16337044.65
+164,,Pereira,Carlos Díaz,2024-06,5,1741220.34,8706101.7
+147,Impresora,Cartagena,Luis Gómez,2024-05,14,2227224.75,31181146.5
+72,Webcam,Pereira,Sandra López,2024-05,4,1357406.09,5429624.36
+30,Tablet,BUCARAMANGA,Carlos Díaz,2024-05,15,436699.62,6550494.3
+95,Hub USB,Bogotá,Sandra López,2024-04,16,35547.85,568765.6
+14,Laptop,Barranquilla,Ana Torres,2024-03,13,948076.95,12325000.35
+90,Monitor,Cartagena,Sandra López,2024-04,8,971972.1,7775776.8
+28,Teclado,Manizales,Sandra López,2024-02,9,1853943.15,16685488.35
+58,Laptop,Medellín,Carlos Díaz,2024-03,2,27356.73,54713.46
+124,Monitor,Bucaramanga,Ana Torres,2024-06,18,3328808.3,59918549.4
+200,Auriculares,Barranquilla,Ana Torres,2024-04,3,2324749.05,6974247.15
+55,Disco SSD,Cartagena,Ana Torres,2024-02,9,417268.92,3755420.28
+130,Impresora,BUCARAMANGA,Luis Gómez,2024-01,9,3294606.63,29651459.67
+148,Impresora,Medellín,Carlos Díaz,2024-03,14,1176579.75,16472116.5
+27,Mouse,Medellín,Carlos Díaz,2024-01,18,2683932.99,48310793.82
+178,Webcam,Cartagena,Carlos Díaz,2024-06,9,1607072.81,14463655.29
+80,Disco SSD,Manizales,Luis Gómez,2024-06,3,1003995.62,3011986.86
+154,Auriculares,Manizales,Carlos Díaz,2024-01,1,3406416.65,3406416.65
+74,Disco SSD,Barranquilla,María Reyes,2024-04,3,3321827.58,9965482.74
+14,Laptop,Barranquilla,Ana Torres,2024-03,13,948076.95,12325000.35
+109,Auriculares,Pereira,Carlos Díaz,2024-06,7,279847.73,1958934.11
+8,Tablet,Medellín,Sandra López,2024-03,20,3100799.34,62015986.8
+91,Mouse,Cartagena,Luis Gómez,2024-03,11,1129187.85,12421066.35
+106,Monitor,Cali,Carlos Díaz,06/2024,4,1980433.99,7921735.96
+32,Hub USB,Barranquilla,Ana Torres,2024-01,2,812862.12,1625724.24
+172,Laptop,Bucaramanga,Ana Torres,2024-03,12,1321321.2,15855854.4
+85,Laptop,Medellín,Carlos Díaz,,6,2817322.85,16903937.1
+184,Laptop,Cartagena,Carlos Díaz,2024-01,19,1286541.4,24444286.6
+144,Hub USB,Bogotá,Carlos Díaz,2024-06,11,2118942.04,23308362.44
+151,Mouse,Pereira,Sandra López,,18,1624987.56,29249776.08
+16,Impresora,Cali,María Reyes,2024-02,8,2611286.6,20890292.8
+143,Tablet,Cartagena,Sandra López,2024-05,16,1540589.64,24649434.24
+34,,Barranquilla,Sandra López,2024-02,19,2023097.6,38438854.4
+83,Hub USB,Medellín,Carlos Díaz,2024-04,19,692606.8,13159529.2
+190,Mouse,Manizales,María Reyes,2024-06,9,2052191.92,18469727.28
+191,Webcam,Medellín,Luis Gómez,2024-04,1,2174120.83,2174120.83
+88,Hub USB,Bucaramanga,Carlos Díaz,2024-05,17,1502191.54,25537256.18
+111,Hub USB,BOGOTÁ,María Reyes,05/2024,14,2320401.87,32485626.18
+196,Disco SSD,Pereira,Sandra López,2024-06,5,3100667.04,15503335.2
+22,Webcam,Medellín,María Reyes,2024-04,6,1596227.12,9577362.72
+24,Disco SSD,Barranquilla,Luis Gómez,2024-03,6,1894735.92,11368415.52
+18,Monitor,Cali,,2024-04,3,2648900.82,7946702.46
+122,Disco SSD,Bucaramanga,Carlos Díaz,2024-06,18,1167807.67,21020538.06
+176,Auriculares,Manizales,María Reyes,2024-06,1,3147696.23,3147696.23
+40,Mouse,Manizales,Sandra López,2024-01,2,2287724.96,4575449.92
+96,Webcam,Cartagena,Carlos Díaz,2024-04,18,2620092.11,47161657.98
+66,Mouse,Pereira,Ana Torres,2024-04,8,710511.31,5684090.48
+171,Mouse,Manizales,Luis Gómez,2024-06,10,3163432.86,31634328.6
+55,Disco SSD,Cartagena,Ana Torres,2024-02,9,417268.92,3755420.28
+110,Monitor,Medellín,María Reyes,2024-06,20,2822264.95,56445299
+81,Hub USB,Bucaramanga,Ana Torres,2024-02,10,797872.72,7978727.2
+25,Disco SSD,Bogotá,Sandra López,2024-03,16,82876.45,1326023.2
+187,Auriculares,Manizales,María Reyes,2024-06,11,2817750.4,30995254.4
+107,Monitor,Manizales,María Reyes,2024-03,6,2126536.03,12759216.18
+103,Tablet,Cartagena,Ana Torres,2024-04,1,2625349.55,2625349.55
